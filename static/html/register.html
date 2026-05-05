@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% block title %}注册账号 - 景艺大图书馆{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}注册账号 - 示例图书馆{% endblock %}
 
 {% block header %}{% endblock %}
 {% block footer %}{% endblock %}
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div>
-                        <p class="font-heading text-base font-bold text-pink-900/90">景艺大图书馆</p>
+                        <p class="font-heading text-base font-bold text-pink-900/90">示例图书馆</p>
                         <p class="text-[10px] uppercase tracking-[0.28em] text-pink-400/70">New Membership ♡</p>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                         <div>
                             <label for="email" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">电子邮箱</label>
                             <div class="flex gap-2">
-                                <input type="email" id="email" name="email" required placeholder="example@qq.com"
+                                <input type="email" id="email" name="email" required placeholder="example@example.com"
                                        value="{{ form_data.get('email', '') }}"
                                        class="flex-1 rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
                                 <button type="button" id="send-code-btn"

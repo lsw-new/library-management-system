@@ -13,10 +13,10 @@ from extensions import db
 
 logger = logging.getLogger(__name__)
 
-_SMTP_SERVER = "smtp.qq.com"
+_SMTP_SERVER = "smtp.example.com"
 _SMTP_PORT = 587
-_SENDER_EMAIL = "xianyu20046@qq.com"
-_SENDER_PASSWORD = "pifvqcyzpeacffee"
+_SENDER_EMAIL = "xxx@example.com"
+_SENDER_PASSWORD = "xxx"
 _CODE_TTL_MINUTES = 10
 
 
@@ -30,7 +30,7 @@ def send_verification_email(to_email, code):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>景艺大图书馆 · 验证码</title>
+<title>示例图书馆 · 验证码</title>
 </head>
 <body style="margin:0;padding:0;background:#FDE8F0;font-family:'Segoe UI',Arial,sans-serif;">
 
@@ -66,7 +66,7 @@ def send_verification_email(to_email, code):
               ✦ &nbsp;Jingyi Grand Library&nbsp; ✦
             </div>
             <h1 style="margin:0;color:#ffffff;font-size:26px;font-weight:700;letter-spacing:1px;text-shadow:0 2px 12px rgba(0,0,0,0.15);">
-              景艺大图书馆
+              示例图书馆
             </h1>
           </td>
         </tr>
@@ -90,7 +90,7 @@ def send_verification_email(to_email, code):
         你好呀，新朋友 &nbsp;♡
       </p>
       <p style="margin:0 0 28px;font-size:14px;color:#9E7A88;line-height:1.8;">
-        欢迎来到景艺大图书馆的奇妙世界～<br>
+        欢迎来到示例图书馆的奇妙世界～<br>
         请使用下面这枚专属验证码完成注册，它只为你而存在哦 ✨
       </p>
 
@@ -134,7 +134,7 @@ def send_verification_email(to_email, code):
       <!-- 签名 -->
       <p style="margin:0;font-size:13px;color:#C9A0B0;line-height:2;text-align:right;">
         愿你在书页与灵感之间，收获一段美好的阅读时光。<br>
-        <span style="font-size:15px;font-weight:700;color:#E91E8C;">景艺大图书馆</span>
+        <span style="font-size:15px;font-weight:700;color:#E91E8C;">示例图书馆</span>
         <span style="font-size:12px;color:#D4A0B8;">· 自动邮件中心</span><br>
         <span style="font-size:18px;letter-spacing:3px;">♡ ✦ ♡</span>
       </p>
@@ -171,8 +171,8 @@ def send_verification_email(to_email, code):
 </html>"""
     try:
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = '♡ 景艺大图书馆 · 你的专属验证码来啦'
-        msg['From'] = formataddr(('景艺大图书馆', _SENDER_EMAIL))
+        msg['Subject'] = '♡ 示例图书馆 · 你的专属验证码来啦'
+        msg['From'] = formataddr(('示例图书馆', _SENDER_EMAIL))
         msg['To'] = to_email
         msg.attach(MIMEText(html_content, 'html', 'utf-8'))
 

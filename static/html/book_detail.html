@@ -1,7 +1,7 @@
-{# 图书详情页 #}
+﻿{# 图书详情页 #}
 {% extends "base.html" %}
 
-{% block title %}{{ book.title }} - 景艺大图书馆{% endblock %}
+{% block title %}{{ book.title }} - 示例图书馆{% endblock %}
 
 {% set cover_url = url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') %}
 {% set stock_pct = (book.stock * 100 // book.total) if book.total else 0 %}

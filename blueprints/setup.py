@@ -509,13 +509,13 @@ def insert_test_data():
     try:
         # 创建管理员账户
         if not Admin.query.filter_by(username='admin').first():
-            admin = Admin(username='admin', email='admin@library.com')
+            admin = Admin(username='admin', email='admin@example.com')
             admin.set_password('admin123')
             db.session.add(admin)
 
         # 创建测试用户
         if not User.query.filter_by(username='user1').first():
-            user = User(username='user1', email='user1@library.com', student_id=TEST_USER_STUDENT_ID)
+            user = User(username='user1', email='user1@example.com', student_id=TEST_USER_STUDENT_ID)
             user.set_password('user123')
             db.session.add(user)
 

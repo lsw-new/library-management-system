@@ -48,6 +48,114 @@
    - 应用地址: http://localhost:5001
    - 数据库: localhost:3307
 
+## ⚙️ 详细配置指南
+
+### 📧 邮件服务配置
+
+系统支持邮件验证码功能，需要配置SMTP邮件服务：
+
+#### 1. Gmail 配置（推荐）
+```bash
+# 编辑 .env 文件
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USE_TLS=true
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password  # 使用应用专用密码，不是登录密码
+```
+
+**获取Gmail应用密码步骤**：
+1. 登录 Google 账户
+2. 进入 [Google 账户安全设置](https://myaccount.google.com/security)
+3. 启用"两步验证"
+4. 生成"应用专用密码"
+5. 将生成的16位密码填入 `MAIL_PASSWORD`
+
+#### 2. QQ邮箱配置
+```bash
+MAIL_SERVER=smtp.qq.com
+MAIL_PORT=587
+MAIL_USE_TLS=true
+MAIL_USERNAME=your-email@qq.com
+MAIL_PASSWORD=your-authorization-code  # QQ邮箱授权码
+```
+
+**获取QQ邮箱授权码步骤**：
+1. 登录QQ邮箱
+2. 设置 → 账户 → POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务
+3. 开启"POP3/SMTP服务"
+4. 获取授权码并填入 `MAIL_PASSWORD`
+
+#### 3. 163邮箱配置
+```bash
+MAIL_SERVER=smtp.163.com
+MAIL_PORT=587
+MAIL_USE_TLS=true
+MAIL_USERNAME=your-email@163.com
+MAIL_PASSWORD=your-authorization-code  # 163邮箱授权码
+```
+
+### 🗄️ 数据库配置
+
+#### Docker方式（推荐，自动配置）
+使用Docker部署时，MySQL会自动配置，无需手动设置。
+
+#### 手动配置MySQL
+
+**1. 安装MySQL 8.0**
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install mysql-server-8.0
+
+# CentOS/RHEL
+sudo yum install mysql-server
+
+# Windows: 下载MySQL安装包
+# https://dev.mysql.com/downloads/mysql/
+```
+
+**2. 创建数据库和用户**
+```sql
+-- 登录MySQL
+mysql -u root -p
+
+-- 创建数据库
+CREATE DATABASE library_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- 创建用户并授权
+CREATE USER 'library_user'@'localhost' IDENTIFIED BY 'your_secure_password';
+GRANT ALL PRIVILEGES ON library_db.* TO 'library_user'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+**3. 配置连接信息**
+```bash
+# 编辑 .env 文件
+DATABASE_URL=mysql+pymysql://library_user:your_secure_password@localhost:3306/library_db?charset=utf8mb4
+
+# 或者修改 config.py 中的默认配置
+```
+
+#### 远程数据库配置
+```bash
+# 连接远程MySQL
+DATABASE_URL=mysql+pymysql://username:password@remote_host:3306/database_name?charset=utf8mb4
+
+# 连接云数据库（如阿里云RDS）
+DATABASE_URL=mysql+pymysql://username:password@rm-xxxxx.mysql.rds.aliyuncs.com:3306/library_db?charset=utf8mb4
+```
+
+### 🔐 安全配置
+
+**生产环境必须修改的配置**：
+```bash
+# 生成强密钥-c "import secrets; print(secrets.token_hex(32))"
+
+# .env 文件配置
+SECRET_KEY=your-generated-secb-password
+```
+
 ### 传统部署
 
 1. **安装依赖**
@@ -58,12 +166,19 @@
    pip install -r requirements.txt
    ```
 
-2. **配置数据库**
-   - 安装 MySQL 8.0
-   - 创建数据库 `library_db`
-   - 修改 `config.py` 中的数据库连接
+2. **配置数据库和邮件**
+   - 按照上述指南配置MySQL数据库
+   - 按照上述指南配置邮件服务
+   - 修改 `.env` 文件或 `config.py`
 
-3. **运行应用**
+3. **初始化数据库**
+   ```bash
+   # 运行应用，首次访问会自动引导数据库初始化
+   python app.py
+   # 访问 http://localhost:5000 按提示完成初始化
+   ```
+
+4. **运行应用**
    ```bash
    python app.py
    ```
@@ -99,7 +214,7 @@ PythonProject/
 |--------|------|--------|
 | `SECRET_KEY` | Flask密钥 | 必须修改 |
 | `DATABASE_URL` | 数据库连接 | MySQL连接字符串 |
-| `MAIL_SERVER` | 邮件服务器 | smtp.gmail.com |
+| `MAIL_SERVER` | 邮件服务器 | smtp.example.com |
 | `MAIL_USERNAME` | 邮件用户名 | 可选 |
 | `MAIL_PASSWORD` | 邮件密码 | 可选 |
 
@@ -219,5 +334,5 @@ python -c "from app import create_app; from extensions import db; app = create_a
 
 ---
 
-**开发者**: 何夕2077  
+**开发者**: lsw-new  
 **最后更新**: 2026年5月

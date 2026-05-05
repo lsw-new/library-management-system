@@ -7,7 +7,7 @@ services:
     container_name: library_mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-lsw666...}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-xxx}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-library_db}
       MYSQL_USER: ${MYSQL_USER:-library_user}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-library_pass}
@@ -61,7 +61,7 @@ services:
       FLASK_DEBUG: ${FLASK_DEBUG:-0}
 
       # 邮件配置
-      MAIL_SERVER: ${MAIL_SERVER:-smtp.gmail.com}
+      MAIL_SERVER: ${MAIL_SERVER:-smtp.example.com}
       MAIL_PORT: ${MAIL_PORT:-587}
       MAIL_USE_TLS: ${MAIL_USE_TLS:-true}
       MAIL_USERNAME: ${MAIL_USERNAME}

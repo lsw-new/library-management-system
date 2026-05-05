@@ -1,0 +1,383 @@
+{# 我的借阅记录页 #}
+{% extends "base.html" %}
+
+{% block title %}借阅足迹 - 景艺大图书馆{% endblock %}
+
+{% set status_meta = {
+    'pending':   {'label': '未领取', 'tone': 'pending'},
+    'picked_up': {'label': '已领取', 'tone': 'picked'},
+    'returned':  {'label': '已归还', 'tone': 'returned'},
+    'rejected':  {'label': '已拒绝', 'tone': 'rejected'},
+    'expired':   {'label': '已逾期', 'tone': 'expired'},
+} %}
+
+{% set tabs = [
+    ('all',       '全部',   'all',      stats.total),
+    ('pending',   '未领取', 'pending',  stats.pending),
+    ('picked_up', '已领取', 'picked',   stats.picked_up),
+    ('returned',  '已归还', 'returned', stats.returned),
+    ('rejected',  '已拒绝', 'rejected', stats.rejected),
+    ('expired',   '已逾期', 'expired',  stats.expired),
+] %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    {# ========== 头部 ========== #}
+    <header class="mb-5 sm:mb-6">
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-heading font-bold text-brand-deep">借阅足迹</h1>
+                <p class="text-sm text-brand-deep/50 mt-0.5">共 {{ stats.total }} 条记录</p>
+            </div>
+            <a href="{{ url_for('user.books') }}"
+               class="inline-flex items-center gap-1.5 flex-shrink-0 px-4 py-2 text-sm font-semibold text-brand-primary border border-brand-primary/20 hover:bg-pink-50 rounded-xl transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                继续预约
+            </a>
+        </div>
+    </header>
+
+    {# ========== Tab 筛选栏 ========== #}
+    <section id="records-filters" class="records-tabs-bar mb-5">
+        <div class="records-tabs-scroll">
+            {% for value, label, tone, count in tabs %}
+            <button type="button"
+                    data-filter="{{ value }}"
+                    class="records-tab tone-{{ tone }}{% if loop.first %} is-active{% endif %}">
+                {{ label }}
+                <span class="records-tab-count">{{ count }}</span>
+            </button>
+            {% endfor %}
+        </div>
+    </section>
+
+    {# ========== 记录列表 ========== #}
+    {% if records %}
+    <section id="records-list" class="space-y-3 sm:space-y-3.5">
+        {% for record in records %}
+        {% set meta = status_meta.get(record.status, {'label': record.status, 'tone': 'pending'}) %}
+        <article class="record-card" data-status="{{ record.status }}"
+                 style="animation-delay: {{ loop.index0 * 40 }}ms">
+            {# 封面 #}
+            <div class="record-cover">
+                {% if record.book.image %}
+                <img src="{{ url_for('static', filename='images/' + record.book.image) }}"
+                     alt="{{ record.book.title }}" loading="lazy" decoding="async">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/default-book.jpg') }}"
+                     alt="{{ record.book.title }}" loading="lazy" decoding="async">
+                {% endif %}
+            </div>
+
+            {# 内容区 #}
+            <div class="record-body">
+
+                {# 书名 + 状态 #}
+                <div class="flex items-start justify-between gap-2">
+                    <div class="min-w-0">
+                        <a href="{{ url_for('user.book_detail', book_id=record.book.id) }}"
+                           class="block text-sm sm:text-base font-heading font-semibold text-brand-deep hover:text-brand-primary transition-colors leading-snug line-clamp-2">
+                            {{ record.book.title }}
+                        </a>
+                        <p class="text-xs text-brand-deep/45 mt-0.5 truncate">
+                            {{ record.book.author }}{% if record.book.category %} · {{ record.book.category }}{% endif %}
+                        </p>
+                    </div>
+                    <span class="status-pill tone-{{ meta.tone }} flex-shrink-0 mt-0.5">{{ meta.label }}</span>
+                </div>
+
+                {# 时间线 #}
+                <div class="record-timeline">
+                    <div class="timeline-step is-done">
+                        <span class="timeline-dot"></span>
+                        <span>预约于 {{ record.borrow_date.strftime('%Y-%m-%d %H:%M') }}</span>
+                    </div>
+
+                    {% if record.return_date %}
+                    <div class="timeline-step{% if record.status == 'returned' %} is-done tone-green{% endif %}">
+                        <span class="timeline-dot"></span>
+                        <span>预定归还 {{ record.return_date.strftime('%Y-%m-%d') }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if record.status == 'picked_up' and record.pickup_date %}
+                    <div class="timeline-step is-done tone-blue">
+                        <span class="timeline-dot"></span>
+                        <span>已领取 · {{ record.pickup_date.strftime('%Y-%m-%d %H:%M') }}</span>
+                    </div>
+                    {% elif record.status == 'returned' %}
+                    <div class="timeline-step is-done tone-green">
+                        <span class="timeline-dot"></span>
+                        <span>已归还{% if record.pickup_date %} · 领取于 {{ record.pickup_date.strftime('%m-%d %H:%M') }}{% endif %}</span>
+                    </div>
+                    {% elif record.status == 'rejected' %}
+                    <div class="timeline-step is-done tone-red">
+                        <span class="timeline-dot"></span>
+                        <span>已拒绝{% if record.reject_date %} · {{ record.reject_date.strftime('%Y-%m-%d %H:%M') }}{% endif %}</span>
+                    </div>
+                    {% elif record.status == 'expired' %}
+                    <div class="timeline-step is-done tone-orange">
+                        <span class="timeline-dot"></span>
+                        <span>已逾期{% if record.reject_date %} · {{ record.reject_date.strftime('%Y-%m-%d %H:%M') }}{% endif %}</span>
+                    </div>
+                    {% else %}
+                    <div class="timeline-step">
+                        <span class="timeline-dot"></span>
+                        <span>等待管理员审核…</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {# 操作按钮（底部） #}
+                {% if record.status in ('pending', 'picked_up') %}
+                <div class="record-actions">
+                    {% if record.status == 'pending' %}
+                    <button type="button"
+                            class="record-action-btn tone-cancel"
+                            data-action="cancel"
+                            data-record-id="{{ record.id }}"
+                            data-book-title="{{ record.book.title }}">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        取消预约
+                    </button>
+                    {% elif record.status == 'picked_up' %}
+                    <button type="button"
+                            class="record-action-btn tone-return"
+                            data-action="return"
+                            data-record-id="{{ record.id }}"
+                            data-book-title="{{ record.book.title }}">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        归还图书
+                    </button>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+            </div>
+        </article>
+        {% endfor %}
+
+        {# 空筛选占位 #}
+        <div id="records-empty-filter" class="hidden text-center py-12">
+            <p class="text-sm text-brand-deep/45">当前筛选下没有记录</p>
+        </div>
+    </section>
+
+    {# 自助操作确认弹层 #}
+    <div id="record-confirm" class="record-confirm-overlay" aria-hidden="true">
+        <div class="record-confirm-card" role="dialog" aria-modal="true" aria-labelledby="record-confirm-title">
+            <div class="record-confirm-icon">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4a2 2 0 00-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/></svg>
+            </div>
+            <h3 id="record-confirm-title" class="record-confirm-title">确认操作</h3>
+            <p id="record-confirm-msg" class="record-confirm-msg">确定要执行此操作吗？</p>
+            <div class="record-confirm-actions">
+                <button type="button" class="record-confirm-btn is-cancel" data-confirm-cancel>取消</button>
+                <button type="button" class="record-confirm-btn is-confirm" data-confirm-ok>确定</button>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    {# 整体空状态 #}
+    <section class="bg-white rounded-2xl shadow-sm border border-pink-100 text-center py-16 px-6">
+        <div class="inline-flex w-20 h-20 items-center justify-center rounded-full bg-gradient-to-br from-pink-100 to-purple-100 mb-4">
+            <svg class="w-10 h-10 text-brand-primary/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+        </div>
+        <h3 class="text-lg font-heading font-semibold text-brand-deep mb-1">还没有任何借阅记录</h3>
+        <p class="text-sm text-brand-deep/50 mb-6">从馆藏中挑一本喜欢的书开始你的阅读之旅</p>
+        <a href="{{ url_for('user.books') }}"
+           class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-brand-primary to-brand-accent rounded-xl shadow-md hover:opacity-90 transition-all">
+            浏览馆藏
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    const filters = document.getElementById('records-filters');
+    const list = document.getElementById('records-list');
+    if (!filters || !list) return;
+
+    const emptyHint = document.getElementById('records-empty-filter');
+    const toast = (msg, type = 'success') => (window.showToast ? window.showToast(msg, type) : alert(msg));
+    let currentFilter = 'all';
+
+    function getCards() { return list.querySelectorAll('.record-card'); }
+
+    function applyFilter(value) {
+        currentFilter = value;
+        let visible = 0;
+        getCards().forEach(card => {
+            const match = value === 'all' || card.dataset.status === value;
+            card.hidden = !match;
+            if (match) visible += 1;
+        });
+        if (emptyHint) emptyHint.classList.toggle('hidden', visible !== 0);
+        filters.querySelectorAll('[data-filter]').forEach(btn => {
+            btn.classList.toggle('is-active', btn.dataset.filter === value);
+        });
+        const url = new URL(window.location.href);
+        if (value === 'all') url.searchParams.delete('status');
+        else url.searchParams.set('status', value);
+        window.history.replaceState({}, '', url);
+    }
+
+    filters.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-filter]');
+        if (!btn) return;
+        applyFilter(btn.dataset.filter);
+    });
+
+    const initial = new URL(window.location.href).searchParams.get('status') || 'all';
+    applyFilter(initial);
+
+    // ============ 统计数字增减 ============
+    function bumpStat(key, delta) {
+        const btn = filters.querySelector(`[data-filter="${key}"]`);
+        if (!btn) return;
+        const v = btn.querySelector('.records-tab-count');
+        if (!v) return;
+        v.textContent = Math.max(0, parseInt(v.textContent || '0', 10) + delta);
+    }
+
+    // ============ 自定义确认弹层 ============
+    const confirmEl = document.getElementById('record-confirm');
+    const confirmTitle = document.getElementById('record-confirm-title');
+    const confirmMsg = document.getElementById('record-confirm-msg');
+    const confirmOk = confirmEl.querySelector('[data-confirm-ok]');
+    const confirmCancel = confirmEl.querySelector('[data-confirm-cancel]');
+    let confirmResolver = null;
+
+    function openConfirm({ title, msg, okText = '确定', tone = '' }) {
+        return new Promise((resolve) => {
+            confirmTitle.textContent = title;
+            confirmMsg.textContent = msg;
+            confirmOk.textContent = okText;
+            confirmOk.classList.remove('tone-danger', 'tone-return');
+            if (tone) confirmOk.classList.add(tone);
+            confirmEl.classList.add('is-open');
+            confirmEl.setAttribute('aria-hidden', 'false');
+            confirmResolver = resolve;
+        });
+    }
+    function closeConfirm(result) {
+        confirmEl.classList.remove('is-open');
+        confirmEl.setAttribute('aria-hidden', 'true');
+        if (confirmResolver) { confirmResolver(result); confirmResolver = null; }
+    }
+    confirmOk.addEventListener('click', () => closeConfirm(true));
+    confirmCancel.addEventListener('click', () => closeConfirm(false));
+    confirmEl.addEventListener('click', (e) => { if (e.target === confirmEl) closeConfirm(false); });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && confirmEl.classList.contains('is-open')) closeConfirm(false);
+    });
+
+    // ============ 操作配置 ============
+    const STATUS_META = {
+        pending:   { label: '未领取', tone: 'pending'  },
+        picked_up: { label: '已领取', tone: 'picked'   },
+        returned:  { label: '已归还', tone: 'returned' },
+        rejected:  { label: '已拒绝', tone: 'rejected' },
+        expired:   { label: '已逾期', tone: 'expired'  },
+    };
+
+    const ACTIONS = {
+        cancel: {
+            url: id => `/book/cancel/${id}`,
+            confirm: title => ({ title: '取消预约', msg: `确定取消《${title}》的预约吗？库存将被释放。`, okText: '确认取消', tone: 'tone-danger' }),
+            successMsg: '已取消预约',
+            newStatus: 'rejected',
+            timelineTone: 'tone-red',
+            timelineLabel: ts => `已取消 · ${ts}`,
+            statDelta: { pending: -1, rejected: +1 },
+        },
+        return: {
+            url: id => `/book/return/${id}`,
+            confirm: title => ({ title: '归还图书', msg: `确定归还《${title}》了吗？请将书带回图书馆。`, okText: '确认归还', tone: 'tone-return' }),
+            successMsg: '归还成功，感谢按时归还',
+            newStatus: 'returned',
+            timelineTone: 'tone-green',
+            timelineLabel: ts => `已归还 · ${ts}`,
+            statDelta: { picked_up: -1, returned: +1 },
+        },
+    };
+
+    function nowStamp() {
+        const d = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function updateCard(card, cfg) {
+        card.dataset.status = cfg.newStatus;
+        const meta = STATUS_META[cfg.newStatus];
+        const pill = card.querySelector('.status-pill');
+        if (pill && meta) {
+            pill.className = `status-pill tone-${meta.tone} flex-shrink-0 mt-0.5`;
+            pill.textContent = meta.label;
+        }
+        const actions = card.querySelector('.record-actions');
+        if (actions) actions.remove();
+        const timeline = card.querySelector('.record-timeline');
+        if (timeline) {
+            const placeholder = Array.from(timeline.querySelectorAll('.timeline-step'))
+                .find(el => /等待管理员审核/.test(el.textContent));
+            if (placeholder) placeholder.remove();
+            const step = document.createElement('div');
+            step.className = `timeline-step is-done ${cfg.timelineTone}`;
+            step.innerHTML = `<span class="timeline-dot"></span><span>${cfg.timelineLabel(nowStamp())}</span>`;
+            timeline.appendChild(step);
+        }
+        card.style.transition = 'box-shadow 0.6s ease';
+        card.style.boxShadow = '0 0 0 3px rgba(236,72,153,0.3), 0 16px 32px -18px rgba(236,72,153,0.4)';
+        setTimeout(() => { card.style.boxShadow = ''; }, 750);
+    }
+
+    // ============ 卡片操作 ============
+    list.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.record-action-btn');
+        if (!btn) return;
+        const actionKey = btn.dataset.action;
+        const cfg = ACTIONS[actionKey];
+        if (!cfg) return;
+
+        const recordId = btn.dataset.recordId;
+        const bookTitle = btn.dataset.bookTitle || '该书';
+        const ok = await openConfirm(cfg.confirm(bookTitle));
+        if (!ok) return;
+
+        const card = btn.closest('.record-card');
+        const allBtns = card.querySelectorAll('.record-action-btn');
+        allBtns.forEach(b => (b.disabled = true));
+
+        try {
+            const resp = await fetch(cfg.url(recordId), {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const data = await resp.json();
+            if (data.success) {
+                toast(cfg.successMsg, 'success');
+                Object.entries(cfg.statDelta || {}).forEach(([k, d]) => bumpStat(k, d));
+                updateCard(card, cfg);
+                applyFilter(currentFilter);
+            } else {
+                toast(data.message || '操作失败', 'error');
+                allBtns.forEach(b => (b.disabled = false));
+            }
+        } catch (err) {
+            toast('网络错误，请稍后重试', 'error');
+            allBtns.forEach(b => (b.disabled = false));
+        }
+    });
+})();
+</script>
+{% endblock %}

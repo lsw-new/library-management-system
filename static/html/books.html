@@ -1,0 +1,242 @@
+{# 图书列表页 - 含搜索、分类、排序、筛选、预约 #}
+{% extends "base.html" %}
+
+{% block title %}馆藏资源 - 景艺大图书馆{% endblock %}
+
+{% set sort_options = [
+    ('newest',    '最新入库'),
+    ('popular',   '热门借阅'),
+    ('available', '库存优先'),
+    ('title',     '书名 A-Z'),
+] %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:items-start">
+
+        {# ========== 侧边栏 ========== #}
+        <aside class="lg:sticky lg:top-4 lg:self-start lg:h-[calc(100vh-2rem)] lg:flex lg:flex-col">
+            <div id="books-sidebar-content" class="lg:flex lg:h-full lg:min-h-0 lg:flex-col">
+
+                {# 移动端横向标签 #}
+                <div class="lg:hidden mb-4 lg:flex-shrink-0">
+                    <div id="books-mobile-categories" class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
+                        <a href="{{ url_for('user.books', search=search) if search else url_for('user.books') }}"
+                           data-category-value=""
+                           class="flex-shrink-0 snap-start inline-flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all duration-300 {% if not category %}bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg border-transparent{% else %}bg-white text-brand-deep/70 border-gray-200{% endif %}">
+                            <span class="text-sm font-bold whitespace-nowrap">全部图书</span>
+                            <span class="px-1.5 py-0.5 {% if not category %}bg-white/30{% else %}bg-gray-100{% endif %} text-xs font-bold rounded-full" data-category="all">{{ categories_total }}</span>
+                        </a>
+                        {% for cat, count in categories %}
+                        <a href="{{ url_for('user.books', category=cat, search=search) }}"
+                           data-category-value="{{ cat }}"
+                           class="flex-shrink-0 snap-start inline-flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all duration-300 {% if category == cat %}bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg border-transparent{% else %}bg-white text-brand-deep/70 border-gray-200{% endif %}">
+                            <span class="text-sm font-bold whitespace-nowrap">{{ cat }}</span>
+                            <span class="px-1.5 py-0.5 {% if category == cat %}bg-white/30{% else %}bg-gray-100{% endif %} text-xs font-bold rounded-full" data-category="{{ cat }}">{{ count }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {# 桌面端垂直侧边栏 #}
+                <div class="hidden lg:flex lg:h-full lg:min-h-0 lg:flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-pink-100 flex-shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-fuchsia-400 rounded-xl flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-base font-bold text-brand-deep">图书分类</h3>
+                        </div>
+                    </div>
+
+                    <div class="px-4 pt-4 pb-2 flex-shrink-0">
+                        <a href="{{ url_for('user.books', search=search) if search else url_for('user.books') }}"
+                           data-category-value=""
+                           class="flex items-center justify-between px-4 py-3 rounded-xl border-2 transition-all duration-300 ease-out {% if not category %}bg-gradient-to-r from-purple-50 to-pink-50 text-brand-primary border-brand-primary{% else %}hover:bg-pink-50/50 text-brand-deep/70 border-transparent{% endif %}">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                                <span class="text-sm font-bold">全部图书</span>
+                            </div>
+                            <span class="px-2 py-0.5 bg-white/50 text-xs font-bold rounded-full" data-category="all">{{ categories_total }}</span>
+                        </a>
+                    </div>
+
+                    <div id="books-desktop-categories" class="px-4 pb-4 overflow-y-auto flex-1 min-h-0 scrollbar-thin">
+                        {% for cat, count in categories %}
+                        <a href="{{ url_for('user.books', category=cat, search=search) }}"
+                           data-category-value="{{ cat }}"
+                           class="flex items-center justify-between px-4 py-3 rounded-xl border-2 transition-all duration-300 ease-out mb-2 {% if category == cat %}bg-gradient-to-r from-purple-50 to-pink-50 text-brand-primary border-brand-primary{% else %}hover:bg-pink-50/50 text-brand-deep/70 border-transparent{% endif %}">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                </svg>
+                                <span class="text-sm font-bold">{{ cat }}</span>
+                            </div>
+                            <span class="px-2 py-0.5 {% if category == cat %}bg-white/50{% else %}bg-gray-100{% endif %} text-xs font-bold rounded-full" data-category="{{ cat }}">{{ count }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+
+                    <div class="h-8 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none flex-shrink-0"></div>
+                </div>
+            </div>
+        </aside>
+
+        {# ========== 主内容区 ========== #}
+        <div id="books-main-content" class="bg-white rounded-2xl shadow-lg overflow-hidden lg:h-[calc(100vh-2rem)] lg:overflow-y-auto">
+
+            {# 头部:标题 + 搜索 + 工具条 #}
+            <div class="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex flex-col gap-3 sm:gap-4 lg:sticky lg:top-0 lg:bg-white lg:z-10">
+                <div id="books-summary" class="flex items-end justify-between gap-3">
+                    <div>
+                        <h2 class="text-lg sm:text-xl lg:text-2xl font-heading font-semibold text-brand-deep">
+                            {% if category %}{{ category }}{% else %}馆藏资源{% endif %}
+                        </h2>
+                        <p class="text-xs sm:text-sm text-brand-deep/60 mt-1">
+                            共 {{ pagination.total }} 本{% if search %} · 关键字 "{{ search }}"{% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                <form method="GET" id="books-search-form" class="relative group w-full">
+                    {% if category %}<input type="hidden" name="category" value="{{ category }}">{% endif %}
+                    {% if sort and sort != 'newest' %}<input type="hidden" name="sort" value="{{ sort }}">{% endif %}
+                    {% if only_available %}<input type="hidden" name="only_available" value="1">{% endif %}
+                    <input type="text"
+                           id="books-search-input"
+                           name="search"
+                           aria-label="搜索图书"
+                           maxlength="64"
+                           class="w-full pl-11 sm:pl-12 pr-16 py-3 bg-pink-50/50 border-2 border-transparent focus:border-brand-primary focus:bg-white rounded-xl sm:rounded-2xl text-sm font-medium transition-all outline-none"
+                           placeholder="搜索书名、作者、ISBN(按 / 快速聚焦)"
+                           value="{{ search }}">
+                    <svg class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-deep/30 group-focus-within:text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2.5"/></svg>
+                    <kbd class="hidden sm:inline-flex absolute right-4 top-1/2 -translate-y-1/2 items-center px-1.5 py-0.5 text-[10px] font-mono font-semibold text-brand-deep/40 bg-white border border-gray-200 rounded">/</kbd>
+                </form>
+
+                {# 工具条:排序 + 仅可借 #}
+                <div id="books-toolbar" class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs font-semibold text-brand-deep/50 mr-1">排序</span>
+                    {% for value, label in sort_options %}
+                    <button type="button" data-sort="{{ value }}"
+                            class="chip{% if sort == value %} is-active{% endif %}">{{ label }}</button>
+                    {% endfor %}
+                    <span class="mx-1 h-4 w-px bg-gray-200"></span>
+                    <button type="button" data-toggle="only-available"
+                            class="chip{% if only_available %} is-active{% endif %}">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        仅显示可借
+                    </button>
+                </div>
+            </div>
+
+            {# 网格区 #}
+            <div id="books-results-content" class="p-4 sm:p-6 animate-fade-in">
+                {% if books %}
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+                    {% for book in books %}
+                    <article class="book-card" data-book-id="{{ book.id }}" data-book-title="{{ book.title|e }}">
+                        <div class="book-card-cover">
+                            <span class="book-card-status {% if book.available %}is-available{% else %}is-unavailable{% endif %}">
+                                {% if book.available %}可借阅{% else %}已借出{% endif %}
+                            </span>
+                            <img class="lazy-img"
+                                 alt="{{ book.title }}"
+                                 src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3C/svg%3E"
+                                 data-src="{{ url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') }}"
+                                 loading="lazy"
+                                 decoding="async">
+                        </div>
+                        <div class="p-3 sm:p-4 flex-1 flex flex-col">
+                            <h3 class="text-sm sm:text-base font-heading font-semibold text-brand-deep mb-1 line-clamp-2">{{ book.title }}</h3>
+                            <p class="text-xs text-brand-deep/60 mb-1 truncate">{{ book.author }}</p>
+                            <p class="text-[11px] text-gray-400 mb-3 truncate">ISBN {{ book.isbn }}</p>
+
+                            <div class="mt-auto flex items-center justify-between mb-3">
+                                <span class="text-[11px] uppercase tracking-wider text-brand-deep/40 font-bold">库存</span>
+                                <span class="text-xs font-semibold {% if book.stock > 0 %}text-emerald-600{% else %}text-rose-600{% endif %}" data-stock-text>
+                                    {{ book.stock }}/{{ book.total }}
+                                </span>
+                            </div>
+
+                            <div data-actions class="space-y-2">
+                                <a href="{{ url_for('user.book_detail', book_id=book.id) }}"
+                                   class="block w-full px-4 py-2.5 text-sm font-semibold text-center text-brand-primary border-2 border-brand-primary/20 hover:border-brand-primary hover:bg-pink-50 rounded-lg transition-all duration-200 active:scale-95">
+                                    查看详情
+                                </a>
+                                {% if book.available and current_user.is_authenticated and not current_user.is_admin %}
+                                <button type="button"
+                                        data-book-id="{{ book.id }}"
+                                        data-book-title="{{ book.title }}"
+                                        data-book-stock="{{ book.stock }}"
+                                        onclick="showBorrowModalFromData(this)"
+                                        class="w-full px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-brand-primary to-brand-accent hover:opacity-90 rounded-lg transition-all duration-200 active:scale-95">
+                                    预约图书
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+
+                {# 分页 #}
+                {% if pagination.pages > 1 %}
+                <nav class="flex flex-wrap items-center justify-center gap-2 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-100">
+                    {% if pagination.has_prev %}
+                    <a href="{{ url_for('user.books', page=pagination.prev_num, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) }}"
+                       class="px-3 sm:px-4 py-2 text-sm font-medium text-brand-primary border-2 border-brand-primary/20 hover:bg-pink-50 rounded-xl transition-colors active:scale-95">上一页</a>
+                    {% endif %}
+                    {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                        {% if p %}
+                            {% if p == pagination.page %}
+                            <span class="px-3 sm:px-4 py-2 text-sm font-bold text-white bg-brand-primary rounded-xl shadow-sm">{{ p }}</span>
+                            {% else %}
+                            <a href="{{ url_for('user.books', page=p, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) }}"
+                               class="px-3 sm:px-4 py-2 text-sm font-medium text-brand-deep/60 hover:text-brand-primary hover:bg-pink-50 rounded-xl transition-colors active:scale-95">{{ p }}</a>
+                            {% endif %}
+                        {% else %}
+                            <span class="px-2 text-gray-400">...</span>
+                        {% endif %}
+                    {% endfor %}
+                    {% if pagination.has_next %}
+                    <a href="{{ url_for('user.books', page=pagination.next_num, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) }}"
+                       class="px-3 sm:px-4 py-2 text-sm font-medium text-brand-primary border-2 border-brand-primary/20 hover:bg-pink-50 rounded-xl transition-colors active:scale-95">下一页</a>
+                    {% endif %}
+                </nav>
+                {% endif %}
+
+                {% else %}
+                {# 空状态 #}
+                <div class="text-center py-20">
+                    <div class="inline-flex w-20 h-20 items-center justify-center rounded-full bg-gradient-to-br from-pink-100 to-purple-100 mb-4">
+                        <svg class="w-10 h-10 text-brand-primary/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <p class="text-brand-deep font-semibold mb-1">没有找到匹配的图书</p>
+                    <p class="text-sm text-brand-deep/50">试试调整搜索关键字或切换分类</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include '_borrow_modal.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+window.__BOOKS_CONFIG__ = {
+    booksUrl: {{ url_for('user.books')|tojson }},
+    stockUrl: {{ url_for('user.books_stock')|tojson }},
+    categoriesUrl: {{ url_for('user.books_categories')|tojson }}
+};
+</script>
+<script src="{{ url_for('static', filename='js/books.js') }}" defer></script>
+{% endblock %}

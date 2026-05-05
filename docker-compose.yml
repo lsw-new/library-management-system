@@ -1,0 +1,134 @@
+version: '3.8'
+
+services:
+  # MySQL 数据库服务
+  mysql:
+    image: mysql:8.0
+    container_name: library_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-lsw666...}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-library_db}
+      MYSQL_USER: ${MYSQL_USER:-library_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-library_pass}
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+      - ./docker/mysql/conf:/etc/mysql/conf.d
+    networks:
+      - library_network
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Redis 缓存服务（可选）
+  redis:
+    image: redis:7-alpine
+    container_name: library_redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - library_network
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Flask 应用服务
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: library_app
+    restart: unless-stopped
+    environment:
+      # 数据库配置
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-library_user}:${MYSQL_PASSWORD:-library_pass}@mysql:3306/${MYSQL_DATABASE:-library_db}?charset=utf8mb4
+
+      # Flask 配置
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production}
+      FLASK_ENV: ${FLASK_ENV:-production}
+      FLASK_DEBUG: ${FLASK_DEBUG:-0}
+
+      # 邮件配置
+      MAIL_SERVER: ${MAIL_SERVER:-smtp.gmail.com}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USE_TLS: ${MAIL_USE_TLS:-true}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+
+      # Redis 配置（如果使用）
+      REDIS_URL: redis://redis:6379/0
+
+      # 其他配置
+      UPLOAD_FOLDER: /app/static/images
+      LOG_FOLDER: /app/static/logs
+      MAX_CONTENT_LENGTH: 16777216  # 16MB
+
+    ports:
+      - "${APP_PORT:-5000}:5000"
+    volumes:
+      # 持久化存储
+      - app_uploads:/app/static/images
+      - app_logs:/app/static/logs
+      # 开发时可以挂载代码目录（生产环境注释掉）
+      # - .:/app
+    networks:
+      - library_network
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Nginx 反向代理（生产环境推荐）
+  nginx:
+    image: nginx:alpine
+    container_name: library_nginx
+    restart: unless-stopped
+    ports:
+      - "${NGINX_PORT:-80}:80"
+      - "${NGINX_SSL_PORT:-443}:443"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./docker/nginx/ssl:/etc/nginx/ssl:ro
+      - app_uploads:/var/www/uploads:ro
+    networks:
+      - library_network
+    depends_on:
+      - app
+    profiles:
+      - production
+
+# 网络配置
+networks:
+  library_network:
+    driver: bridge
+
+# 数据卷配置
+volumes:
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+  app_uploads:
+    driver: local
+  app_logs:
+    driver: local

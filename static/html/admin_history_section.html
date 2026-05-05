@@ -1,0 +1,152 @@
+            {% elif tab == 'history' %}
+                <!-- 历史借阅记录 -->
+                <div class="p-4 md:p-8 border-b border-pink-50 bg-pink-50/30 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <h3 class="text-lg font-bold text-brand-deep">历史借阅记录</h3>
+                    <form method="GET" class="relative group">
+                        <input type="hidden" name="tab" value="history">
+                        <input type="text" name="search" value="{{ search or '' }}" placeholder="搜索书名或用户..."
+                               class="w-full md:w-72 pl-12 pr-6 py-4 md:py-3 bg-pink-50/50 border-2 border-transparent focus:border-brand-primary focus:bg-white rounded-2xl text-base md:text-sm font-medium transition-all outline-none">
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-deep/30 group-focus-within:text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2.5"/></svg>
+                    </form>
+                </div>
+
+                <!-- 今日预约记录 -->
+                <div class="p-4 md:p-8 border-b border-pink-100">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-fuchsia-400 rounded-xl flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-base font-bold text-brand-deep">今日预约记录</h4>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full">{{ today_records|length }}</span>
+                    </div>
+                    {% if today_records %}
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-[10px] font-bold text-brand-deep/40 uppercase tracking-widest border-b border-pink-50">
+                                    <th class="px-6 py-4">借阅用户</th>
+                                    <th class="px-6 py-4">图书名称</th>
+                                    <th class="px-6 py-4">预约日期</th>
+                                    <th class="px-6 py-4">领取时间</th>
+                                    <th class="px-6 py-4">归还日期</th>
+                                    <th class="px-6 py-4">状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in today_records %}
+                                <tr class="group hover:bg-pink-50/50 transition-colors">
+                                    <td class="px-6 py-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-9 h-9 bg-brand-deep text-white rounded-xl flex items-center justify-center font-bold text-sm">{{ record.user.username[:1]|upper }}</div>
+                                            <span class="text-sm font-bold text-brand-deep">{{ record.user.username }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 text-sm font-medium text-brand-deep/80">{{ record.book.title }}</td>
+                                    <td class="px-6 py-5 text-sm text-brand-deep/60">{{ record.borrow_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td class="px-6 py-5 text-sm text-brand-deep/60">
+                                        {% if record.pickup_date %}
+                                            {{ record.pickup_date.strftime('%Y-%m-%d %H:%M') }}
+                                        {% else %}
+                                            <span class="text-gray-400">—</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-5 text-sm text-brand-deep/60">
+                             {% if record.return_date %}
+                                            {{ record.return_date.strftime('%Y-%m-%d %H:%M') }}
+                                        {% else %}
+                                            <span class="text-gray-400">—</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-5">
+                                        {% if record.status == 'returned' %}
+                                            <span class="inline-block px-3 py-1 text-xs font-bold bg-green-100 text-green-800 rounded-full whitespace-nowrap">已归还</span>
+                                        {% elif record.status == 'rejected' %}
+                                            <span class="inline-block px-3 py-1 text-xs font-bold bg-red-100 text-red-800 rounded-full whitespace-nowrap">已拒绝</span>
+                                        {% elif record.status == 'expired' %}
+                                            <span class="inline-block px-3 py-1 text-xs font-bold bg-orange-100 text-orange-800 rounded-full whitespace-nowrap">已逾期</span>
+                                        {% endif %}
+                                    </td>
+                           </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-8 bg-purple-50/30 rounded-2xl">
+                        <p class="text-gray-400 text-sm font-medium">今日暂无预约记录</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- 过往借阅记录 -->
+                <div class="p-4 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-500 rounded-xl flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-base font-bold text-brand-deep">过往借阅记录</h4>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{{ past_records|length }}</span>
+                    </div>
+                    {% if past_records %}
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-[10px] font-bold text-brand-deep/40 uppercase tracking-widest border-b border-pink-50">
+                                    <th class="px-6 py-4">借阅用户</th>
+                                    <th class="px-6 py-4">图书名称</th>
+                                    <th class="px-6 py-4">预约日期</th>
+                                    <th class="px-6 py-4">领取时间</th>
+                                    <th class="px-6 py-4">归还日期</th>
+                                    <th class="px-6 py-4">状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                          {% for record in past_records %}
+                                <tr class="group hover:bg-pink-50/50 transition-colors">
+                                    <td class="px-6 py-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-9 h-9 bg-brand-deep text-white rounded-xl flex items-center justify-center font-bold text-sm">{{ record.user.username[:1]|upper }}</div>
+                                            <span class="text-sm font-bold text-brand-deep">{{ record.user.username }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 text-sm font-medium text-brand-deep/80">{{ record.book.title }}</td>
+                                    <td class="px-6 py-5 text-sm text-brand-deep/60">{{ record.borrow_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td class="px-6 py-5 text-sm text-brand-deep/60">
+                                        {% if record.pickup_date %}
+                                            {{ record.pickup_date.strftime('%Y-%m-%d %H:%M') }}
+                                        {%                                          <span class="text-gray-400">—</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-5 text-sm text-brand-deep/60">
+                                        {% if record.return_date %}
+                                            {{ record.return_date.strftime('%Y-%m-%d %H:%M') }}
+                                        {% else %}
+                                            <span class="text-gray-400">—</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-5">
+                                        {% if record.status == 'returned' %}
+                                            <span class="inline-block px-3 py-1 text-xs font-bold bg-green-100 text-green-800 rounded-full whitespace-nowrap">已归还</span>
+                                        {% elif record.status == 'rejected' %}
+                                            <span class="inline-block px-3 py-1 text-xs font-bold bg-red-100 text-red-800 rounded-full whitespace-nowrap">已拒绝</span>
+                                        {% elif record.status == 'expired' %}
+                                            <span class="inline-block px-3 py-1 text-xs font-bold bg-orange-100 text-orange-800 rounded-full whitespace-nowrap">已逾期</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-centbg-gray-50/30 rounded-2xl">
+                        <p class="text-gray-400 text-sm font-medium">暂无过往借阅记录</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+            {% endif %}

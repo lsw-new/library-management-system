@@ -1,0 +1,118 @@
+<!--
+    借阅预约弹窗组件 (_borrow_modal.html)
+    共享组件，可被其他页面引入使用
+    提供图书预约功能，包含日期选择和表单验证
+-->
+
+<!-- 弹窗容器：全屏遮罩层，默认隐藏 -->
+<div id="borrowModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <!-- 弹窗主体：白色卡片，圆角，阴影，动画效果 -->
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300">
+        <!-- ==================== 弹窗头部 ==================== -->
+        <div class="px-6 py-4 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+                <!-- 标题 -->
+                <h3 class="text-xl font-heading font-semibold text-brand-deep">预约图书</h3>
+                <!-- 关闭按钮 -->
+                <button onclick="closeBorrowModal()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 cursor-pointer">
+                    <!-- X 图标 -->
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== 弹窗内容 ==================== -->
+        <div class="p-6">
+            <!-- 图书信息展示区 -->
+            <div class="flex items-start gap-4 mb-5">
+                <!-- 图书图标 -->
+                <div class="flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-50 text-brand-primary">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <!-- 图书详情：书名和库存 -->
+                <div class="flex-1 min-w-0">
+                    <!-- 书名：动态填充，文本溢出截断 -->
+                    <p class="text-lg font-semibold text-gray-900 truncate" id="modalBookTitle"></p>
+                    <!-- 库存信息 -->
+                    <p class="text-sm text-gray-500 mt-1">
+                        剩余库存: <span class="font-semibold text-green-600" id="modalBookStock"></span> 本
+                    </p>
+                </div>
+            </div>
+
+            <!-- 借阅时间段选择 -->
+            <div class="space-y-4 mb-5">
+                <!-- 借阅开始时间 -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <svg class="w-4 h-4 inline-block mr-1 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        借阅开始时间
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="borrowStartDateDisplay" readonly placeholder="选择开始日期"
+                               onclick="toggleCalendar('start')"
+                               class="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl bg-white text-gray-800 focus:border-purple-400 focus:outline-none transition-colors duration-200 text-sm cursor-pointer">
+                        <input type="hidden" id="borrowStartDate">
+                        <div id="calendarStart" class="hidden absolute z-50 top-full mt-1 left-0 w-full"></div>
+                    </div>
+                </div>
+                <!-- 预计归还时间 -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <svg class="w-4 h-4 inline-block mr-1 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        预计归还时间 <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="borrowEndDateDisplay" readonly placeholder="选择归还日期"
+                               onclick="toggleCalendar('end')"
+                               class="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl bg-white text-gray-800 focus:border-purple-400 focus:outline-none transition-colors duration-200 text-sm cursor-pointer">
+                        <input type="hidden" id="borrowEndDate">
+                        <div id="calendarEnd" class="hidden absolute z-50 top-full mt-1 left-0 w-full"></div>
+                    </div>
+                    <p id="borrowDuration" class="text-xs text-gray-400 mt-1.5"></p>
+                    <p id="borrowDateError" class="text-xs text-red-500 mt-1 hidden"></p>
+                </div>
+            </div>
+
+            <!-- 温馨提示框 -->
+            <div class="bg-pink-50 border border-pink-200 rounded-xl p-3.5 mb-5">
+                <div class="flex items-start gap-2">
+                    <!-- 信息图标 -->
+                    <svg class="w-4 h-4 text-brand-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <!-- 提示文字 -->
+                    <p class="text-xs text-pink-700 leading-relaxed">预约成功后请等待管理员审核，审核通过后即可前往领取图书。请在预计归还时间前归还。</p>
+                </div>
+            </div>
+
+            <!-- 操作按钮组 -->
+            <div class="flex gap-3">
+                <!-- 取消按钮：灰色，关闭弹窗 -->
+                <button onclick="closeBorrowModal()" class="flex-1 px-4 py-3 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors duration-200 cursor-pointer">
+                    取消
+                </button>
+                <!-- 确认按钮：粉色，提交预约 -->
+                <button id="confirmBorrowBtn" onclick="confirmBorrow()" class="flex-1 px-4 py-3 text-sm font-medium text-white bg-brand-primary hover:bg-pink-600 rounded-xl shadow-sm transition-colors duration-200 cursor-pointer">
+                    确认预约
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入弹窗专用 JavaScript -->
+<script>
+window.borrowModalConfig = Object.assign({}, window.borrowModalConfig || {}, {
+    booksStockUrl: '{{ url_for("user.books_stock") }}'
+});
+</script>
+<script src="{{ url_for('static', filename='js/borrow-modal.js') }}"></script>

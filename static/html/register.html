@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+{% block title %}注册账号 - 景艺大图书馆{% endblock %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block main_class %}flex-1 flex flex-col{% endblock %}
+{% block content_wrapper %}flex-1 flex{% endblock %}
+
+{% block content %}
+
+<!-- Elysia 主题：梦幻樱粉背景 + 居中玻璃卡片 -->
+<div class="elysia-scene relative flex-1 flex items-center justify-center px-4 py-10 overflow-hidden">
+
+    <!-- 渐变背景层 -->
+    <div class="absolute inset-0 bg-[linear-gradient(135deg,_#FFE4F1_0%,_#FFF0F5_30%,_#F3E5F5_65%,_#FCE4EC_100%)]"></div>
+
+    <!-- 装饰光晕 -->
+    <div class="pointer-events-none absolute -top-24 -right-16 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,_#FFB6D9_0%,_transparent_70%)] opacity-50 blur-2xl"></div>
+    <div class="pointer-events-none absolute -bottom-32 -left-20 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,_#E8D5F2_0%,_transparent_70%)] opacity-60 blur-2xl"></div>
+
+    <!-- 飘落星点 -->
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+        <span class="absolute top-[10%] left-[10%] h-1.5 w-1.5 rounded-full bg-pink-300/70 animate-pulse"></span>
+        <span class="absolute top-[28%] right-[8%] h-1 w-1 rounded-full bg-purple-300/60 animate-pulse" style="animation-delay:0.7s"></span>
+        <span class="absolute bottom-[15%] left-[8%] h-2 w-2 rounded-full bg-pink-200/60 animate-pulse" style="animation-delay:1.2s"></span>
+        <span class="absolute top-[55%] right-[6%] h-1 w-1 rounded-full bg-rose-300/70 animate-pulse" style="animation-delay:0.4s"></span>
+        <svg class="absolute top-[12%] right-[12%] h-7 w-7 text-pink-300/40 rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        <svg class="absolute bottom-[18%] right-[15%] h-6 w-6 text-purple-300/40 -rotate-45" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+    </div>
+
+    <!-- 顶部回登录 -->
+    <a href="{{ url_for('auth.login') }}" class="absolute top-6 right-6 z-20 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/50 backdrop-blur-md px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-pink-700/70 transition-all hover:bg-white/80 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-6px_rgba(236,72,153,0.25)]">
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        Sign In
+    </a>
+
+    <!-- 主卡片 -->
+    <div class="relative z-10 w-full max-w-[560px]">
+
+        <div class="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-pink-300/40 via-fuchsia-200/30 to-purple-300/40 blur-xl"></div>
+
+        <div class="relative rounded-[28px] border border-white/70 bg-white/75 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(236,72,153,0.25),0_0_0_1px_rgba(255,255,255,0.6)_inset] p-8 lg:p-10">
+
+            <!-- 顶部装饰 -->
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center gap-1">
+                <span class="h-1 w-8 rounded-full bg-gradient-to-r from-transparent to-pink-300"></span>
+                <svg class="h-5 w-5 text-pink-400 drop-shadow-[0_2px_4px_rgba(236,72,153,0.4)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                <span class="h-1 w-8 rounded-full bg-gradient-to-l from-transparent to-pink-300"></span>
+            </div>
+
+            <!-- 头部 -->
+            <div class="flex items-center justify-between mb-7">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="absolute inset-0 rounded-xl bg-gradient-to-br from-pink-300 to-purple-300 blur-md opacity-60"></div>
+                        <div class="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-pink-400 via-rose-400 to-purple-400 shadow-[0_8px_20px_-6px_rgba(236,72,153,0.5)]">
+                            <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="font-heading text-base font-bold text-pink-900/90">景艺大图书馆</p>
+                        <p class="text-[10px] uppercase tracking-[0.28em] text-pink-400/70">New Membership ♡</p>
+                    </div>
+                </div>
+                <div class="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-100 to-purple-100 px-3 py-1.5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-pink-400"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.22em] bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">Step · 02</span>
+                </div>
+            </div>
+
+            <!-- 标题 -->
+            <div class="mb-7">
+                <h1 class="font-heading text-[32px] font-bold leading-tight text-pink-900">
+                    创建你的<span class="italic font-normal bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">读者档案</span>
+                </h1>
+                <p class="mt-2 text-[13px] leading-6 text-pink-800/55">
+                    填写真实信息，便于后续借阅与图书归还提醒 ♡
+                </p>
+            </div>
+
+            <form method="POST" novalidate class="space-y-6">
+
+                <!-- 01 身份信息 -->
+                <fieldset>
+                    <legend class="flex items-center gap-2 mb-4 px-1">
+                        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-purple-400 text-[10px] font-bold text-white shadow-sm">1</span>
+                        <span class="text-[11px] font-bold uppercase tracking-[0.22em] text-pink-700/75">身份信息</span>
+                        <span class="h-px flex-1 bg-gradient-to-r from-pink-200 to-transparent"></span>
+                    </legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="username" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">用户名</label>
+                            <input type="text" id="username" name="username" required autofocus
+                                   minlength="3" maxlength="20" placeholder="3-20 个字符"
+                                   value="{{ form_data.get('username', '') }}"
+                                   class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                        </div>
+                        <div>
+                            <label for="student_id" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">学号</label>
+                            <input type="text" id="student_id" name="student_id" required
+                                   pattern="[0-9]{13}" minlength="13" maxlength="13" inputmode="numeric"
+                                   placeholder="13 位学号"
+                                   value="{{ form_data.get('student_id', '') }}"
+                                   class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- 02 设置密码 -->
+                <fieldset>
+                    <legend class="flex items-center gap-2 mb-4 px-1">
+                        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-purple-400 text-[10px] font-bold text-white shadow-sm">2</span>
+                        <span class="text-[11px] font-bold uppercase tracking-[0.22em] text-pink-700/75">设置密码</span>
+                        <span class="h-px flex-1 bg-gradient-to-r from-pink-200 to-transparent"></span>
+                    </legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="password" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">密码</label>
+                            <div class="relative">
+                                <input type="password" id="password" name="password" required minlength="6"
+                                       placeholder="至少 6 位字符"
+                                       class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 pr-16 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                                <button type="button" data-password-toggle data-target="password"
+                                        aria-label="显示密码" aria-controls="password" aria-pressed="false"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg px-2.5 py-1 text-[11px] font-bold text-pink-500 hover:bg-pink-100/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-300">
+                                    显示
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="confirm_password" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">确认密码</label>
+                            <div class="relative">
+                                <input type="password" id="confirm_password" name="confirm_ord" required minlength="6"
+                                       placeholder="再次输入密码"
+                                       class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 pr-16 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                                <button type="button" data-password-toggle data-target="confirm_password"
+                                        aria-label="显示确认密码" aria-controls="confirm_password" aria-pressed="false"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg px-2.5 py-1 text-[11px] font-bold text-pink-500 hover:bg-pink-100/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-300">
+                                    显示
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- 03 邮箱验证 -->
+                <fieldset>
+                    <legend class="flex items-center gap-2 mb-4 px-1">
+                        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-purple-400 text-[10px] font-bold text-white shadow-sm">3</span>
+                        <span class="text-[11px] font-bold uppercase tracking-[0.22em] text-pink-700/75">邮箱验证</span>
+                        <span class="h-px flex-1 bg-gradient-to-r from-pink-200 to-transparent"></span>
+                    </legend>
+                    <div class="space-y-4">
+
+                        <!-- 邮箱输入 + 发送按钮 -->
+                        <div>
+                            <label for="email" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">电子邮箱</label>
+                            <div class="flex gap-2">
+                                <input type="email" id="email" name="email" required placeholder="example@qq.com"
+                                       value="{{ form_data.get('email', '') }}"
+                                       class="flex-1 rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                                <button type="button" id="send-code-btn"
+                                        class="shrink-0 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 px-4 py-3 text-sm font-bold text-white shadow-[0_8px_20px_-6px_rgba(236,72,153,0.4)] transition-all hover:from-pink-500 hover:to-purple-500 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:translate-y-0 whitespace-nowrap min-w-[90px] flex items-center justify-center gap-1.5">
+                                    <svg id="send-btn-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                    <span id="send-btn-text">发送验证码</span>
+                                </button>
+                            </div>
+
+                            <!-- 发送成功提示条 -->
+                            <div id="code-sent-tip" class="hidden mt-2.5 flex items-center gap-2 rounded-xl bg-emerald-50 border border-emerald-200 px-3.5 py-2.5">
+                                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center">
+                                    <svg class="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <p class="text-[11px] text-emerald-700 font-medium flex-1 min-w-0">
+                                    验证码已发送至 <span id="sent-email-display" class="font-bold truncate"></span>
+                                </p>
+                                <span id="countdown-badge" class="flex-shrink-0 text-[10px] font-bold text-emerald-600 bg-emerald-100 rounded-full px-2 py-0.5 tabular-nums"></span>
+                            </div>
+                        </div>
+
+                        <!-- 6格 OTP 验证码输入 -->
+                        <div>
+                            <label class="mb-2.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">验证码</label>
+                            <!-- 真实 hidden input，提交给后端 -->
+                            <input type="hidden" name="verification_code" id="verification_code">
+                            <!-- 6个独立格子 -->
+                            <div class="flex gap-2 sm:gap-3" id="otp-boxes">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"
+                                       class="otp-digit w-full aspect-square max-w-[52px] rounded-xl border-2 border-pink-200/60 bg-white/60 backdrop-blur-sm text-center text-xl font-bold text-pink-900 outline-none transition-all focus:border-pink-400 focus:bg-white focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)] placeholder:text-pink-200" placeholder="·">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"
+                                       class="otp-digit w-full aspect-square max-w-[52px] rounded-xl border-2 border-pink-200/60 bg-white/60 backdrop-blur-sm text-center text-xl font-bold text-pink-900 outline-none transition-all focus:border-pink-400 focus:bg-white focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)] placeholder:text-pink-200" placeholder="·">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"
+                                       class="otp-digit w-full aspect-square max-w-[52px] rounded-xl border-2 border-pink-200/60 bg-white/60 backdrop-blur-sm text-center text-xl font-bold text-pink-900 outline-none transition-all focus:border-pink-400 focus:bg-white focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)] placeholder:text-pink-200" placeholder="·">
+                                <!-- 分隔点 -->
+                                <div class="flex items-center text-pink-300 font-bold text-lg select-none">·</div>
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"
+                                       class="otp-digit w-full aspect-square max-w-[52px] rounded-xl border-2 border-pink-200/60 bg-white/60 backdrop-blur-sm text-center text-xl font-bold text-pink-900 outline-none transition-all focus:border-pink-400 focus:bg-white focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)] placeholder:text-pink-200" placeholder="·">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"
+                                       class="otp-digit w-full aspect-square max-w-[52px] rounded-xl border-2 border-pink-200/60 bg-white/60 backdrop-blur-sm text-center text-xl font-bold text-pink-900 outline-none transition-all focus:border-pink-400 focus:bg-white focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)] placeholder:text-pink-200" placeholder="·">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"
+                                       class="otp-digit w-full aspect-square max-w-[52px] rounded-xl border-2 border-pink-200/60 bg-white/60 backdrop-blur-sm text-center text-xl font-bold text-pink-900 outline-none transition-all focus:border-pink-400 focus:bg-white focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)] placeholder:text-pink-200" placeholder="·">
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+                <!-- 协议勾选 -->
+                <label for="agree_terms" class="flex items-start gap-3 cursor-pointer rounded-2xl border border-pink-200/60 bg-gradient-to-r from-pink-50/70 to-purple-50/70 backdrop-blur-sm px-5 py-4 transition-all hover:border-pink-300 hover:from-pink-100/80 hover:to-purple-100/80">
+                    <input type="checkbox" id="agree_terms" name="agree_terms" required
+                           class="mt-0.5 h-4 w-4 cursor-pointer rounded border-2 border-pink-300 text-pink-500 focus:ring-2 focus:ring-pink-300/30">
+                    <span class="select-none text-[12px] leading-6 text-pink-800/75">
+                        我已阅读并同意
+                        <a href="#" onclick="openTermsModal(event)" class="font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent underline-offset-2 hover:underline">《服务协议》</a>
+                        与
+                        <a href="#" onclick="openRulesModal(event)" class="font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent underline-offset-2 hover:underline">《用户规则中心》</a>
+                    </span>
+                </label>
+
+                <!-- 提交按钮 -->
+                <div class="grid grid-cols-1 sm:grid-cols-[1.6fr_1fr] gap-3 pt-1">
+                    <button type="submit"
+                            class="group relative inline-flex min-h-[54px] items-center justify-center gap-3 overflow-hidden rounded-2xl px-6 py-4 text-sm font-bold text-white transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-pink-300/50">
+                        <span class="absolute inset-0 bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400"></span>
+                        <span class="absolute inset-0 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                        <span class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/80 to-transparent"></span>
+                        <svg class="relative z-10 h-4 w-4 drop-shadow" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                        <span class="relative z-10 tracking-widest drop-shadow">立即注册</span>
+                        <svg class="relative z-10 h-4 w-4 drop-shadow group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                    <a href="{{ url_for('auth.login') }}"
+                       class="inline-flex min-h-[54px] items-center justify-center rounded-2xl border border-pink-200/70 bg-white/50 backdrop-blur-sm px-6 py-4 text-sm font-bold text-pink-700/80 transition-all hover:bg-white/90 hover:border-pink-400 hover:text-pink-600 hover:-translate-y-0.5">
+                        返回登录
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <p class="mt-5 text-center text-[10px] uppercase tracking-[0.32em] text-pink-400/55 font-mono">
+            ─── ♡ Welcome To Our Library ♡ ───
+        </p>
+    </div>
+</div>
+
+<!-- ============ 服务协议弹窗 ============ -->
+<div id="termsModal" class="hidden fixed inset-0 bg-pink-900/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden border border-white/70">
+        <div class="px-6 py-4 bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg class="h-5 w-5 text-white drop-shadow" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                <h3 class="text-xl font-heading font-semibold text-white">服务协议</h3>
+            </div>
+            <button onclick="closeTermsModal()" class="text-white hover:text-pink-100 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[calc(80vh-80px)] text-sm text-pink-900/80 space-y-4">
+            <section><h4 class="font-semibold text-pink-700 mb-2">一、服务条款的接受与修改</h4><p class="leading-relaxed">欢迎使用图书管理系统。在使用本系统前，请您仔细阅读并充分理解本协议的全部内容。您点击"同意"按钮或实际使用本系统服务，即表示您已阅读、理解并同意接受本协议的全部内容。</p><p class="leading-relaxed mt-2">本系统有权根据需要不时修改本协议条款。修改后的协议一经公布即生效，并代替原协议。用户可随时查阅最新协议。</p></section>
+            <section><h4 class="font-semibold text-pink-700 mb-2">二、账号注册与使用</h4><p class="leading-relaxed">1. 用户注册时应提供真实、准确、完整的个人信息，包括但不限于用户名、学号、邮箱等。</p><p class="leading-relaxed">2. 用户应妥善保管账号及密码，对使用该账号进行的所有活动负责。</p><p class="leading-relaxed">3. 禁止用户将账号转让、出借或以其他方式提供给第三方使用。</p><p class="leading-relaxed">4. 如发现账号被盗用或存在安全隐患，应立即通知系统管理员。</p></section>
+            <section><h4 class="font-semibold text-pink-700 mb-2">三、图书借阅规则</h4><p class="leading-relaxed">1. 用户可通过系统预约图书，预约成功后需在规定时间内到馆领取。</p><p class="leading-relaxed">2. 每位用户同时借阅图书数量不得超过系统规定的上限。</p><p class="leading-relaxed">3. 借阅期限以系统显示为准，逾期未还将影响信用记录。</p><p class="leading-relaxed">4. 用户应爱护图书，如有损坏或遗失，需按规定进行赔偿。</p></section>
+            <section><h4 class="font-semibold text-pink-700 mb-2">四、用户行为规范</h4><p class="leading-relaxed">用户在使用本系统时，不得从事以下行为：发布、传播违法违规信息；利用系统漏洞进行恶意操作；使用自动化程序干扰系统正常运行；恶意抢占图书资源或进行虚假预约。</p></section>
+            <section><h4 class="font-semibold text-pink-700 mb-2">五、隐私保护</h4><p class="leading-relaxed">本系统重视用户隐私保护，承诺不会向第三方泄露用户个人信息，但法律要求或用户授权的情况除外。</p></section>
+            <section class="pt-4 border-t border-pink-200"><p class="text-xs text-pink-400">本协议最终解释权归图书管理系统所有。生效日期：2026年4月30日</p></section>
+        </div>
+        <div class="px-6 py-4 bg-pink-50/50 border-t border-pink-100 flex justify-end">
+            <button onclick="closeTermsModal()" class="px-6 py-2 text-white bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg font-medium">我已阅读 ♡</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 用户规则中心弹窗 ============ -->
+<div id="rulesModal" class="hidden fixed inset-0 bg-purple-900/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden border border-white/70">
+        <div class="px-6 py-4 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg class="h-5 w-5 text-white drop-shadow" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                <h3 class="text-xl font-heading font-semibold text-white">用户规则中心</h3>
+            </div>
+            <button onclick="closeRulesModal()" class="text-white hover:text-purple-100 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[calc(80vh-80px)] text-sm text-pink-900/80 space-y-4">
+            <section><h4 class="font-semibold text-purple-700 mb-2">一、借阅规则</h4><div class="space-y-2"><div class="flex items-start gap-2"><span class="text-pink-500 font-medium">♡</span><p class="leading-relaxed">每位用户最多可同时借阅 <span class="font-semibold text-pink-500">5本</span> 图书。</p></div><div class="flex items-start gap-2"><span class="text-pink-500 font-medium">♡</span><p class="leading-relaxed">图书借阅期限为 <span class="font-semibold text-pink-500">30天</span>，到期前可续借一次，续借期限为 <span class="font-semibold text-pink-500">15天</span>。</p></div><div class="flex items-start gap-2"><span class="text-pink-500 font-medium">♡</span><p class="leading-relaxed">预约图书后需在 <span class="font-semibold text-pink-500">3个工作日</span> 内到馆领取，逾期预约自动取消。</p></div></div></section>
+            <section><h4 class="font-semibold text-purple-700 mb-2">二、逾期与罚则</h4><div class="space-y-2"><div class="flex items-start gap-2"><span class="text-rose-500 font-medium">⚠</span><p class="leading-relaxed">图书逾期未还，每天收取 <span class="font-semibold text-rose-500">0.1元/本</span> 的滞纳金。</p></div><div class="flex items-start gap-2"><span class="text-rose-500 font-medium">⚠</span><p class="leading-relaxed">逾期超过 <span class="font-semibold text-rose-500">30天</span>，账号将被暂停借阅权限。</p></div></div></section>
+            <section><h4 class="font-semibold text-purple-700 mb-2">三、图书损坏与赔偿</h4><div class="space-y-2"><div class="flex items-start gap-2"><span class="text-fuchsia-500 font-medium">◆</span><p class="leading-relaxed">轻微污损：赔偿图书原价的 <span class="font-semibold text-fuchsia-500">20%</span>。严重损坏：赔偿 <span class="font-semibold text-fuchsia-500">100%</span>。遗失：赔偿 <span class="font-semibold text-fuchsia-500">150%</span>。</p></div></div></section>
+            <section><h4 class="font-semibold text-purple-700 mb-2">四、信用等级制度</h4><div class="bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200/60 rounded-xl p-3 space-y-1 text-sm"><p><span class="font-semibold text-pink-600">★★★★★ 优秀</span>：无逾期记录，可享受优先预约权。</p><p><span class="font-semibold text-purple-600">★★★★ 良好</span>：偶尔逾期，正常借阅权限。</p><p><span class="font-semibold text-rose-500">★ 警告</span>：严重违规，暂停借阅权限。</p></div></section>
+            <section class="pt-4 border-t border-purple-200"><p class="text-xs text-purple-400">本规则中心内容由图书管理系统制定并负责解释。最后更新：2026年4月30日</p></section>
+        </div>
+        <div class="px-6 py-4 bg-purple-50/50 border-t border-purple-100 flex justify-end">
+            <button onclick="closeRulesModal()" class="px-6 py-2 text-white bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg font-medium">我已了解 ♡</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+{% endblock %}

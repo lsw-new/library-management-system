@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # MySQL 数据库服务
+  mysql:
+    image: mysql:8.0
+    container_name: library_mysql_dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: dev_root_pass
+      MYSQL_DATABASE: library_db
+      MYSQL_USER: library_user
+      MYSQL_PASSWORD: dev_pass
+    ports:
+      - "3307:3306"  # 避免与本地MySQL冲突
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - library_dev_network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Flask 应用服务（开发模式）
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: library_app_dev
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: mysql+pymysql://library_user:dev_pass@mysql:3306/library_db?charset=utf8mb4
+      SECRET_KEY: dev-secret-key-not-for-production
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+    ports:
+      - "5001:5000"  # 避免与本地应用冲突
+    volumes:
+      # 开发时挂载代码目录，支持热重载
+      - .:/app
+      - /app/.venv  # 排除虚拟环境
+      - /app/__pycache__  # 排除缓存
+    networks:
+      - library_dev_network
+    depends_on:
+      - mysql
+
+networks:
+  library_dev_network:
+    driver: bridge
+
+volumes:
+  mysql_dev_data:
+    driver: local

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}服务器错误 - 景艺大图书馆{% endblock %}
+
+{% block content %}
+<div class="min-h-[60vh] flex flex-col items-center justify-center text-center px-4 py-20">
+    <div class="w-20 h-20 rounded-3xl bg-rose-50 flex items-center justify-center mb-6">
+        <svg class="w-10 h-10 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        </svg>
+    </div>
+    <h1 class="text-4xl font-heading font-bold text-brand-deep mb-3">服务器遇到了问题</h1>
+    <p class="text-brand-deep/50 text-base max-w-md mb-8 leading-relaxed">
+        系统内部发生了一个错误，已记录日志。请稍后再试，或联系管理员处理。
+    </p>
+    <div class="flex gap-3">
+        <a href="/" class="btn-primary px-6 py-3 rounded-2xl text-white font-bold text-sm">
+            返回首页
+        </a>
+        <button onclick="history.back()"
+                class="px-6 py-3 rounded-2xl border-2 border-pink-100 text-brand-deep/60 hover:border-brand-primary hover:text-brand-primary font-bold text-sm transition-all">
+            返回上一页
+        </button>
+    </div>
+</div>
+{% endblock %}

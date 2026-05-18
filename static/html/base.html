@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}图书管理系统{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            deep: '#831843',
+                            primary: '#EC4899',
+                            soft: '#FBCFE8',
+                            accent: '#8B5CF6',
+                            bg: '#FDF2F8',
+                            glass: 'rgba(255, 255, 255, 0.7)'
+                        },
+                        primary: '#EC4899',
+                        secondary: '#8B5CF6',
+                        accent: '#10b981',
+                        textDark: '#831843'
+                    },
+                    fontFamily: {
+                        heading: ['Cormorant', 'serif'],
+                        sans: ['Montserrat', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(236, 72, 153, 0.08)',
+                        'pink-lg': '0 10px 15px -3px rgba(236, 72, 153, 0.2), 0 4px 6px -4px rgba(236, 72, 153, 0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-pink-100 via-brand-bg to-white min-h-screen flex flex-col overflow-x-hidden">
+    <div id="mobile-block" style="display:none;position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#fdf2f8,#f3e8ff);flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;font-family:'Montserrat',sans-serif;">
+        <div style="width:88px;height:88px;margin-bottom:1.5rem;border-radius:1.5rem;background:rgba(236,72,153,0.1);display:flex;align-items:center;justify-content:center;">
+            <svg style="width:48px;height:48px;color:#ec4899;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <h1 style="font-family:'Cormorant',serif;font-size:1.75rem;font-weight:700;color:#831843;margin-bottom:0.5rem;">请使用电脑访问</h1>
+        <p style="font-size:0.875rem;color:rgba(131,24,67,0.6);max-width:280px;line-height:1.6;margin-bottom:1.5rem;">景艺大图书馆目前仅支持 PC 端浏览器访问，请在电脑上打开以获得最佳体验。</p>
+        <div style="padding:0.625rem 1.25rem;border-radius:0.75rem;background:rgba(255,255,255,0.8);border:1px solid rgba(236,72,153,0.15);font-size:0.75rem;color:rgba(131,24,67,0.5);">
+            <span style="margin-right:4px;">🔗</span> 请在 PC 浏览器中输入相同网址
+        </div>
+    </div>
+    <script>
+    (function(){
+        var w = window.innerWidth;
+        var ua = navigator.userAgent || '';
+        var isMobile = /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(ua) || w < 768;
+        if (isMobile) {
+            var el = document.getElementById('mobile-block');
+            el.style.display = 'flex';
+            var body = document.body;
+            for (var i = body.children.length - 1; i >= 0; i--) {
+                if (body.children[i] !== el) body.children[i].style.display = 'none';
+            }
+        }
+    })();
+    </script>
+    {% block header %}
+    <header class="site-header fixed top-0 left-0 right-0 mx-auto w-full max-w-[1405px] px-2 md:px-4 z-[100] pt-2 md:pt-6">
+        <nav id="site-nav" class="nav-glass shadow-glass rounded-2xl md:rounded-[2.5rem] px-4 md:px-8 py-3 md:py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-3 group cursor-pointer">
+                <div class="p-2.5 bg-brand-primary/10 rounded-2xl group-hover:bg-brand-primary group-hover:rotate-12 transition-all duration-500">
+                    <svg class="w-7 h-7 text-brand-primary group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <span class="text-2xl font-heading font-bold text-brand-deep tracking-tight">景艺大图书馆</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                {% if current_user.is_authenticated %}
+                    {% if current_user.is_admin %}
+                        <a href="{{ url_for('admin.admin_index') }}" class="nav-link text-sm font-semibold text-brand-deep/80 hover:text-brand-primary transition-colors">管理工作台</a>
+                    {% else %}
+                        <a href="{{ url_for('user.books') }}" class="nav-link text-sm font-semibold text-brand-deep/80 hover:text-brand-primary transition-colors">馆藏资源</a>
+                        <a href="{{ url_for('user.borrow_records') }}" class="nav-link text-sm font-semibold text-brand-deep/80 hover:text-brand-primary transition-colors">借阅足迹</a>
+                        <a href="{{ url_for('user.ranking') }}" class="nav-link text-sm font-semibold text-brand-deep/80 hover:text-brand-primary transition-colors">借阅排行</a>
+                    {% endif %}
+
+                    <div class="flex items-center space-x-3 pl-4 border-l border-pink-200">
+                        {% if not current_user.is_admin %}
+                        <a href="{{ url_for('user.profile') }}" class="nav-avatar group" title="{{ current_user.username }}">
+                            {% if current_user.avatar %}
+                            <img src="{{ url_for('static', filename='images/avatars/' + current_user.avatar) }}" alt="头像" class="nav-avatar-img">
+                            {% else %}
+                            <span class="nav-avatar-letter">{{ current_user.username[0]|upper }}</span>
+                            {% endif %}
+                        </a>
+                        {% else %}
+                        <div class="nav-avatar" title="{{ current_user.username }}">
+                            {% if current_user.avatar %}
+                            <img src="{{ url_for('static', filename='images/avatars/' + current_user.avatar) }}" alt="头像" class="nav-avatar-img">
+                            {% else %}
+                            <span class="nav-avatar-letter">{{ current_user.username[0]|upper }}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <a href="{{ url_for('auth.logout') }}" class="btn-primary px-6 py-2.5 text-xs font-bold text-white rounded-2xl cursor-pointer">退出</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="px-6 py-2.5 text-sm font-bold text-white rounded-2xl cursor-pointer bg-gradient-to-r from-brand-primary to-brand-accent hover:from-pink-600 hover:to-purple-600 transition-all duration-300 shadow-lg">登录</a>
+                    <a href="{{ url_for('auth.register') }}" class="px-8 py-3 text-sm font-bold text-white rounded-2xl cursor-pointer bg-gradient-to-r from-brand-primary to-brand-accent hover:from-pink-600 hover:to-purple-600 transition-all duration-300 shadow-lg">注册账号</a>
+                {% endif %}
+            </div>
+
+        </nav>
+    </header>
+    {% endblock %}
+
+    <div id="toast-container" class="fixed top-20 md:top-24 right-2 left-2 md:left-auto md:right-6 z-[1000] flex flex-col gap-4 pointer-events-none"></div>
+
+    <main class="{% block main_class %}flex-1 py-6 md:py-12 px-4 animate-in fade-in duration-700 mt-20 md:mt-28{% endblock %}">
+        <div class="{% block content_wrapper %}max-w-7xl mx-auto{% endblock %}">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    {% block footer %}
+    <footer class="mt-10 md:mt-20 border-t border-pink-100 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
+            <div class="flex items-center space-x-3 opacity-60">
+                <svg class="w-5 h-5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <span class="text-xs font-semibold text-brand-deep tracking-wider">© 2026 景德镇艺术职业大学 版权所有</span>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-1 sm:gap-2">
+
+                <span class="footer-link group">
+                    <svg class="footer-link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    <span>隐私政策</span>
+                    <div class="footer-tooltip">
+                        <p class="text-xs font-bold text-brand-deep">隐私政策</p>
+                        <p class="mt-1 text-[11px] leading-5 text-brand-deep/65">我们承诺通过加密传输与访问控制，保护您的个人信息安全。</p>
+                        <span class="footer-tooltip-arrow"></span>
+                    </div>
+                </span>
+
+                <span class="footer-dot"></span>
+
+                <span class="footer-link group">
+                    <svg class="footer-link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span>使用条款</span>
+                    <div class="footer-tooltip">
+                        <p class="text-xs font-bold text-brand-deep">使用条款</p>
+                        <p class="mt-1 text-[11px] leading-5 text-brand-deep/65">使用本系统即表示您已阅读并遵守图书馆借阅、归还及行为规范。</p>
+                        <span class="footer-tooltip-arrow"></span>
+                    </div>
+                </span>
+
+                <span class="footer-dot"></span>
+
+                <span class="footer-link group">
+                    <svg class="footer-link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span>联系我们</span>
+                    <div class="footer-tooltip">
+                        <p class="text-xs font-bold text-brand-deep">联系我们</p>
+                        <div class="mt-2 space-y-1.5">
+                            <div class="flex items-center gap-2 text-[11px] text-brand-deep/70">
+                                <svg class="h-3 w-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                <span class="font-mono">15079378671</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-[11px] text-brand-deep/70">
+                                <svg class="h-3 w-3 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                <span class="font-mono">3435255848@qq.com</span>
+                            </div>
+                        </div>
+                        <span class="footer-tooltip-arrow"></span>
+                    </div>
+                </span>
+
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div id="flash-messages-data" style="display:none" data-messages='{{ messages|tojson }}'></div>
+        {% endif %}
+    {% endwith %}
+    {% if current_user.is_authenticated %}
+    <script>
+    (function() {
+        var loginUrl = "{{ url_for('auth.login') }}";
+        var pingUrl = "{{ url_for('session_ping') }}";
+        var redirecting = false;
+
+        function showKickoutModal(message) {
+            if (document.querySelector('.kickout-overlay')) return;
+            var seconds = 3;
+            var overlay = document.createElement('div');
+            overlay.className = 'kickout-overlay';
+            overlay.innerHTML =
+                '<div class="kickout-card" role="alertdialog" aria-modal="true">' +
+                  '<div class="kickout-icon-wrap">' +
+                    '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">' +
+                      '<path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L5.636 5.636"/>' +
+                    '</svg>' +
+                  '</div>' +
+                  '<div class="kickout-title">登录已失效</div>' +
+                  '<div class="kickout-msg">' + (message || '您已被管理员强制下线') + '</div>' +
+                  '<div class="kickout-countdown">' +
+                    '<svg width="50" height="50">' +
+                      '<circle cx="25" cy="25" r="22" stroke="#fee2e2" stroke-width="4" fill="none"/>' +
+                      '<circle cx="25" cy="25" r="22" stroke="#e11d48" stroke-width="4" fill="none"' +
+                      ' stroke-dasharray="138.23" stroke-dashoffset="0" stroke-linecap="round"' +
+                      ' style="animation: kickoutCountdown ' + seconds + 's linear forwards;"/>' +
+                    '</svg>' +
+                    '<div class="kickout-countdown-num" id="kickoutNum">' + seconds + '</div>' +
+                  '</div>' +
+                  '<button type="button" class="kickout-btn" id="kickoutBtn">' +
+                    '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">' +
+                      '<path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>' +
+                    '</svg>' +
+                    '立即重新登录' +
+                  '</button>' +
+                '</div>';
+            document.body.appendChild(overlay);
+
+            var numEl = overlay.querySelector('#kickoutNum');
+            var timer = setInterval(function() {
+                seconds -= 1;
+                if (numEl) numEl.textContent = Math.max(seconds, 0);
+                if (seconds <= 0) { clearInterval(timer); window.location.href = loginUrl; }
+            }, 1000);
+
+            overlay.querySelector('#kickoutBtn').addEventListener('click', function() {
+                clearInterval(timer);
+                window.location.href = loginUrl;
+            });
+        }
+
+        function ping() {
+            if (redirecting) return;
+            fetch(pingUrl, {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                cache: 'no-store'
+            }).then(function(resp) {
+                if (resp.status === 401) {
+                    redirecting = true;
+                    resp.json().then(function(d) {
+                        showKickoutModal((d && d.message) ? d.message : '会话已失效，请重新登录');
+                    }).catch(function() {
+                        showKickoutModal('会话已失效，请重新登录');
+                    });
+                }
+            }).catch(function() { /* 网络错误忽略 */ });
+        }
+        setInterval(ping, 3000);
+    })();
+    </script>
+    {% endif %}
+    {% block scripts %}{% endblock %}
+</body>
+</html>

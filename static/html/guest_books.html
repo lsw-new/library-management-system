@@ -1,0 +1,138 @@
+<!--
+    游客图书浏览页面 (guest_books.html)
+    继承 base.html 基础模板
+    无需登录即可浏览图书，但不能预约借阅
+    功能与 books.html 类似，但隐藏了借阅按钮
+-->
+{% extends "base.html" %}
+
+<!-- 页面标题 -->
+{% block title %}馆藏浏览 - 景艺大图书馆{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/books.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- 主容器 -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- 白色卡片容器 -->
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <!-- ==================== 头部：标题和搜索栏 ==================== -->
+        <div class="px-4 sm:px-6 py-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <!-- 标题区域 -->
+            <div>
+                <h2 class="text-xl sm:text-2xl font-heading font-semibold text-brand-deep">馆藏浏览</h2>
+                <!-- 游客模式提示 -->
+                <p class="text-sm text-gray-400 mt-1">游客模式 — 登录后即可预约借阅</p>
+            </div>
+            <!-- 搜索表单：GET 请求，保留搜索关键词 -->
+            <form method="GET" class="relative group w-full sm:w-auto">
+                <input type="text"
+                       name="search"
+                       class="w-full sm:w-80 pl-12 pr-6 py-4 sm:py-3 bg-pink-50/50 border-2 border-transparent focus:border-brand-primary focus:bg-white rounded-2xl text-base sm:text-sm font-medium transition-all outline-none"
+                       placeholder="搜索书名、作者或分类"
+                       value="{{ request.args.get('search', '') }}">
+                <!-- 搜索图标：焦点时变色 -->
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-deep/30 group-focus-within:text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2.5"/></svg>
+            </form>
+        </div>
+
+        <!-- ==================== 图书网格 ==================== -->
+        <div class="p-6">
+            {% if books %}
+            <!-- 响应式网格：移动端1列，平板2列，桌面4列 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for book in books %}
+                <!-- 图书卡片 -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-200 flex flex-col">
+                    <!-- 图书封面：固定高度，对象适配 -->
+                    <img src="{{ url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') }}"
+                         class="w-full h-56 object-cover" alt="{{ book.title }}">
+                    <!-- 图书信息区域 -->
+                    <div class="p-4 flex-1 flex flex-col">
+                        <!-- 书名：最多显示2行，超出省略 -->
+                        <h3 class="text-base font-heading font-semibold text-brand-deep mb-2 line-clamp-2">{{ book.title }}</h3>
+                        <!-- 作者 -->
+                        <p class="text-sm text-gray-600 mb-1">{{ book.author }}</p>
+                        <!-- 出版社：可选字段 -->
+                        {% if book.publisher %}
+                        <p class="text-xs text-gray-400 mb-1">{{ book.publisher }}</p>
+                        {% endif %}
+                        <!-- 分类标签：可选字段 -->
+                        {% if book.category %}
+                        <span class="inline-block self-start px-2 py-0.5 bg-pink-50 text-pink-600 rounded text-xs font-medium mb-3">{{ book.category }}</span>
+                        {% endif %}
+                        <!-- 底部操作区：自动推到底部 -->
+                        <div class="mt-auto">
+                            <!-- 状态和库存信息 -->
+                            <div class="flex items-center justify-between mb-3">
+                                <!-- 可借阅状态徽章：绿色/红色 -->
+                                <span class="inline-block px-3 py-1 text-xs font-medium rounded-full {% if book.available %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                    {% if book.available %}可借阅{% else %}已借出{% endif %}
+                                </span>
+                                <!-- 库存数量：当前/总数 -->
+                                <span class="text-xs font-medium {% if book.stock > 0 %}text-green-600{% else %}text-red-600{% endif %}">
+                                    {{ book.stock }}/{{ book.total }}
+                                </span>
+                            </div>
+                            <!-- 登录提示按钮：游客点击跳转到登录页 -->
+                            <a href="{{ url_for('auth.login') }}" class="touch-target block w-full px-4 py-3 sm:py-2 text-sm font-medium text-center text-brand-primary border-2 border-brand-primary/20 hover:border-brand-primary hover:bg-pink-50 rounded-lg transition-colors duration-200 cursor-pointer">
+                                登录后借阅
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- ==================== 分页控件 ==================== -->
+            {% if pagination.pages > 1 %}
+            <nav class="flex flex-wrap items-center justify-center gap-2 mt-8 pt-6 border-t border-gray-100">
+                <!-- 上一页按钮 -->
+                {% if pagination.has_prev %}
+                <a href="{{ url_for('user.guest_books', page=pagination.prev_num, search=search) }}"
+                   class="px-4 py-2 text-sm font-medium text-brand-primary border-2 border-brand-primary/20 hover:bg-pink-50 rounded-xl transition-colors">
+                    上一页
+                </a>
+                {% endif %}
+
+                <!-- 页码列表：显示当前页前后2页 -->
+                {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                    {% if p %}
+                        {% if p == pagination.page %}
+                        <!-- 当前页：高亮显示 -->
+                        <span class="px-4 py-2 text-sm font-bold text-white bg-brand-primary rounded-xl shadow-sm">{{ p }}</span>
+                        {% else %}
+                        <!-- 其他页：可点击 -->
+                        <a href="{{ url_for('user.guest_books', page=p, search=search) }}"
+                           class="px-4 py-2 text-sm font-medium text-brand-deep/60 hover:text-brand-primary hover:bg-pink-50 rounded-xl transition-colors">{{ p }}</a>
+                        {% endif %}
+                    {% else %}
+                        <!-- 省略号：表示跳过的页码 -->
+                        <span class="px-2 text-gray-400">...</span>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- 下一页按钮 -->
+                {% if pagination.has_next %}
+                <a href="{{ url_for('user.guest_books', page=pagination.next_num, search=search) }}"
+                   class="px-4 py-2 text-sm font-medium text-brand-primary border-2 border-brand-primary/20 hover:bg-pink-50 rounded-xl transition-colors">
+                    下一页
+                </a>
+                {% endif %}
+            </nav>
+            {% endif %}
+            {% else %}
+            <!-- ==================== 空状态提示 ==================== -->
+            <div class="text-center py-16">
+                <!-- 书本图标 -->
+                <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+                <p class="text-gray-500">暂无图书</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

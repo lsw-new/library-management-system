@@ -1,0 +1,518 @@
+{# 个人中心 #}
+{% extends "base.html" %}
+
+{% block title %}个人中心 - 景艺大图书馆{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+{% block header %}{% endblock %}
+{% block main_class %}flex-1 py-6 md:py-12 px-4 animate-in fade-in duration-700{% endblock %}
+{% block content_wrapper %}max-w-4xl mx-auto{% endblock %}
+
+{% set active_count = insights.active_count %}
+{% set completion_rate = insights.completion_rate %}
+
+{% block content %}
+<div class="pf-page">
+
+    {# ====== 顶部导航 ====== #}
+    <nav class="pf-topbar">
+        <a href="{{ url_for('user.books') }}" class="pf-back" title="返回首页">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        </a>
+        <span class="pf-topbar-title">个人中心</span>
+        <a href="{{ url_for('auth.logout') }}" class="pf-logout">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-3.5 h-3.5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+            退出
+        </a>
+    </nav>
+
+    {# ====== 英雄区 ====== #}
+    <section class="pf-hero">
+        <div class="pf-hero-bg"></div>
+        <div class="pf-hero-blob pf-hero-blob-a"></div>
+        <div class="pf-hero-blob pf-hero-blob-b"></div>
+        <div class="pf-hero-blob pf-hero-blob-c"></div>
+
+        <div class="pf-hero-content">
+            <div class="pf-avatar" id="avatar-wrapper">
+                {% if current_user.avatar %}
+                <img class="pf-avatar-img" id="avatar-img"
+                     src="{{ url_for('static', filename='images/avatars/' + current_user.avatar) }}" alt="头像">
+                {% else %}
+                <span class="pf-avatar-letter" id="avatar-letter"
+                      data-bind="avatar-letter">{{ current_user.username[0]|upper }}</span>
+                {% endif %}
+                <label class="pf-avatar-overlay" for="avatar-input" title="更换头像">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
+                </label>
+                <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/gif" class="sr-only">
+            </div>
+
+            <div class="pf-hero-eyebrow">
+                <span class="pf-dot"></span>
+                <span class="pf-hero-eyebrow-text">个人中心</span>
+                <span class="pf-dot pf-dot-alt"></span>
+            </div>
+            <h1 class="pf-hero-name" data-bind="username">{{ current_user.username }}</h1>
+            <p class="pf-hero-sub" data-bind="user-sub">
+                {% if current_user.real_name %}<span data-bind="real-name">{{ current_user.real_name }}</span>{% endif %}{% if current_user.class_name %}<span class="pf-hero-sub-sep"> · </span><span data-bind="class-name">{{ current_user.class_name }}</span>{% endif %}{% if current_user.student_id %}<span class="pf-hero-sub-sep"> · </span>学号 {{ current_user.student_id }}{% endif %}
+            </p>
+        </div>
+
+        <div class="pf-stats">
+            <div class="pf-stat tone-pink">
+                <div class="pf-stat-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <div>
+                    <p class="pf-stat-label">总借阅</p>
+                    <p class="pf-stat-value">{{ stats.total }}</p>
+                </div>
+            </div>
+            <div class="pf-stat tone-amber">
+                <div class="pf-stat-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                    <p class="pf-stat-label">进行中</p>
+                    <p class="pf-stat-value">{{ active_count }}</p>
+                </div>
+            </div>
+            <div class="pf-stat tone-emerald">
+                <div class="pf-stat-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div>
+                    <p class="pf-stat-label">完成率</p>
+                    <p class="pf-stat-value">{{ completion_rate }}<span class="pf-stat-unit">%</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ====== 标签页切换 ====== #}
+    <div class="pf-tabs">
+        <button class="pf-tab is-active" data-tab="profile" type="button">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            个人资料
+        </button>
+        <button class="pf-tab" data-tab="security" type="button">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            安全设置
+        </button>
+    </div>
+
+    {# ====== 个人资料面板 ====== #}
+    <div class="pf-panel" id="panel-profile">
+        <div class="pf-panel-head">
+            <span class="pf-panel-icon tone-pink">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </span>
+            <h2 class="pf-panel-title">个人资料</h2>
+            <span class="pf-panel-badge">基本信息</span>
+        </div>
+        <form id="profile-form" class="pf-form">
+            <div class="pf-form-grid">
+                <div class="pf-field">
+                    <label class="pf-label" for="profile-username">用户名</label>
+                    <input type="text" id="profile-username" name="username"
+                           value="{{ current_user.username }}"
+                           class="pf-input" minlength="3" maxlength="20" required
+                           autocomplete="username">
+                </div>
+                <div class="pf-field">
+                    <label class="pf-label" for="profile-realname">姓名</label>
+                    <input type="text" id="profile-realname" name="real_name"
+                           value="{{ current_user.real_name or '' }}"
+                           class="pf-input" maxlength="50" required
+                           placeholder="请输入真实姓名">
+                </div>
+                <div class="pf-field">
+                    <label class="pf-label" for="profile-classname">班级 <span class="pf-label-hint">(选填)</span></label>
+                    <input type="text" id="profile-classname" name="class_name"
+                           value="{{ current_user.class_name or '' }}"
+                           class="pf-input" maxlength="100"
+                           placeholder="例如：2024级计算机1班">
+                </div>
+                <div class="pf-field">
+                    <label class="pf-label">学号</label>
+                    <div class="pf-static">{{ current_user.student_id or '未设置' }}</div>
+                    <p class="pf-hint">学号注册后不可修改</p>
+                </div>
+            </div>
+            <div class="pf-field">
+                <label class="pf-label">邮箱</label>
+                <div class="pf-static">{{ current_user.email }}</div>
+                <p class="pf-hint">邮箱注册后不可修改</p>
+            </div>
+            <button type="submit" id="profile-save-btn" class="pf-btn-primary">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                保存修改
+            </button>
+        </form>
+    </div>
+
+    {# ====== 安全设置面板 ====== #}
+    <div class="pf-panel" id="panel-security" style="display:none">
+        <div class="pf-panel-head">
+            <span class="pf-panel-icon tone-purple">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </span>
+            <h2 class="pf-panel-title">修改密码</h2>
+            <span class="pf-panel-badge">安全设置</span>
+        </div>
+        <form id="password-form" class="pf-form">
+            <div class="pf-field">
+                <label class="pf-label" for="old-password">当前密码</label>
+                <div class="pf-input-wrap">
+                    <input type="password" id="old-password" name="old_password"
+                           class="pf-input" required placeholder="请输入当前密码"
+                           autocomplete="current-password">
+                    <button type="button" class="pf-toggle-pw" data-target="old-password" aria-label="切换密码可见">
+                        <svg class="eye-open w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        <svg class="eye-closed w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pf-form-grid">
+                <div class="pf-field">
+                    <label class="pf-label" for="new-password">新密码</label>
+                    <div class="pf-input-wrap">
+                        <input type="password" id="new-password" name="new_password"
+                               class="pf-input" minlength="6" required placeholder="至少 6 位字符"
+                               autocomplete="new-password">
+                        <button type="button" class="pf-toggle-pw" data-target="new-password" aria-label="切换密码可见">
+                            <svg class="eye-open w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            <svg class="eye-closed w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="pf-field">
+                    <label class="pf-label" for="confirm-password">确认新密码</label>
+                    <div class="pf-input-wrap">
+                        <input type="password" id="confirm-password" name="confirm_password"
+                               class="pf-input" minlength="6" required placeholder="再次输入新密码"
+                               autocomplete="new-password">
+                        <button type="button" class="pf-toggle-pw" data-target="confirm-password" aria-label="切换密码可见">
+                            <svg class="eye-open w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            <svg class="eye-closed w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pf-field">
+                <label class="pf-label" for="verification-code">邮箱验证码</label>
+                <div class="pf-input-wrap has-code-btn">
+                    <input type="text" id="verification-code" name="verification_code"
+                           class="pf-input" required placeholder="请输入验证码"
+                           maxlength="6" inputmode="numeric" autocomplete="one-time-code">
+                    <button type="button" id="send-code-btn" class="pf-send-code">获取验证码</button>
+                </div>
+                <p class="pf-hint">验证码将发送到 {{ current_user.email }}</p>
+            </div>
+
+            <button type="submit" id="password-save-btn" class="pf-btn-accent">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                更新密码
+            </button>
+        </form>
+    </div>
+
+
+    {# ====== 头像裁剪弹窗 ====== #}
+    <div id="crop-modal" class="crop-modal" aria-hidden="true" role="dialog">
+        <div class="crop-dialog">
+            <div class="crop-header">
+                <h3>调整头像</h3>
+                <p>拖动选框定位 · 滑块或滚轮调整大小</p>
+            </div>
+            <div id="crop-viewport" class="crop-viewport">
+                <canvas id="crop-canvas"></canvas>
+                <div class="crop-ring"></div>
+            </div>
+            <div class="crop-zoom">
+                <svg class="crop-zoom-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"/></svg>
+                <input id="crop-zoom" type="range" min="100" max="300" value="200" class="crop-slider">
+                <svg class="crop-zoom-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+            </div>
+            <div class="crop-actions">
+                <button type="button" id="crop-cancel" class="crop-btn-cancel">取消</button>
+                <button type="button" id="crop-confirm" class="crop-btn-confirm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    确认裁剪
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    var toast = function (msg, type) { return window.showToast ? window.showToast(msg, type) : alert(msg); };
+
+    // ====== 标签页切换 ======
+    document.querySelectorAll('.pf-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            var target = tab.dataset.tab;
+            document.querySelectorAll('.pf-tab').forEach(function (t) { t.classList.remove('is-active', 'tone-purple'); });
+            tab.classList.add('is-active');
+            if (target === 'security') tab.classList.add('tone-purple');
+            document.getElementById('panel-profile').style.display  = target === 'profile'  ? '' : 'none';
+            document.getElementById('panel-security').style.display = target === 'security' ? '' : 'none';
+        });
+    });
+
+    // ====== 头像裁剪上传 ======
+    var avatarInput = document.getElementById('avatar-input');
+    var avatarWrapper = document.getElementById('avatar-wrapper');
+    var cropModal = document.getElementById('crop-modal');
+    var cropViewport = document.getElementById('crop-viewport');
+    var cropCanvas = document.getElementById('crop-canvas');
+    var cropRing = cropViewport ? cropViewport.querySelector('.crop-ring') : null;
+    var cropZoom = document.getElementById('crop-zoom');
+    var cropCancel = document.getElementById('crop-cancel');
+    var cropConfirm = document.getElementById('crop-confirm');
+
+    if (avatarInput && cropModal && cropRing) {
+        var ctx = cropCanvas.getContext('2d');
+        var srcImg = new Image();
+        var state = { imgX:0, imgY:0, scale:1, ringX:0, ringY:0, ringR:0, dragging:false, sx:0, sy:0, startRX:0, startRY:0 };
+        var vpSize = 0;
+        var CROP_OUT = 400;
+
+        function ringRadius(v) {
+            var dw = srcImg.naturalWidth * state.scale, dh = srcImg.naturalHeight * state.scale;
+            return Math.min(dw, dh) * (0.15 + (v - 100) / 200 * 0.35);
+        }
+        function positionRing() {
+            var d = state.ringR * 2;
+            cropRing.style.width = d + 'px'; cropRing.style.height = d + 'px';
+            cropRing.style.left = (state.ringX - state.ringR) + 'px';
+            cropRing.style.top  = (state.ringY - state.ringR) + 'px';
+        }
+        function clampRing() {
+            var l = state.imgX, t = state.imgY;
+            var r = l + srcImg.naturalWidth * state.scale, b = t + srcImg.naturalHeight * state.scale;
+            state.ringX = Math.max(l + state.ringR, Math.min(r - state.ringR, state.ringX));
+            state.ringY = Math.max(t + state.ringR, Math.min(b - state.ringR, state.ringY));
+        }
+        function draw() {
+            ctx.clearRect(0, 0, vpSize, vpSize);
+            ctx.drawImage(srcImg, state.imgX, state.imgY, srcImg.naturalWidth * state.scale, srcImg.naturalHeight * state.scale);
+        }
+        function openCrop() {
+            cropModal.classList.add('is-open'); cropModal.setAttribute('aria-hidden', 'false');
+            vpSize = cropViewport.offsetWidth;
+            cropCanvas.width = vpSize; cropCanvas.height = vpSize;
+            var sx = vpSize / srcImg.naturalWidth, sy = vpSize / srcImg.naturalHeight;
+            state.scale = Math.min(sx, sy);
+            state.imgX = (vpSize - srcImg.naturalWidth * state.scale) / 2;
+            state.imgY = (vpSize - srcImg.naturalHeight * state.scale) / 2;
+            cropZoom.value = 200;
+            state.ringR = ringRadius(200); state.ringX = vpSize / 2; state.ringY = vpSize / 2;
+            draw(); positionRing();
+        }
+        function closeCrop() {
+            cropModal.classList.remove('is-open'); cropModal.setAttribute('aria-hidden', 'true');
+            avatarInput.value = '';
+        }
+
+        avatarInput.addEventListener('change', function () {
+            var file = avatarInput.files[0]; if (!file) return;
+            if (file.size > 2 * 1024 * 1024) { toast('图片大小不能超过 2MB', 'warning'); avatarInput.value = ''; return; }
+            var url = URL.createObjectURL(file);
+            srcImg.onload = function () { URL.revokeObjectURL(url); openCrop(); };
+            srcImg.src = url;
+        });
+
+        cropViewport.addEventListener('mousedown', function (e) {
+            e.preventDefault(); state.dragging = true;
+            state.sx = e.clientX; state.sy = e.clientY;
+            state.startRX = state.ringX; state.startRY = state.ringY;
+        });
+        window.addEventListener('mousemove', function (e) {
+            if (!state.dragging) return;
+            state.ringX = state.startRX + (e.clientX - state.sx);
+            state.ringY = state.startRY + (e.clientY - state.sy);
+            clampRing(); positionRing();
+        });
+        window.addEventListener('mouseup', function () { state.dragging = false; });
+
+        cropViewport.addEventListener('touchstart', function (e) {
+            if (e.touches.length !== 1) return;
+            var t = e.touches[0]; state.dragging = true;
+            state.sx = t.clientX; state.sy = t.clientY;
+            state.startRX = state.ringX; state.startRY = state.ringY;
+        }, { passive: true });
+        cropViewport.addEventListener('touchmove', function (e) {
+            if (!state.dragging || e.touches.length !== 1) return;
+            e.preventDefault(); var t = e.touches[0];
+            state.ringX = state.startRX + (t.clientX - state.sx);
+            state.ringY = state.startRY + (t.clientY - state.sy);
+            clampRing(); positionRing();
+        }, { passive: false });
+        cropViewport.addEventListener('touchend', function () { state.dragging = false; });
+
+        cropViewport.addEventListener('wheel', function (e) {
+            e.preventDefault();
+            var v = Math.max(100, Math.min(300, parseFloat(cropZoom.value) + (e.deltaY > 0 ? -8 : 8)));
+            cropZoom.value = v; state.ringR = ringRadius(v); clampRing(); positionRing();
+        }, { passive: false });
+
+        cropZoom.addEventListener('input', function () {
+            state.ringR = ringRadius(parseFloat(cropZoom.value)); clampRing(); positionRing();
+        });
+
+        cropCancel.addEventListener('click', closeCrop);
+        cropModal.addEventListener('click', function (e) { if (e.target === cropModal) closeCrop(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cropModal.classList.contains('is-open')) closeCrop(); });
+
+        cropConfirm.addEventListener('click', function () {
+            cropConfirm.disabled = true; cropConfirm.textContent = '上传中…';
+            var out = document.createElement('canvas'); out.width = CROP_OUT; out.height = CROP_OUT;
+            var octx = out.getContext('2d');
+            var srcX = (state.ringX - state.ringR - state.imgX) / state.scale;
+            var srcY = (state.ringY - state.ringR - state.imgY) / state.scale;
+            var srcD = (state.ringR * 2) / state.scale;
+            octx.drawImage(srcImg, srcX, srcY, srcD, srcD, 0, 0, CROP_OUT, CROP_OUT);
+            out.toBlob(function (blob) {
+                var fd = new FormData(); fd.append('avatar', blob, 'avatar.jpg');
+                fetch('/profile/avatar', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: fd })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data.success) {
+                        toast(data.message, 'success');
+                        var existing = document.getElementById('avatar-img');
+                        var letter = document.getElementById('avatar-letter');
+                        if (existing) { existing.src = data.avatar_url + '?t=' + Date.now(); }
+                        else {
+                            if (letter) letter.remove();
+                            var img = document.createElement('img');
+                            img.className = 'pf-avatar-img'; img.id = 'avatar-img'; img.alt = '头像';
+                            img.src = data.avatar_url + '?t=' + Date.now();
+                            avatarWrapper.insertBefore(img, avatarWrapper.firstChild);
+                        }
+                        closeCrop();
+                    } else { toast(data.message || '上传失败', 'error'); }
+                })
+                .catch(function () { toast('网络错误，请稍后重试', 'error'); })
+                .finally(function () {
+                    cropConfirm.disabled = false;
+                    cropConfirm.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>确认裁剪';
+                });
+            }, 'image/jpeg', 0.9);
+        });
+    }
+
+    // ====== 密码可见切换 ======
+    document.querySelectorAll('.pf-toggle-pw').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var input = document.getElementById(btn.dataset.target); if (!input) return;
+            var show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            btn.querySelector('.eye-open').classList.toggle('hidden', !show);
+            btn.querySelector('.eye-closed').classList.toggle('hidden', show);
+        });
+    });
+
+    // ====== 修改资料 ======
+    var profileForm = document.getElementById('profile-form');
+    var profileBtn = document.getElementById('profile-save-btn');
+    if (profileForm) {
+        profileForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var username  = document.getElementById('profile-username').value.trim();
+            var realName  = document.getElementById('profile-realname').value.trim();
+            var className = document.getElementById('profile-classname').value.trim();
+            if (!username) { toast('请填写用户名', 'warning'); return; }
+            if (!realName) { toast('请填写姓名', 'warning'); return; }
+
+            withLoadingBtn(profileBtn, '保存中…', function () {
+                return postJson('/profile/update', { username: username, real_name: realName, class_name: className })
+                    .then(function (res) {
+                        if (res.data.success) {
+                            toast(res.data.message, 'success');
+                            var d = res.data;
+                            if (d.username) {
+                                document.querySelectorAll('[data-bind="username"]').forEach(function (el) { el.textContent = d.username; });
+                                var avatarEl = document.querySelector('[data-bind="avatar-letter"]');
+                                if (avatarEl) avatarEl.textContent = d.username.charAt(0).toUpperCase();
+                            }
+                            var rnEl = document.querySelector('[data-bind="real-name"]');
+                            if (rnEl) rnEl.textContent = d.real_name || '';
+                            var cnEl = document.querySelector('[data-bind="class-name"]');
+                            if (cnEl) cnEl.textContent = d.class_name || '';
+                        } else { toast(res.data.message || '更新失败', 'error'); }
+                    })
+                    .catch(function () { toast('网络错误，请稍后重试', 'error'); });
+            });
+        });
+    }
+
+    // ====== 发送验证码 ======
+    var sendCodeBtn = document.getElementById('send-code-btn');
+    if (sendCodeBtn) {
+        sendCodeBtn.addEventListener('click', function () {
+            sendCodeBtn.disabled = true;
+            var orig = sendCodeBtn.textContent;
+            sendCodeBtn.textContent = '发送中…';
+            fetch('/send-verification-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                body: JSON.stringify({ email: '{{ current_user.email }}' })
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (data.success) {
+                    toast(data.message || '验证码已发送', 'success');
+                    var cd = 60;
+                    sendCodeBtn.textContent = cd + 's';
+                    var t = setInterval(function () {
+                        cd--;
+                        if (cd <= 0) { clearInterval(t); sendCodeBtn.disabled = false; sendCodeBtn.textContent = orig; }
+                        else { sendCodeBtn.textContent = cd + 's'; }
+                    }, 1000);
+                } else { toast(data.message || '发送失败', 'error'); sendCodeBtn.disabled = false; sendCodeBtn.textContent = orig; }
+            })
+            .catch(function () { toast('网络错误', 'error'); sendCodeBtn.disabled = false; sendCodeBtn.textContent = orig; });
+        });
+    }
+
+    // ====== 修改密码 ======
+    var passwordForm = document.getElementById('password-form');
+    var passwordBtn  = document.getElementById('password-save-btn');
+    if (passwordForm) {
+        passwordForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var oldPw     = document.getElementById('old-password').value;
+            var newPw     = document.getElementById('new-password').value;
+            var confirmPw = document.getElementById('confirm-password').value;
+            var verCode   = document.getElementById('verification-code').value.trim();
+
+            if (!oldPw || !newPw || !confirmPw) { toast('请填写所有密码字段', 'warning'); return; }
+            if (newPw.length < 6) { toast('新密码至少 6 位字符', 'warning'); return; }
+            if (newPw !== confirmPw) { toast('两次输入的新密码不一致', 'warning'); return; }
+            if (!verCode) { toast('请输入邮箱验证码', 'warning'); return; }
+
+            withLoadingBtn(passwordBtn, '更新中…', function () {
+                return postJson('/profile/password', {
+                    old_password: oldPw, new_password: newPw,
+                    confirm_password: confirmPw, verification_code: verCode
+                })
+                .then(function (res) {
+                    if (res.data.success) { toast(res.data.message, 'success'); passwordForm.reset(); }
+                    else { toast(res.data.message || '修改失败', 'error'); }
+                })
+                .catch(function () { toast('网络错误，请稍后重试', 'error'); });
+            });
+        });
+    }
+})();
+</script>
+{% endblock %}

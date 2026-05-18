@@ -1,0 +1,16 @@
+# Docker 部署文件
+docker-compose.yml
+.env
+
+# 数据卷
+mysql_data/
+web_logs/
+web_images/
+
+# SSL 证书
+nginx/ssl/*.pem
+nginx/ssl/*.key
+
+# 备份文件
+*.sql
+backup_*.sql

@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+
+# 虚拟环境
+.venv/
+venv/
+ENV/
+env/
+
+# 环境变量文件（包含敏感信息）
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# 日志文件
+*.log
+logs/
+static/logs/
+
+# 数据库文件
+*.db
+*.sqlite3
+
+# 上传的文件（保留默认图片）
+static/images/*
+!static/images/default-book.jpg
+
+# 临时文件
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 测试
+.pytest_cache/
+.coverage
+htmlcov/
+.playwright-mcp/
+
+# 验证截图（调试产物）
+/test-*.png
+/verify-*.png
+/verify_*.png
+/borrow_records*.png
+/profile_*.png
+
+# Docker 运行时
+docker/mysql/data/
+docker/logs/
+
+# 证书和密钥
+*.pem
+*.key
+*.crt
+
+# 备份
+*.backup
+*.sql.backup

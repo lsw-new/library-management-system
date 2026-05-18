@@ -1,0 +1,857 @@
+{# 我的借阅记录页 #}
+{% extends "base.html" %}
+
+{% block title %}借阅足迹 - 景艺大图书馆{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/borrow-records.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/borrow-sidebar.css') }}">
+{% endblock %}
+
+{% block header %}{% endblock %}
+{% block main_class %}flex-1 py-6 md:py-12 px-4 animate-in fade-in duration-700{% endblock %}
+{% block content_wrapper %}max-w-6xl mx-auto{% endblock %}
+
+{% set status_meta = {
+    'pending':   {'label': '未领取', 'tone': 'pending'},
+    'picked_up': {'label': '已领取', 'tone': 'picked'},
+    'returned':  {'label': '已归还', 'tone': 'returned'},
+    'rejected':  {'label': '已拒绝', 'tone': 'rejected'},
+    'expired':   {'label': '已逾期', 'tone': 'expired'},
+} %}
+
+{% set tabs = [
+    ('all',       '全部',   'all',      stats.total),
+    ('pending',   '未领取', 'pending',  stats.pending),
+    ('picked_up', '已领取', 'picked',   stats.picked_up),
+    ('returned',  '已归还', 'returned', stats.returned),
+    ('rejected',  '已拒绝', 'rejected', stats.rejected),
+    ('expired',   '已逾期', 'expired',  stats.expired),
+] %}
+
+{% set active_count = insights.active_count %}
+{% set completed_count = stats.returned %}
+{% set completion_rate = insights.completion_rate %}
+{% set now = insights.now %}
+
+{% block content %}
+<div class="borrow-page px-4 sm:px-6 lg:px-8" data-borrow-action-csrf="{{ borrow_action_csrf_token }}">
+
+    {# ========== Elysia 风格英雄区 ========== #}
+    <section class="borrow-hero">
+        <div class="borrow-hero-gradient"></div>
+        <div class="borrow-hero-blob borrow-hero-blob-a"></div>
+        <div class="borrow-hero-blob borrow-hero-blob-b"></div>
+        <div class="borrow-hero-blob borrow-hero-blob-c"></div>
+
+        <div class="borrow-hero-petals" aria-hidden="true">
+            <span class="petal-dot" style="top:18%;left:8%;animation-delay:0s"></span>
+            <span class="petal-dot" style="top:32%;right:14%;animation-delay:1.1s"></span>
+            <span class="petal-dot" style="top:68%;left:22%;animation-delay:0.5s"></span>
+            <span class="petal-dot" style="bottom:24%;right:10%;animation-delay:1.6s"></span>
+            <svg class="petal-svg" style="top:14%;right:7%" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+            <svg class="petal-svg petal-svg-sm" style="bottom:18%;left:14%" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        </div>
+
+        <div class="borrow-hero-inner">
+            <div class="borrow-hero-header">
+                <div class="borrow-hero-eyebrow">
+                    <span class="dot"></span>
+                    <span class="text">我的阅读之旅</span>
+                    <span class="dot dot-purple"></span>
+                </div>
+                <h1 class="borrow-hero-title">
+                    我的<span class="accent">借阅足迹</span>
+                </h1>
+                <p id="records-total-text" class="borrow-hero-sub">
+                    至今共 <strong>{{ stats.total }}</strong> 段书页之约 ♡
+                </p>
+            </div>
+            <a href="{{ url_for('user.books') }}" class="borrow-hero-cta">
+                <svg class="cta-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <span>继续预约</span>
+                <svg class="cta-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+
+        {# 数据卡片条：4 项 #}
+        <div class="borrow-stat-grid">
+            <div class="borrow-stat-card tone-pink">
+                <div class="stat-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <div class="stat-meta">
+                    <p class="stat-label">总借阅</p>
+                    <p class="stat-value" data-stat="total">{{ stats.total }}</p>
+                </div>
+                <span class="stat-deco"></span>
+            </div>
+            <div class="borrow-stat-card tone-amber">
+                <div class="stat-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div class="stat-meta">
+                    <p class="stat-label">进行中</p>
+                    <p class="stat-value" data-stat="active">{{ active_count }}</p>
+                </div>
+                <span class="stat-deco"></span>
+            </div>
+            <div class="borrow-stat-card tone-emerald">
+                <div class="stat-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div class="stat-meta">
+                    <p class="stat-label">已完成</p>
+                    <p class="stat-value" data-stat="completed">{{ completed_count }}</p>
+                </div>
+                <span class="stat-deco"></span>
+            </div>
+            <div class="borrow-stat-card tone-purple">
+                <div class="stat-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                </div>
+                <div class="stat-meta">
+                    <p class="stat-label">完成率</p>
+                    <p class="stat-value" data-stat="rate">{{ completion_rate }}<span class="stat-unit">%</span></p>
+                </div>
+                <span class="stat-deco"></span>
+            </div>
+        </div>
+    </section>
+
+    {# ========== 主体两栏布局 ========== #}
+    <div class="borrow-layout">
+
+        {# ===== 左栏：筛选 + 记录列表 ===== #}
+        <div class="borrow-main">
+
+            {# 筛选 + 搜索头 #}
+            <section id="records-filters" class="records-tabs-bar mb-4">
+                <div class="records-tabs-head">
+                    <div class="records-tabs-label">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                        <span>状态筛选</span>
+                        <span class="dash"></span>
+                    </div>
+                    <div class="records-search">
+                        <svg class="records-search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 17a6 6 0 100-12 6 6 0 000 12z"/></svg>
+                        <input type="text" id="records-search-input" placeholder="按书名搜索…" autocomplete="off">
+                        <button type="button" id="records-search-clear" class="records-search-clear" aria-label="清除搜索">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="records-tabs-scroll">
+                    {% for value, label, tone, count in tabs %}
+                    <button type="button"
+                            data-filter="{{ value }}"
+                            class="records-tab tone-{{ tone }}{% if loop.first %} is-active{% endif %}">
+                        {{ label }}
+                        <span class="records-tab-count">{{ count }}</span>
+                    </button>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {# 记录列表 #}
+            {% if records %}
+            <section id="records-list" class="space-y-3 sm:space-y-3.5">
+                {% for record in records %}
+                {% set meta = status_meta.get(record.status, {'label': record.status, 'tone': 'pending'}) %}
+                {% set borrow_days = ((now - record.borrow_date).days) if record.borrow_date else None %}
+                {% set days_left = ((record.return_date.date() - now.date()).days) if record.return_date and record.status == 'picked_up' else None %}
+                <article class="record-card" data-record-id="{{ record.id }}" data-status="{{ record.status }}"
+                         data-title="{{ record.book.title|lower }}"
+                         style="animation-delay: {{ loop.index0 * 40 }}ms">
+                    {# 封面 #}
+                    <div class="record-cover">
+                        {% if record.book.image %}
+                        <img src="{{ url_for('static', filename='images/' + record.book.image) }}"
+                             alt="{{ record.book.title }}" loading="lazy" decoding="async">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/default-book.jpg') }}"
+                             alt="{{ record.book.title }}" loading="lazy" decoding="async">
+                        {% endif %}
+                        <span class="record-cover-shine"></span>
+                        {% if borrow_days is not none and record.status in ('pending', 'picked_up') %}
+                        <span class="record-cover-day">第 {{ borrow_days + 1 }} 天</span>
+                        {% endif %}
+                    </div>
+
+                    {# 内容区 #}
+                    <div class="record-body">
+
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="min-w-0">
+                                <a href="{{ url_for('user.book_detail', book_id=record.book.id) }}"
+                                   class="block text-sm sm:text-base font-heading font-semibold text-brand-deep hover:text-brand-primary transition-colors leading-snug line-clamp-2">
+                                    {{ record.book.title }}
+                                </a>
+                                <p class="text-xs text-brand-deep/45 mt-0.5 truncate">
+                                    {{ record.book.author }}{% if record.book.category %} · <span class="record-cat">{{ record.book.category }}</span>{% endif %}
+                                </p>
+                            </div>
+                            <span class="status-pill tone-{{ meta.tone }} flex-shrink-0 mt-0.5">{{ meta.label }}</span>
+                        </div>
+
+                        {# 进行中：归还倒计时进度条 #}
+                        {% if record.status == 'picked_up' and days_left is not none %}
+                        {% set raw_total_loan = ((record.return_date - record.pickup_date).days) if record.pickup_date and record.return_date else 30 %}
+                        {% set total_loan = raw_total_loan if raw_total_loan > 0 else 30 %}
+                        {% set raw_used = total_loan - days_left %}
+                        {% set used = raw_used if raw_used > 0 else 0 %}
+                        {% set raw_pct = (used / total_loan * 100) | round | int %}
+                        {% set progress_pct = raw_pct if raw_pct < 100 else 100 %}
+                        {% set tone_class = 'is-overdue' if days_left < 0 else ('is-soon' if days_left <= 3 else 'is-ok') %}
+                        <div class="record-progress {{ tone_class }}">
+                            <div class="record-progress-track">
+                                <span class="record-progress-fill" style="width: {{ progress_pct }}%"></span>
+                            </div>
+                            <div class="record-progress-meta">
+                                {% if days_left < 0 %}
+                                <span class="record-progress-label">已逾期 {{ -days_left }} 天</span>
+                                {% elif days_left == 0 %}
+                                <span class="record-progress-label">今日到期 ⚠</span>
+                                {% else %}
+                                <span class="record-progress-label">还剩 {{ days_left }} 天归还</span>
+                                {% endif %}
+                                <span class="record-progress-pct">{{ progress_pct }}%</span>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {# 时间线 #}
+                        <div class="record-timeline">
+                            <div class="timeline-step is-done">
+                                <span class="timeline-dot"></span>
+                                <span>预约于 {{ record.borrow_date.strftime('%Y-%m-%d %H:%M') }}</span>
+                            </div>
+
+                            {% if record.return_date %}
+                            <div class="timeline-step{% if record.status == 'returned' %} is-done tone-green{% endif %}">
+                                <span class="timeline-dot"></span>
+                                <span>预定归还 {{ record.return_date.strftime('%Y-%m-%d') }}</span>
+                            </div>
+                            {% endif %}
+
+                            {% if record.status == 'picked_up' and record.pickup_date %}
+                            <div class="timeline-step is-done tone-blue">
+                                <span class="timeline-dot"></span>
+                                <span>已领取 · {{ record.pickup_date.strftime('%Y-%m-%d %H:%M') }}</span>
+                            </div>
+                            {% elif record.status == 'returned' %}
+                            <div class="timeline-step is-done tone-green">
+                                <span class="timeline-dot"></span>
+                                <span>已归还{% if record.pickup_date %} · 领取于 {{ record.pickup_date.strftime('%m-%d %H:%M') }}{% endif %}</span>
+                            </div>
+                            {% elif record.status == 'rejected' %}
+                            <div class="timeline-step is-done tone-red">
+                                <span class="timeline-dot"></span>
+                                <span>已拒绝{% if record.reject_date %} · {{ record.reject_date.strftime('%Y-%m-%d %H:%M') }}{% endif %}</span>
+                            </div>
+                            {% elif record.status == 'expired' %}
+                            <div class="timeline-step is-done tone-orange">
+                                <span class="timeline-dot"></span>
+                                <span>已逾期{% if record.reject_date %} · {{ record.reject_date.strftime('%Y-%m-%d %H:%M') }}{% endif %}</span>
+                            </div>
+                            {% else %}
+                            <div class="timeline-step">
+                                <span class="timeline-dot"></span>
+                                <span>等待管理员审核…</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        {% if record.status == 'pending' %}
+                        <div class="record-actions">
+                            <button type="button"
+                                    class="record-action-btn tone-cancel"
+                                    data-action="cancel"
+                                    data-record-id="{{ record.id }}"
+                                    data-book-title="{{ record.book.title }}">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                取消预约
+                            </button>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </article>
+                {% endfor %}
+
+                {# 空筛选占位 #}
+                <div id="records-empty-filter" class="hidden records-empty-filter">
+                    <div class="records-empty-filter-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M21 21l-4.35-4.35M11 17a6 6 0 100-12 6 6 0 000 12z"/></svg>
+                    </div>
+                    <p class="records-empty-filter-title">没有匹配的记录</p>
+                    <p class="records-empty-filter-desc">换个筛选条件试试，或继续从馆藏中挑选 ♡</p>
+                </div>
+            </section>
+
+            <div id="record-confirm" class="record-confirm-overlay" aria-hidden="true">
+                <div class="record-confirm-card" role="dialog" aria-modal="true" aria-labelledby="record-confirm-title">
+                    <div class="record-confirm-icon">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4a2 2 0 00-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/></svg>
+                    </div>
+                    <h3 id="record-confirm-title" class="record-confirm-title">确认操作</h3>
+                    <p id="record-confirm-msg" class="record-confirm-msg">确定要执行此操作吗？</p>
+                    <div class="record-confirm-actions">
+                        <button type="button" class="record-confirm-btn is-cancel" data-confirm-cancel>取消</button>
+                        <button type="button" class="record-confirm-btn is-confirm" data-confirm-ok>确定</button>
+                    </div>
+                </div>
+            </div>
+
+            {% else %}
+            {# 整体空状态 #}
+            <section class="borrow-empty">
+                <div class="borrow-empty-blob"></div>
+                <div class="borrow-empty-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <p class="borrow-empty-eyebrow">空白篇章待你书写</p>
+                <h3 class="borrow-empty-title">还未翻开第一本书</h3>
+                <p class="borrow-empty-sub">从馆藏中挑一本喜欢的书，开启你的阅读旅程吧 ♡</p>
+                <a href="{{ url_for('user.books') }}" class="borrow-empty-cta">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                    <span>浏览馆藏</span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </section>
+            {% endif %}
+        </div>
+
+        {# ===== 右栏：洞察侧栏 ===== #}
+        <aside class="borrow-aside">
+
+            {# 阅读概览 - 完成率环 #}
+            <section class="aside-card">
+                <div class="aside-card-head">
+                    <div class="aside-card-title">
+                        <span class="aside-icon tone-pink">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                        </span>
+                        <h3>阅读概览</h3>
+                    </div>
+                    <span class="aside-card-eye">概览</span>
+                </div>
+                <div class="overview-content">
+                    <div class="overview-ring" data-ring="{{ completion_rate }}">
+                        <svg viewBox="0 0 120 120">
+                            <defs>
+                                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ec4899"/>
+                                    <stop offset="100%" stop-color="#a855f7"/>
+                                </linearGradient>
+                            </defs>
+                            <circle class="ring-bg" cx="60" cy="60" r="48" />
+                            <circle class="ring-fg" cx="60" cy="60" r="48"
+                                    stroke="url(#ringGrad)"
+                                    stroke-dasharray="{{ (completion_rate / 100 * 301.59) | round(2) }} 301.59"
+                                    transform="rotate(-90 60 60)"/>
+                        </svg>
+                        <div class="ring-center">
+                            <span class="ring-num">{{ completion_rate }}<small>%</small></span>
+                            <span class="ring-label">完成率</span>
+                        </div>
+                    </div>
+                    <ul class="overview-list">
+                        <li>
+                            <span class="dot bg-amber-400"></span>
+                            <span class="lbl">未领取</span>
+                            <strong>{{ stats.pending }}</strong>
+                        </li>
+                        <li>
+                            <span class="dot bg-blue-500"></span>
+                            <span class="lbl">已领取</span>
+                            <strong>{{ stats.picked_up }}</strong>
+                        </li>
+                        <li>
+                            <span class="dot bg-emerald-500"></span>
+                            <span class="lbl">已归还</span>
+                            <strong>{{ stats.returned }}</strong>
+                        </li>
+                        <li>
+                            <span class="dot bg-orange-500"></span>
+                            <span class="lbl">已逾期</span>
+                            <strong>{{ stats.expired }}</strong>
+                        </li>
+                    </ul>
+                </div>
+                <div class="overview-level tone-{{ insights.level.tone }}">
+                    <span class="level-badge">
+                        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                    </span>
+                    <div>
+                        <p class="level-name">{{ insights.level.name }}</p>
+                        <p class="level-desc">{{ insights.level.desc }}</p>
+                    </div>
+                </div>
+            </section>
+
+            {# 阅读偏好 - Top 3 #}
+            {% if insights.top_categories %}
+            <section class="aside-card">
+                <div class="aside-card-head">
+                    <div class="aside-card-title">
+                        <span class="aside-icon tone-purple">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                        </span>
+                        <h3>阅读偏好</h3>
+                    </div>
+                    <span class="aside-card-eye">前三</span>
+                </div>
+                <ul class="pref-list">
+                    {% for cat in insights.top_categories %}
+                    <li class="pref-item rank-{{ loop.index }}">
+                        <span class="pref-rank">0{{ loop.index }}</span>
+                        <div class="pref-meta">
+                            <div class="pref-row">
+                                <span class="pref-name">{{ cat.name }}</span>
+                                <span class="pref-count">{{ cat.count }} 本</span>
+                            </div>
+                            <div class="pref-bar">
+                                <span class="pref-fill" style="width: {{ cat.pct }}%"></span>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {# 即将到期 #}
+            {% if insights.upcoming_due %}
+            <section class="aside-card">
+                <div class="aside-card-head">
+                    <div class="aside-card-title">
+                        <span class="aside-icon tone-amber">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </span>
+                        <h3>即将到期</h3>
+                    </div>
+                    <span class="aside-card-eye pulse">{{ insights.upcoming_due | length }} 项</span>
+                </div>
+                <ul class="due-list">
+                    {% for item in insights.upcoming_due %}
+                    {% set rec = item.record %}
+                    <li class="due-item {% if item.overdue %}is-overdue{% elif item.days_left <= 3 %}is-soon{% endif %}">
+                        <a href="{{ url_for('user.book_detail', book_id=rec.book.id) }}" class="due-link">
+                            <div class="due-cover">
+                                {% if rec.book.image %}
+                                <img src="{{ url_for('static', filename='images/' + rec.book.image) }}" alt="" loading="lazy">
+                                {% else %}
+                                <img src="{{ url_for('static', filename='images/default-book.jpg') }}" alt="" loading="lazy">
+                                {% endif %}
+                            </div>
+                            <div class="due-meta">
+                                <p class="due-title">{{ rec.book.title }}</p>
+                                <p class="due-info">
+                                    {% if item.overdue %}
+                                    <span class="due-pill is-overdue">已逾期 {{ -item.days_left }} 天</span>
+                                    {% elif item.days_left == 0 %}
+                                    <span class="due-pill is-today">今日到期</span>
+                                    {% else %}
+                                    <span class="due-pill is-soon">还剩 {{ item.days_left }} 天</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {# 借阅小贴士 #}
+            <section class="aside-card tips-card">
+                <div class="aside-card-head">
+                    <div class="aside-card-title">
+                        <span class="aside-icon tone-emerald">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </span>
+                        <h3>借阅小贴士</h3>
+                    </div>
+                </div>
+                <ul class="tips-list">
+                    <li>
+                        <span class="tip-num">01</span>
+                        <p>预约后需等待管理员审核，超过 <strong>3 分钟</strong> 未处理将自动取消。</p>
+                    </li>
+                    <li>
+                        <span class="tip-num">02</span>
+                        <p>借阅时长最长 <strong>12 天</strong>，请在预约时合理设置归还日期。</p>
+                    </li>
+                    <li>
+                        <span class="tip-num">03</span>
+                        <p>同时最多借阅 <strong>2 本</strong>，归还后即可继续预约新书。</p>
+                    </li>
+                    <li>
+                        <span class="tip-num">04</span>
+                        <p>请在预定日期前归还图书，逾期可能影响后续借阅权限 ♡</p>
+                    </li>
+                </ul>
+            </section>
+
+        </aside>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    const page = document.querySelector('[data-borrow-action-csrf]');
+    const filters = document.getElementById('records-filters');
+    const list = document.getElementById('records-list');
+    if (!filters || !list) return;
+
+    const emptyHint = document.getElementById('records-empty-filter');
+    const toast = (msg, type = 'success') => (window.showToast ? window.showToast(msg, type) : alert(msg));
+    let currentFilter = 'all';
+    let searchKeyword = '';
+
+    function getCards() { return list.querySelectorAll('.record-card'); }
+
+    function applyFilter(value) {
+        if (typeof value === 'string') currentFilter = value;
+        let visible = 0;
+        getCards().forEach(card => {
+            const statusOk = currentFilter === 'all' || card.dataset.status === currentFilter;
+            const titleOk = !searchKeyword || (card.dataset.title || '').includes(searchKeyword);
+            const match = statusOk && titleOk;
+            card.hidden = !match;
+            if (match) visible += 1;
+        });
+        if (emptyHint) emptyHint.classList.toggle('hidden', visible !== 0);
+        filters.querySelectorAll('[data-filter]').forEach(btn => {
+            btn.classList.toggle('is-active', btn.dataset.filter === currentFilter);
+        });
+        const url = new URL(window.location.href);
+        if (currentFilter === 'all') url.searchParams.delete('status');
+        else url.searchParams.set('status', currentFilter);
+        window.history.replaceState({}, '', url);
+    }
+
+    filters.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-filter]');
+        if (!btn) return;
+        applyFilter(btn.dataset.filter);
+    });
+
+    const initial = new URL(window.location.href).searchParams.get('status') || 'all';
+    applyFilter(initial);
+
+    // ============ 搜索框 ============
+    const searchInput = document.getElementById('records-search-input');
+    const searchClear = document.getElementById('records-search-clear');
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            searchKeyword = searchInput.value.trim().toLowerCase();
+            searchClear.classList.toggle('is-visible', !!searchKeyword);
+            applyFilter();
+        });
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchKeyword = '';
+            searchClear.classList.remove('is-visible');
+            applyFilter();
+            searchInput.focus();
+        });
+    }
+
+    // ============ 顶部数据条更新 ============
+    const heroStatTotal     = document.querySelector('[data-stat="total"]');
+    const heroStatActive    = document.querySelector('[data-stat="active"]');
+    const heroStatCompleted = document.querySelector('[data-stat="completed"]');
+    const heroStatRate      = document.querySelector('[data-stat="rate"]');
+    const heroTotalText     = document.getElementById('records-total-text');
+
+    function refreshHeroStats(stats) {
+        if (!stats) return;
+        const total = stats.total;
+        const active = (stats.pending || 0) + (stats.picked_up || 0);
+        const completed = stats.returned || 0;
+        const rate = total ? Math.round(completed / total * 100) : 0;
+        if (heroStatTotal)     heroStatTotal.textContent = total;
+        if (heroStatActive)    heroStatActive.textContent = active;
+        if (heroStatCompleted) heroStatCompleted.textContent = completed;
+        if (heroStatRate)      heroStatRate.innerHTML = rate + '<span class="stat-unit">%</span>';
+        if (heroTotalText)     heroTotalText.innerHTML = `至今共 <strong>${total}</strong> 段书页之约 ♡`;
+    }
+
+    function bumpStat(key, delta) {
+        const btn = filters.querySelector(`[data-filter="${key}"]`);
+        if (!btn) return;
+        const v = btn.querySelector('.records-tab-count');
+        if (!v) return;
+        v.textContent = Math.max(0, parseInt(v.textContent || '0', 10) + delta);
+    }
+
+    function bumpHeroFromDelta(deltaMap) {
+        const d = deltaMap || {};
+        const totalDelta = Object.values(d).reduce((a, b) => a + b, 0);
+        const activeDelta = (d.pending || 0) + (d.picked_up || 0);
+        const completedDelta = d.returned || 0;
+        const apply = (el, delta) => {
+            if (!el) return;
+            el.textContent = Math.max(0, parseInt(el.textContent || '0', 10) + delta);
+        };
+        apply(heroStatTotal, totalDelta);
+        apply(heroStatActive, activeDelta);
+        apply(heroStatCompleted, completedDelta);
+        if (heroStatRate && heroStatTotal) {
+            const total = parseInt(heroStatTotal.textContent || '0', 10);
+            const completed = parseInt(heroStatCompleted?.textContent || '0', 10);
+            const rate = total ? Math.round(completed / total * 100) : 0;
+            heroStatRate.innerHTML = rate + '<span class="stat-unit">%</span>';
+        }
+        if (heroTotalText && heroStatTotal) {
+            heroTotalText.innerHTML = `至今共 <strong>${heroStatTotal.textContent}</strong> 段书页之约 ♡`;
+        }
+    }
+
+    // ============ 自定义确认弹层 ============
+    const confirmEl = document.getElementById('record-confirm');
+    if (!confirmEl) return;
+    const confirmTitle = document.getElementById('record-confirm-title');
+    const confirmMsg = document.getElementById('record-confirm-msg');
+    const confirmOk = confirmEl.querySelector('[data-confirm-ok]');
+    const confirmCancel = confirmEl.querySelector('[data-confirm-cancel]');
+    let confirmResolver = null;
+
+    function openConfirm({ title, msg, okText = '确定', tone = '' }) {
+        return new Promise((resolve) => {
+            confirmTitle.textContent = title;
+            confirmMsg.textContent = msg;
+            confirmOk.textContent = okText;
+            confirmOk.classList.remove('tone-danger', 'tone-return');
+            if (tone) confirmOk.classList.add(tone);
+            confirmEl.classList.add('is-open');
+            confirmEl.setAttribute('aria-hidden', 'false');
+            confirmResolver = resolve;
+        });
+    }
+    function closeConfirm(result) {
+        confirmEl.classList.remove('is-open');
+        confirmEl.setAttribute('aria-hidden', 'true');
+        if (confirmResolver) { confirmResolver(result); confirmResolver = null; }
+    }
+    confirmOk.addEventListener('click', () => closeConfirm(true));
+    confirmCancel.addEventListener('click', () => closeConfirm(false));
+    confirmEl.addEventListener('click', (e) => { if (e.target === confirmEl) closeConfirm(false); });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && confirmEl.classList.contains('is-open')) closeConfirm(false);
+    });
+
+    // ============ 操作配置 ============
+    const STATUS_META = {
+        pending:   { label: '未领取', tone: 'pending'  },
+        picked_up: { label: '已领取', tone: 'picked'   },
+        returned:  { label: '已归还', tone: 'returned' },
+        rejected:  { label: '已拒绝', tone: 'rejected' },
+        expired:   { label: '已逾期', tone: 'expired'  },
+    };
+
+    const ACTIONS = {
+        cancel: {
+            expectedStatus: 'pending',
+            url: id => `/book/cancel/${id}`,
+            confirm: title => ({ title: '取消预约', msg: `确定取消《${title}》的预约吗？库存将被释放。`, okText: '确认取消', tone: 'tone-danger' }),
+            successMsg: '已取消预约',
+            newStatus: 'rejected',
+            timelineTone: 'tone-red',
+            timelineLabel: ts => `已取消 · ${ts}`,
+            statDelta: { pending: -1, rejected: +1 },
+        },
+    };
+
+    function nowStamp() {
+        const d = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function setStatus(card, status) {
+        card.dataset.status = status;
+        const meta = STATUS_META[status];
+        const pill = card.querySelector('.status-pill');
+        if (pill && meta) {
+            pill.className = `status-pill tone-${meta.tone} flex-shrink-0 mt-0.5`;
+            pill.textContent = meta.label;
+        }
+    }
+
+    function removeWaitingStep(timeline) {
+        const placeholder = Array.from(timeline.querySelectorAll('.timeline-step'))
+            .find(el => /等待管理员审核/.test(el.textContent));
+        if (placeholder) placeholder.remove();
+    }
+
+    function appendTimelineStep(card, className, text) {
+        const timeline = card.querySelector('.record-timeline');
+        if (!timeline || !text) return;
+        removeWaitingStep(timeline);
+        const step = document.createElement('div');
+        step.className = className;
+        const dot = document.createElement('span');
+        dot.className = 'timeline-dot';
+        const label = document.createElement('span');
+        label.textContent = text;
+        step.append(dot, label);
+        timeline.appendChild(step);
+    }
+
+    function setActions(card, status, recordId, bookTitle) {
+        const oldActions = card.querySelector('.record-actions');
+        if (oldActions) oldActions.remove();
+        if (status !== 'pending') return;
+        const body = card.querySelector('.record-body');
+        if (!body) return;
+        const actions = document.createElement('div');
+        actions.className = 'record-actions';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'record-action-btn tone-cancel';
+        button.dataset.action = 'cancel';
+        button.dataset.recordId = recordId;
+        button.dataset.bookTitle = bookTitle;
+        button.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>取消预约';
+        actions.appendChild(button);
+        body.appendChild(actions);
+    }
+
+    function updateCard(card, cfg) {
+        setStatus(card, cfg.newStatus);
+        const actions = card.querySelector('.record-actions');
+        if (actions) actions.remove();
+        const progress = card.querySelector('.record-progress');
+        if (progress) progress.remove();
+        appendTimelineStep(card, `timeline-step is-done ${cfg.timelineTone}`, cfg.timelineLabel(nowStamp()));
+        card.style.transition = 'box-shadow 0.6s ease';
+        card.style.boxShadow = '0 0 0 3px rgba(236,72,153,0.3), 0 16px 32px -18px rgba(236,72,153,0.4)';
+        setTimeout(() => { card.style.boxShadow = ''; }, 750);
+    }
+
+    function setExactStats(stats) {
+        if (!stats) return;
+        Object.entries(stats).forEach(([key, value]) => {
+            if (key === 'total') return;
+            const btn = filters.querySelector(`[data-filter="${key}"]`);
+            const count = btn && btn.querySelector('.records-tab-count');
+            if (count) count.textContent = value;
+        });
+        const allCount = filters.querySelector('[data-filter="all"] .records-tab-count');
+        if (allCount) allCount.textContent = stats.total;
+        refreshHeroStats(stats);
+    }
+
+    function statusTimelineText(record) {
+        if (record.status === 'picked_up') return record.pickup_date ? `已领取 · ${record.pickup_date}` : '已领取';
+        if (record.status === 'returned') return record.return_date ? `已归还 · ${record.return_date}` : '已归还';
+        if (record.status === 'rejected') return record.reject_date ? `已拒绝 · ${record.reject_date}` : '已拒绝';
+        if (record.status === 'expired') return record.reject_date ? `已逾期 · ${record.reject_date}` : '已逾期';
+        return '';
+    }
+
+    function statusTimelineClass(status) {
+        if (status === 'picked_up') return 'timeline-step is-done tone-blue';
+        if (status === 'returned') return 'timeline-step is-done tone-green';
+        if (status === 'rejected') return 'timeline-step is-done tone-red';
+        if (status === 'expired') return 'timeline-step is-done tone-orange';
+        return 'timeline-step';
+    }
+
+    function syncRecord(record) {
+        const card = list.querySelector(`[data-record-id="${record.id}"]`);
+        if (!card || card.dataset.status === record.status) return false;
+        const title = card.querySelector('a')?.textContent.trim() || '该书';
+        setStatus(card, record.status);
+        setActions(card, record.status, String(record.id), title);
+        const progress = card.querySelector('.record-progress');
+        if (progress && record.status !== 'picked_up') progress.remove();
+        appendTimelineStep(card, statusTimelineClass(record.status), statusTimelineText(record));
+        return true;
+    }
+
+    let syncInFlight = false;
+    let userActionInFlight = false;
+    async function syncRecords() {
+        if (syncInFlight || userActionInFlight || confirmEl.classList.contains('is-open') || document.hidden) return;
+        syncInFlight = true;
+        try {
+            const resp = await fetch('/borrow_records/status', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (!resp.ok) return;
+            const data = await resp.json();
+            if (!data.success || !Array.isArray(data.records)) return;
+            let changed = false;
+            data.records.forEach(record => { changed = syncRecord(record) || changed; });
+            setExactStats(data.stats);
+            list.dataset.syncState = 'ok';
+            if (changed) applyFilter(currentFilter);
+        } catch (err) {
+            list.dataset.syncState = 'stale';
+        } finally {
+            syncInFlight = false;
+        }
+    }
+
+    window.setInterval(syncRecords, 15000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) syncRecords(); });
+
+    list.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.record-action-btn');
+        if (!btn) return;
+        const actionKey = btn.dataset.action;
+        const cfg = ACTIONS[actionKey];
+        if (!cfg) return;
+
+        const recordId = btn.dataset.recordId;
+        const bookTitle = btn.dataset.bookTitle || '该书';
+        userActionInFlight = true;
+        const ok = await openConfirm(cfg.confirm(bookTitle));
+        if (!ok) {
+            userActionInFlight = false;
+            return;
+        }
+
+        const card = list.querySelector(`[data-record-id="${recordId}"]`);
+        if (!card || card.dataset.status !== cfg.expectedStatus) {
+            userActionInFlight = false;
+            await syncRecords();
+            return;
+        }
+        const allBtns = card.querySelectorAll('.record-action-btn');
+        allBtns.forEach(b => (b.disabled = true));
+
+        try {
+            const resp = await fetch(cfg.url(recordId), {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-Token': page.dataset.borrowActionCsrf
+                }
+            });
+            const data = await resp.json();
+            if (data.success) {
+                toast(cfg.successMsg, 'success');
+                Object.entries(cfg.statDelta || {}).forEach(([k, d]) => bumpStat(k, d));
+                bumpHeroFromDelta(cfg.statDelta);
+                updateCard(card, cfg);
+                applyFilter(currentFilter);
+            } else {
+                toast(data.message || '操作失败', 'error');
+                allBtns.forEach(b => (b.disabled = false));
+            }
+        } catch (err) {
+            toast('网络错误，请稍后重试', 'error');
+            allBtns.forEach(b => (b.disabled = false));
+        } finally {
+            userActionInFlight = false;
+        }
+    });
+})();
+</script>
+{% endblock %}

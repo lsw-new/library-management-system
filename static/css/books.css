@@ -1,0 +1,140 @@
+/* ==================== 图书列表页 ==================== */
+@keyframes books-fade-in {
+    from { opacity: 0.08; transform: translateY(22px); filter: blur(3px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.animate-fade-in { animation: books-fade-in 0.34s cubic-bezier(0.22, 1, 0.36, 1); }
+.is-results-transitioning {
+    opacity: 0.28;
+    transform: translateY(10px);
+    filter: blur(1.5px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease, filter 0.22s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-in { animation: none; }
+    .is-results-transitioning { opacity: 0.6; transform: none; filter: none; }
+}
+
+/* 图书卡片 */
+.book-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid rgba(236, 72, 153, 0.08);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+}
+.book-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(236, 72, 153, 0.25);
+    box-shadow: 0 18px 40px -20px rgba(236, 72, 153, 0.35),
+                0 8px 16px -8px rgba(139, 92, 246, 0.2);
+}
+.book-card-cover {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
+}
+.book-card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+.book-card:hover .book-card-cover img { transform: scale(1.06); }
+.book-card-cover img.lazy-img { opacity: 0; }
+.book-card-cover img.lazy-img.is-loaded { opacity: 1; }
+.book-card-status {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 999px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.book-card-status.is-available {
+    background: rgba(220, 252, 231, 0.92);
+    color: #166534;
+}
+.book-card-status.is-unavailable {
+    background: rgba(254, 226, 226, 0.92);
+    color: #991b1b;
+}
+.book-card-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* 骨架屏 */
+.book-skeleton {
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(236, 72, 153, 0.08);
+}
+.book-skeleton-cover { aspect-ratio: 3 / 4; }
+.skeleton-shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(253, 242, 248, 0.5) 0%,
+        rgba(243, 232, 255, 0.9) 50%,
+        rgba(253, 242, 248, 0.5) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .skeleton-shimmer { animation: none; }
+}
+
+/* 工具条芯片 */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    gap: 6px;
+    padding: 0.625rem 0.875rem;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(131, 24, 67, 0.7);
+    background: #fff;
+    border: 1px solid rgba(236, 72, 153, 0.12);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.chip:hover {
+    color: #EC4899;
+    border-color: rgba(236, 72, 153, 0.4);
+    background: rgba(253, 242, 248, 0.6);
+}
+.chip.is-active {
+    color: #fff;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    border-color: transparent;
+    box-shadow: 0 6px 14px -4px rgba(168, 85, 247, 0.5);
+}
+
+/* 图书结果区数量徽章过渡 */
+[data-category] { transition: transform 0.25s ease; }
+[data-category].scale-110 { transform: scale(1.15); }

@@ -1,0 +1,234 @@
+{# 图书详情页 #}
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} - 景艺大图书馆{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/book-detail.css') }}">
+{% endblock %}
+
+{% set cover_url = url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') %}
+{% set stock_pct = (book.stock * 100 // book.total) if book.total else 0 %}
+
+{% block content %}
+<div id="bookDetailPageState"
+     data-book-id="{{ book.id }}"
+     data-book-title="{{ book.title }}"
+     data-book-stock="{{ book.stock }}"
+     data-book-total="{{ book.total }}"
+     data-can-borrow="{{ 'true' if current_user.is_authenticated and not current_user.is_admin else 'false' }}"
+     class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    {# 顶部面包屑 #}
+    <nav class="flex items-center gap-2 text-xs sm:text-sm text-brand-deep/60 mb-4 sm:mb-6">
+        <a href="{{ url_for('user.books') }}" class="hover:text-brand-primary transition-colors font-semibold">馆藏资源</a>
+        {% if book.category %}
+        <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+        <a href="{{ url_for('user.books', category=book.category) }}" class="hover:text-brand-primary transition-colors">{{ book.category }}</a>
+        {% endif %}
+        <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+        <span class="text-brand-deep/40 truncate">{{ book.title }}</span>
+    </nav>
+
+    {# Hero 区:封面 + 信息 #}
+    <section class="detail-hero p-4 sm:p-6 lg:p-10"
+             style="--detail-cover: url('{{ cover_url }}');">
+        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,300px)_1fr] gap-6 lg:gap-10">
+
+            {# ========== 左侧:封面 + 操作 ========== #}
+            <div class="lg:sticky lg:top-24 lg:self-start space-y-5">
+                <div class="detail-cover-shell">
+                    <img src="{{ cover_url }}" alt="{{ book.title }}" loading="eager" decoding="async">
+                </div>
+
+                {# 状态徽章保留 ID 以兼容轮询脚本 #}
+                <div class="flex justify-center">
+                    {% if book.available %}
+                    <span id="bookDetailAvailabilityBadge" class="flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="bookDetailAvailabilityIconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span id="bookDetailAvailabilityText">可借阅</span>
+                    </span>
+                    {% else %}
+                    <span id="bookDetailAvailabilityBadge" class="flex items-center px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="bookDetailAvailabilityIconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span id="bookDetailAvailabilityText">已借出</span>
+                    </span>
+                    {% endif %}
+                </div>
+
+                {# 操作按钮 #}
+                <div id="bookDetailActionGroup" class="space-y-2.5">
+                    <div id="bookDetailBorrowButtonSlot">
+                        {% if book.available and current_user.is_authenticated and not current_user.is_admin %}
+                        <button type="button"
+                                id="bookDetailBorrowButton"
+                                data-book-id="{{ book.id }}"
+                                data-book-title="{{ book.title }}"
+                                data-book-stock="{{ book.stock }}"
+                                onclick="showBorrowModalFromData(this)"
+                                class="detail-action-primary">
+                            预约借阅
+                        </button>
+                        {% endif %}
+                    </div>
+                    <a href="{{ url_for('user.books') }}" class="detail-action-secondary block">返回列表</a>
+                </div>
+            </div>
+
+            {# ========== 右侧:标题 + 元数据 + 库存 ========== #}
+            <div class="space-y-6">
+                {# 标题块 #}
+                <header>
+                    {% if book.category %}
+                    <a href="{{ url_for('user.books', category=book.category) }}"
+                       class="inline-flex items-center gap-1.5 px-3 py-1 mb-3 text-xs font-bold text-brand-primary bg-white/70 rounded-full hover:bg-white transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                        {{ book.category }}
+                    </a>
+                    {% endif %}
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-brand-deep leading-tight">{{ book.title }}</h1>
+                    <p class="mt-3 text-base sm:text-lg text-brand-deep/70">
+                        <span class="font-semibold">{{ book.author }}</span>
+                        {% if book.publisher %}<span class="mx-2 text-brand-deep/30">·</span><span>{{ book.publisher }}</span>{% endif %}
+                    </p>
+                </header>
+
+                {# 关键统计 #}
+                <div class="grid grid-cols-3 gap-3 sm:gap-4">
+                    <div class="detail-stat" data-stock-pct-card>
+                        <p class="detail-stat-label">库存</p>
+                        <p class="detail-stat-value">
+                            <span id="detailStockNow">{{ book.stock }}</span><span class="text-brand-deep/40 text-base font-sans">/{{ book.total }}</span>
+                        </p>
+                        <div class="detail-progress mt-2">
+                            <div id="detailStockBar" class="detail-progress-bar" style="width: {{ stock_pct }}%"></div>
+                        </div>
+                    </div>
+                    <div class="detail-stat">
+                        <p class="detail-stat-label">借阅总次数</p>
+                        <p class="detail-stat-value">{{ borrow_count }}</p>
+                        <p class="text-[11px] text-brand-deep/50 mt-1">累计借出</p>
+                    </div>
+                    <div class="detail-stat">
+                        <p class="detail-stat-label">馆藏位置</p>
+                        <p class="detail-stat-value text-xl sm:text-2xl truncate" title="{{ book.location or '未设置' }}">
+                            {{ book.location or '未设置' }}
+                        </p>
+                        <p class="text-[11px] text-brand-deep/50 mt-1">实体位置</p>
+                    </div>
+                </div>
+
+                {# 元数据卡 #}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="detail-meta-card">
+                        <div class="detail-meta-icon">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="detail-meta-label">作者</p>
+                            <p class="detail-meta-value">{{ book.author }}</p>
+                        </div>
+                    </div>
+                    <div class="detail-meta-card">
+                        <div class="detail-meta-icon">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="detail-meta-label">ISBN</p>
+                            <p class="detail-meta-value font-mono text-sm">{{ book.isbn or '—' }}</p>
+                        </div>
+                    </div>
+                    <div class="detail-meta-card">
+                        <div class="detail-meta-icon">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="detail-meta-label">出版社</p>
+                            <p class="detail-meta-value">{{ book.publisher or '未提供' }}</p>
+                        </div>
+                    </div>
+                    <div class="detail-meta-card">
+                        <div class="detail-meta-icon">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="detail-meta-label">分类</p>
+                            <p class="detail-meta-value">{{ book.category or '未分类' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {# 库存详情 (保留 ID 以兼容轮询脚本) #}
+                <div class="bg-white/70 rounded-2xl p-4 sm:p-5 border border-pink-100">
+                    <p id="bookDetailInventoryText" class="text-sm sm:text-base font-semibold text-brand-deep">
+                        {% if book.available %}可借阅 (剩余 {{ book.stock }}/{{ book.total }} 本){% else %}已借出{% endif %}
+                    </p>
+                    <p class="text-xs text-brand-deep/50 mt-1">
+                        库存数据每 3 秒同步一次,确保你看到的是最新状态
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ========== 相关推荐 ========== #}
+    {% if related_books %}
+    <section class="mt-10 sm:mt-12">
+        <div class="flex items-end justify-between mb-4 sm:mb-5">
+            <div>
+                <h2 class="text-xl sm:text-2xl font-heading font-bold text-brand-deep">同类好书</h2>
+                <p class="text-xs sm:text-sm text-brand-deep/50 mt-1">来自《{{ book.category }}》分类下的其他作品</p>
+            </div>
+            <a href="{{ url_for('user.books', category=book.category) }}"
+               class="text-xs sm:text-sm font-semibold text-brand-primary hover:text-pink-600 transition-colors">
+                查看全部 →
+            </a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {% for rel in related_books %}
+            <a href="{{ url_for('user.book_detail', book_id=rel.id) }}" class="related-card group">
+                <div class="related-card-cover">
+                    <img src="{{ url_for('static', filename='images/' + rel.image) if rel.image else url_for('static', filename='images/default-book.jpg') }}"
+                         alt="{{ rel.title }}" loading="lazy" decoding="async">
+                </div>
+                <div class="p-3">
+                    <h3 class="text-sm font-heading font-semibold text-brand-deep line-clamp-2 group-hover:text-brand-primary transition-colors">{{ rel.title }}</h3>
+                    <p class="text-xs text-brand-deep/50 mt-1 truncate">{{ rel.author }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
+
+{% include '_borrow_modal.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 同步库存进度条与计数 — 监听 bookDetailPageState data-* 变化
+(function () {
+    const state = document.getElementById('bookDetailPageState');
+    if (!state) return;
+    const bar = document.getElementById('detailStockBar');
+    const stockNow = document.getElementById('detailStockNow');
+    if (!bar && !stockNow) return;
+
+    const sync = () => {
+        const stock = parseInt(state.dataset.bookStock, 10) || 0;
+        const total = parseInt(state.dataset.bookTotal, 10) || 0;
+        if (stockNow) stockNow.textContent = String(stock);
+        if (bar) bar.style.width = (total > 0 ? Math.round((stock * 100) / total) : 0) + '%';
+    };
+
+    new MutationObserver(sync).observe(state, {
+        attributes: true,
+        attributeFilter: ['data-book-stock', 'data-book-total']
+    });
+})();
+</script>
+{% endblock %}

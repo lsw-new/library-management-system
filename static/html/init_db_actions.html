@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+{% block title %}数据库初始化操作 - 景艺大图书馆{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/setup.css') }}">
+{% endblock %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block main_class %}flex-1 flex flex-col{% endblock %}
+{% block content_wrapper %}flex-1 flex{% endblock %}
+
+{% block content %}
+
+<div class="elysia-scene relative flex-1 flex items-start justify-center px-4 py-10 overflow-y-auto">
+
+    <!-- 渐变背景 -->
+    <div class="absolute inset-0 bg-[linear-gradient(135deg,_#FFE4F1_0%,_#FFF0F5_30%,_#F3E5F5_65%,_#FCE4EC_100%)]"></div>
+    <div class="pointer-events-none absolute -top-24 -left-16 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,_#FFB6D9_0%,_transparent_70%)] opacity-50 blur-2xl"></div>
+    <div class="pointer-events-none absolute -bottom-32 -right-20 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,_#E8D5F2_0%,_transparent_70%)] opacity-60 blur-2xl"></div>
+    <div class="pointer-events-none absolute top-1/3 right-1/4 h-72 w-72 rounded-full bg-[radial-gradient(circle,_#FFD9E8_0%,_transparent_70%)] opacity-40 blur-3xl"></div>
+
+    <!-- 浮动花瓣 -->
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+        <svg class="setup-float-petal text-purple-300/50 h-5 w-5" style="left:10%;--dur:15s;--delay:1s;--dx:35px;--spin:320deg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        <svg class="setup-float-petal text-pink-300/40 h-4 w-4" style="left:30%;--dur:19s;--delay:4s;--dx:-20px;--spin:400deg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        <svg class="setup-float-petal text-fuchsia-200/55 h-6 w-6" style="left:60%;--dur:14s;--delay:2s;--dx:45px;--spin:300deg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        <svg class="setup-float-petal text-rose-300/35 h-3 w-3" style="left:80%;--dur:17s;--delay:7s;--dx:-30px;--spin:370deg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        <svg class="setup-float-petal text-purple-200/45 h-4 w-4" style="left:45%;--dur:16s;--delay:5s;--dx:25px;--spin:350deg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+    </div>
+
+    <!-- 顶部回主页 -->
+    <a href="/" class="absolute top-5 right-5 z-20 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/50 backdrop-blur-md px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-pink-700/70 transition-all hover:bg-white/80 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-6px_rgba(236,72,153,0.25)]">
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        首页
+    </a>
+
+    <!-- 主卡片 -->
+    <div class="relative z-10 w-full max-w-4xl my-4 setup-animate-card">
+        <div class="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-pink-300/40 via-fuchsia-200/30 to-purple-300/40 blur-xl"></div>
+
+        <div class="relative rounded-[28px] border border-white/70 bg-white/75 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(236,72,153,0.25),0_0_0_1px_rgba(255,255,255,0.6)_inset] p-7 lg:p-9">
+
+            <!-- 顶部彩带 -->
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center gap-1">
+                <span class="h-1 w-8 rounded-full bg-gradient-to-r from-transparent to-purple-300"></span>
+                <svg class="h-5 w-5 text-purple-400 drop-shadow-[0_2px_4px_rgba(168,85,247,0.4)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                <span class="h-1 w-8 rounded-full bg-gradient-to-l from-transparent to-purple-300"></span>
+            </div>
+
+            <!-- Logo + 标题 -->
+            <div class="flex flex-col items-center mb-5 setup-animate-up setup-stagger-1">
+                <div class="relative mb-3">
+                    <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-300 to-fuchsia-300 blur-md opacity-60"></div>
+                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-400 via-fuchsia-400 to-pink-400 shadow-[0_10px_30px_-8px_rgba(168,85,247,0.5)]">
+                        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                </div>
+                <p class="font-heading text-lg font-bold text-pink-900/90 tracking-wide">景艺大图书馆</p>
+                <p class="mt-1 text-[10px] uppercase tracking-[0.32em] text-purple-400/70">步骤 2 · 初始化操作</p>
+            </div>
+
+            <!-- 步骤指示器 -->
+            <div class="flex items-center justify-center gap-2 mb-5 max-w-md mx-auto setup-animate-up setup-stagger-2">
+                <div class="flex items-center gap-2 rounded-2xl border border-emerald-200/80 bg-white/90 px-4 py-2.5 shadow-sm ring-2 ring-emerald-100/60">
+                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-teal-400 text-white text-xs font-bold shadow-sm">
+                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                    </span>
+                    <div class="hidden sm:block">
+                        <p class="text-xs font-bold text-emerald-700 leading-none">连接配置</p>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-emerald-500 mt-0.5">已完成</p>
+                    </div>
+                </div>
+                <div class="setup-step-line" style="--line-from:#6ee7b7;--line-to:#c4b5fd"></div>
+                <div class="flex items-center gap-2 rounded-2xl border border-purple-300/60 bg-white/90 px-4 py-2.5 shadow-sm ring-2 ring-purple-200/50">
+                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-purple-400 to-fuchsia-400 text-white text-xs font-bold shadow-sm">2</span>
+                    <div class="hidden sm:block">
+                        <p class="text-xs font-bold text-pink-900/80 leading-none">初始化执行</p>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-purple-500 mt-0.5">执行中</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 状态栏 -->
+            <div class="flex items-center justify-between gap-3 mb-5 rounded-2xl border border-pink-100/60 bg-white/50 px-4 py-2.5 setup-animate-up setup-stagger-3">
+                <div id="pageStatusBadge" class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-[11px] font-black text-amber-700">
+                    <span class="relative flex h-2 w-2">
+                        <span id="pageStatusPing" class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
+                        <span id="pageStatusDot" class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+                    </span>
+                    <span id="pageStatusText">正在加载预览...</span>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] text-pink-700/50">
+                    <span class="font-medium">目标库：</span>
+                    <span id="heroDbName" class="font-mono font-bold text-pink-900/70">{{ db_defaults.database }}</span>
+                </div>
+            </div>
+
+            <!-- 消息控制台 -->
+            <div id="messageConsole" class="hidden rounded-2xl border p-4 mb-5" role="status" aria-live="polite" aria-atomic="true">
+                <div class="flex items-start gap-3">
+                    <div id="messageConsoleIcon" class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl"></div>
+                    <div class="flex-1 min-w-0">
+                        <p id="messageConsoleTitle" class="text-sm font-bold"></p>
+                        <p id="messageConsoleText" class="mt-1 text-sm leading-6"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未配置警告 -->
+            <div id="notConfiguredAlert" class="hidden mb-5 rounded-2xl border border-amber-200 bg-amber-50/60 p-5 setup-animate-up">
+                <div class="flex items-start gap-3">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4a2 2 0 00-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-bold text-amber-800">尚未配置可用的数据库连接</h4>
+                        <p class="mt-1 mb-3 text-[11px] leading-5 text-amber-800/70">无法读取已保存的连接配置，请先返回上一步完成连接验证。</p>
+                        <a href="{{ url_for('setup.init_db_page') }}"
+                           class="inline-flex min-h-[36px] items-center gap-2 rounded-xl bg-amber-600 px-4 py-2 text-xs font-bold text-white transition-all hover:bg-amber-700 hover:-translate-y-0.5">
+                            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
+                            </svg>
+                            返回连接配置
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主内容：左侧操作列 + 右侧信息栏 -->
+            <div class="flex flex-col gap-6 lg:flex-row lg:items-stretch setup-animate-up setup-stagger-4">
+
+            <!-- 左侧主操作列 -->
+            <section class="flex-1 min-w-0 flex flex-col">
+                <div class="mb-4 flex items-start justify-between gap-3">
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-purple-500/70">操作面板</p>
+                        <h3 class="mt-0.5 text-base font-bold text-pink-900/80">初始化操作</h3>
+                        <p id="actionsHint" class="mt-0.5 text-xs text-pink-700/50">正在校验连接，请稍候...</p>
+                    </div>
+                    <span id="actionsBadge" class="inline-flex shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] font-black text-slate-500">
+                        <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+                        <span>校验中</span>
+                    </span>
+                </div>
+
+                <!-- 环境状态预览 -->
+                <div class="flex-1 rounded-2xl border border-pink-100/60 bg-gradient-to-br from-pink-50/40 to-purple-50/20 p-5 mb-4 flex flex-col">
+                    <div class="mb-4 flex items-center justify-between gap-3">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-pink-500/60">实时预览</p>
+                            <h4 class="mt-0.5 text-sm font-bold text-pink-900/80">环境状态预览</h4>
+                        </div>
+                        <span id="previewDbNamePill" class="rounded-full border border-pink-100 bg-white px-3 py-1 text-[10px] font-black uppercase tracking-widest text-pink-600 shadow-sm">{{ db_defaults.database }}</span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="rounded-xl border border-white bg-white/80 p-4">
+                            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-pink-700/40">连接状态</p>
+                            <div class="mt-2 flex items-center gap-2">
+                                <span id="previewStatusDot" class="h-2.5 w-2.5 rounded-full bg-amber-400 transition-colors duration-300"></span>
+                                <p id="previewStatusText" class="text-xs font-bold text-pink-900/80">正在检测...</p>
+                            </div>
+                            <p id="previewStatusHint" class="mt-1.5 text-[10px] leading-4 text-pink-700/50">读取已保存配置中</p>
+                        </div>
+                        <div class="rounded-xl border border-white bg-white/80 p-4">
+                            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-pink-700/40">目标数据库</p>
+                            <p id="previewDbName" class="mt-2 truncate font-mono text-xs font-bold text-pink-900/80">{{ db_defaults.database }}</p>
+                            <p id="previewExistenceValue" class="mt-1.5 text-[10px] leading-4 text-pink-700/50">等待检测</p>
+                        </div>
+                        <div class="rounded-xl border border-white bg-white/80 p-4">
+                            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-pink-700/40">发现的数据表</p>
+                            <div class="mt-2 flex items-center justify-between gap-2">
+                                <p id="previewTableCount" class="text-xs font-bold text-pink-900/80">0 张表</p>
+                                <span id="previewTableCountBadge" class="rounded-full bg-white px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.18em] text-slate-500 shadow-sm">未检测</span>
+                            </div>
+                            <p id="previewHint" class="mt-1.5 text-[10px] leading-4 text-pink-700/50">尚未生成数据库概览。</p>
+                        </div>
+                    </div>
+                    <div id="previewTableList" class="mt-3 flex flex-wrap gap-1.5"></div>
+                </div>
+
+                <!-- 操作卡片 -->
+                <div class="mt-auto grid gap-3 sm:grid-cols-2">
+                    <!-- 同步表结构 -->
+                    <div class="group flex flex-col rounded-2xl border border-pink-100/60 bg-white/70 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-purple-200/60 hover:shadow-[0_12px_28px_-8px_rgba(168,85,247,0.15)]">
+                        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-600 transition-transform duration-200 group-hover:scale-105">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                            </svg>
+                        </div>
+                        <h4 class="mb-1 text-sm font-bold text-pink-900/80">同步表结构</h4>
+                        <p class="mb-4 text-[11px] leading-5 text-pink-700/55 flex-1">创建图书、用户、借阅记录等核心业务表，适合首次部署或重建结构。</p>
+                        <button id="createTablesButton" type="button" disabled aria-disabled="true"
+                                class="inline-flex w-full min-h-[42px] items-center justify-center gap-2 rounded-xl bg-pink-900/90 px-4 py-2.5 text-xs font-bold text-white transition-all hover:bg-pink-950 hover:-translate-y-0.5 hover:shadow-[0_6px_16px_-4px_rgba(131,24,67,0.3)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-pink-900/90 disabled:hover:translate-y-0 disabled:hover:shadow-none">
+                            立即同步表结构
+                        </button>
+                    </div>
+
+                    <!-- 导入演示数据 -->
+                    <div class="group flex flex-col rounded-2xl border border-pink-100/60 bg-white/70 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-pink-300/60 hover:shadow-[0_12px_28px_-8px_rgba(236,72,153,0.15)]">
+                        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-pink-100 text-pink-600 transition-transform duration-200 group-hover:scale-105">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </div>
+                        <h4 class="mb-1 text-sm font-bold text-pink-900/80">导入演示数据</h4>
+                        <p class="mb-4 text-[11px] leading-5 text-pink-700/55 flex-1">注入预设图书、管理员与普通用户账号，便于快速联调与功能演示。包含管理员账号 admin / admin123，普通用户 user1 / user123，以及多本图书与借阅记录样例。</p>
+                        <button id="insertTestDataButton" type="button" disabled aria-disabled="true"
+                                class="setup-shimmer-btn elysia-btn group/btn relative inline-flex w-full min-h-[42px] items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-2.5 text-xs font-bold text-white transition-all hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0">
+                            <span class="absolute inset-0 bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400"></span>
+                            <span class="absolute inset-0 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 opacity-0 transition-opacity duration-500 group-hover/btn:opacity-100"></span>
+                            <span class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/80 to-transparent"></span>
+                            <span class="relative z-10">导入演示数据</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 右侧信息栏 -->
+            <aside class="lg:w-[280px] lg:shrink-0 flex flex-col gap-4 setup-animate-up setup-stagger-5">
+                <!-- 演示凭据 -->
+                <div class="rounded-2xl border border-pink-100/60 bg-gradient-to-br from-pink-50/40 to-purple-50/20 p-5">
+                    <div class="mb-3 flex items-center justify-between gap-3">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-pink-500/60">账号凭据</p>
+                            <h4 class="mt-0.5 text-sm font-bold text-pink-900/80">演示环境凭据</h4>
+                        </div>
+                        <span id="credentialsStatusBadge" class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-slate-500 transition-all duration-300">未导入</span>
+                    </div>
+                    <p id="credentialsHint" class="mb-3 text-[11px] leading-5 text-pink-700/55">执行"导入演示数据"后，以下默认账号将被创建并可直接登录。</p>
+                    <div class="space-y-2">
+                        <div class="rounded-xl border border-white bg-white/80 p-3">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="flex h-5 w-5 items-center justify-center rounded-md bg-purple-100 text-purple-600">
+                                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                </span>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-pink-700/50">管理员</p>
+                            </div>
+                            <p id="adminCredentialValue" class="break-all font-mono text-xs font-semibold text-pink-900/80">admin / admin123（导入后可用）</p>
+                        </div>
+                        <div class="rounded-xl border border-white bg-white/80 p-3">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="flex h-5 w-5 items-center justify-center rounded-md bg-pink-100 text-pink-600">
+                                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                </span>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-pink-700/50">普通用户</p>
+                            </div>
+                            <p id="userCredentialValue" class="break-all font-mono text-xs font-semibold text-pink-900/80">user1 / user123（导入后可用）</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 危险区 -->
+                <div class="rounded-2xl border-2 border-dashed border-rose-200/80 bg-rose-50/30 p-4">
+                    <div class="flex items-center gap-2.5 mb-2.5">
+                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-rose-100 text-rose-600">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4a2 2 0 00-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-rose-600">危险操作</p>
+                            <h4 class="text-xs font-bold text-rose-700">完全重置数据库</h4>
+                        </div>
+                    </div>
+                    <p class="mb-3 text-[10px] leading-4 text-rose-700/70">清空全部表与业务数据，<strong>不可撤销</strong>。</p>
+                    <button id="resetDatabaseButton" type="button" disabled aria-disabled="true"
+                            class="inline-flex w-full min-h-[38px] items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-2 text-xs font-bold text-white transition-all hover:bg-rose-700 hover:-translate-y-0.5 hover:shadow-[0_6px_16px_-4px_rgba(225,29,72,0.3)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-rose-600 disabled:hover:translate-y-0 disabled:hover:shadow-none">
+                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3"/>
+                        </svg>
+                        重置数据库
+                    </button>
+                </div>
+
+                <!-- 完成入口 -->
+                <div id="finishArea" class="hidden mt-auto rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50/50 p-5">
+                    <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-[0_6px_16px_-4px_rgba(16,185,129,0.4)]">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-700/70">全部就绪</p>
+                    <h4 class="mt-0.5 text-sm font-bold text-emerald-900">初始化已完成</h4>
+                    <p class="mt-1 mb-4 text-[11px] leading-4 text-emerald-800/70">数据库与演示数据均已就绪，现在可以进入系统首页继续使用。</p>
+                    <a href="{{ url_for('user.index') }}"
+                       class="inline-flex w-full min-h-[42px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_12px_-3px_rgba(16,185,129,0.35)] transition-all hover:from-emerald-700 hover:to-teal-700 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgba(16,185,129,0.4)]">
+                        <span>进入主页面</span>
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5-5 5M6 7l5 5-5 5"/>
+                        </svg>
+                    </a>
+                </div>
+            </aside>
+            <!-- /右侧信息栏 -->
+
+            </div>
+            <!-- /主内容 -->
+
+            <!-- 返回连接配置 -->
+            <div class="mt-5 flex items-center justify-between gap-3 border-t border-pink-100/60 pt-4">
+                <p class="text-[11px] text-pink-700/40">需要重新调整连接参数？</p>
+                <a href="{{ url_for('setup.init_db_page') }}"
+                   class="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl border border-pink-200/60 bg-white/60 px-4 py-2 text-xs font-bold text-pink-700/70 transition-all hover:border-pink-300 hover:bg-white hover:text-pink-600 hover:-translate-y-0.5">
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
+                    </svg>
+                    返回连接配置
+                </a>
+            </div>
+
+            <!-- 底部签名 -->
+            <p class="mt-7 text-center font-mono text-[10px] uppercase tracking-[0.32em] text-pink-400/45 setup-animate-fade setup-stagger-5">
+                Step 2 of 2 &middot; System Bootstrap
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+window.setupConfig = {
+    csrfToken: {{ setup_action_csrf_token|tojson }}
+};
+</script>
+<script src="{{ url_for('static', filename='js/init-db-shared.js') }}"></script>
+<script src="{{ url_for('static', filename='js/init-db-actions.js') }}"></script>
+{% endblock %}

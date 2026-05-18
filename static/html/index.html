@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% block title %}首页 - 景艺大图书馆{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- ============ 加载占位 ============ -->
+<div id="page-loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-bg">
+    <div class="text-center space-y-4">
+        <div class="relative w-16 h-16 mx-auto">
+            <div class="absolute inset-0 rounded-full border-2 border-brand-primary/15"></div>
+            <div class="absolute inset-0 rounded-full border-2 border-transparent border-t-brand-primary animate-spin"></div>
+            <div class="absolute inset-2 rounded-full border-2 border-transparent border-b-brand-accent" style="animation:spin-rev 1.5s linear infinite;"></div>
+        </div>
+        <p class="font-heading font-bold text-brand-deep">景艺大图书馆</p>
+        <p class="text-xs text-brand-deep/40">正在为您打开知识之门...</p>
+    </div>
+</div>
+
+<div id="main-content" class="opacity-0 space-y-16 md:space-y-24">
+
+    <!-- ==================== Hero ==================== -->
+    <section class="relative">
+        <!-- 背景柔光 -->
+        <div class="pointer-events-none absolute -top-20 right-0 h-[520px] w-[520px] rounded-full bg-brand-primary/10 blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-24 -left-20 h-[420px] w-[420px] rounded-full bg-brand-accent/10 blur-3xl"></div>
+
+        <div class="relative grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+
+            <!-- 左侧文字 -->
+            <div class="space-y-7">
+                <h1 data-reveal="hero" data-delay="0" class="font-heading font-bold leading-[1.05] text-brand-deep reveal-hidden" style="font-size:clamp(2.75rem,6.2vw,5.25rem);">
+                    在书页之间<br>
+                    <span class="italic relative inline-block">
+                        <span class="bg-gradient-to-r from-brand-primary via-rose-500 to-brand-accent bg-clip-text text-transparent">遇见自己</span>
+                        <svg class="absolute -bottom-2 left-0 w-full" height="14" viewBox="0 0 320 14" fill="none" preserveAspectRatio="none">
+                            <path d="M2 9C70 3 160 3 318 8" stroke="url(#under)" stroke-width="3" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="under" x1="0" y1="0" x2="320" y2="0">
+                                    <stop offset="0" stop-color="#EC4899"/>
+                                    <stop offset="1" stop-color="#8B5CF6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </span>
+                </h1>
+
+                <p data-reveal="hero" data-delay="1" class="max-w-xl text-base leading-[1.85] text-brand-deep/65 reveal-hidden">
+                    景艺大图书馆为全校师生提供便捷的图书检索、在线预约与借阅管理服务。<br class="hidden md:block">
+                    借一本好书，开一扇窗 — 从这里开始你的阅读旅程。
+                </p>
+
+                <!-- CTA -->
+                <div data-reveal="hero" data-delay="2" class="flex flex-wrap gap-3 pt-1 reveal-hidden">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('user.books') }}" class="btn-primary group inline-flex items-center gap-3 rounded-2xl px-7 py-4 text-sm font-bold text-white shadow-pink-lg">
+                        进入馆藏书库
+                        <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5-5 5M6 7l5 5-5 5"/></svg>
+                    </a>
+                    <a href="{{ url_for('user.borrow_records') }}" class="inline-flex items-center gap-2 rounded-2xl border-2 border-pink-100 bg-white/70 px-6 py-4 text-sm font-bold text-brand-deep/75 transition-all hover:border-brand-primary/40 hover:text-brand-primary backdrop-blur-sm">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                        借阅足迹
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn-primary group inline-flex items-center gap-3 rounded-2xl px-7 py-4 text-sm font-bold text-white shadow-pink-lg">
+                        读者登录
+                        <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5-5 5M6 7l5 5-5 5"/></svg>
+                    </a>
+                    <a href="{{ url_for('auth.register') }}" class="inline-flex items-center rounded-2xl border-2 border-brand-primary/25 bg-white/60 px-7 py-4 text-sm font-bold text-brand-primary transition-all hover:bg-brand-primary/5 hover:border-brand-primary/40 backdrop-blur-sm">注册账号</a>
+                    <a href="{{ url_for('user.guest_books') }}" class="inline-flex items-center gap-2 rounded-2xl px-6 py-4 text-sm font-bold text-brand-deep/55 transition-all hover:text-brand-primary">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        游客浏览
+                    </a>
+                    {% endif %}
+                </div>
+
+                <!-- 数据条 -->
+                <div data-reveal="hero" data-delay="3" class="grid grid-cols-3 gap-4 border-t border-pink-100 pt-7 max-w-md reveal-hidden">
+                    <div>
+                        <p class="font-heading text-3xl md:text-4xl font-bold text-brand-deep leading-none">10K<span class="text-brand-primary">+</span></p>
+                        <p class="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-deep/40">馆藏图书</p>
+                    </div>
+                    <div>
+                        <p class="font-heading text-3xl md:text-4xl font-bold text-brand-deep leading-none">50<span class="text-brand-accent">+</span></p>
+                        <p class="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-deep/40">学科分类</p>
+                    </div>
+                    <div>
+                        <p class="font-heading text-3xl md:text-4xl font-bold text-brand-deep leading-none">24/7</p>
+                        <p class="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-deep/40">在线服务</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：CSS 书脊堆插画 -->
+            <div data-reveal="bookspine" class="relative hidden lg:flex items-center justify-center reveal-hidden">
+                <div class="relative w-full max-w-[460px] aspect-square">
+                    <!-- 装饰圆 -->
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-br from-pink-50 via-white to-purple-50 shadow-glass"></div>
+                    <div class="absolute inset-6 rounded-full border border-dashed border-brand-primary/20"></div>
+
+                    <!-- 书脊堆叠 -->
+                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-end gap-2">
+                        <div class="book-spine" style="--c1:#EC4899;--c2:#DB2777;height:240px;width:46px;transform:rotate(-3deg);">
+                            <span class="book-title">阅读之书</span>
+                        </div>
+                        <div class="book-spine" style="--c1:#831843;--c2:#9F1239;height:280px;width:54px;">
+                            <span class="book-title">鸬鹚集</span>
+                        </div>
+                        <div class="book-spine" style="--c1:#F59E0B;--c2:#D97706;height:200px;width:40px;transform:rotate(2deg);">
+                            <span class="book-title">古典</span>
+                        </div>
+                        <div class="book-spine" style="--c1:#8B5CF6;--c2:#6D28D9;height:260px;width:50px;transform:rotate(-1deg);">
+                            <span class="book-title">图书馆</span>
+                        </div>
+                        <div class="book-spine" style="--c1:#FBCFE8;--c2:#F9A8D4;height:220px;width:44px;transform:rotate(4deg);">
+                            <span class="book-title book-title-dark">花期</span>
+                        </div>
+                        <div class="book-spine" style="--c1:#0F172A;--c2:#1E293B;height:250px;width:48px;transform:rotate(-2deg);">
+                            <span class="book-title">经典</span>
+                        </div>
+                    </div>
+
+                    <!-- 环绕标签 -->
+                    <div class="absolute inset-0 orbit-ring" style="animation:orbit 30s linear infinite;">
+                        <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 orbit-tag" style="animation:orbit-counter 30s linear infinite;">
+                            <div class="rounded-2xl bg-white/95 backdrop-blur p-3 shadow-lg shadow-pink-200/40 ring-1 ring-pink-100">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-bold text-brand-deep leading-none">智能检索</p>
+                                        <p class="text-[10px] text-brand-deep/50 mt-1 leading-none">秒速定位</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute inset-0 orbit-ring" style="animation:orbit 30s linear infinite;animation-delay:-15s;">
+                        <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 orbit-tag" style="animation:orbit-counter 30s linear infinite;animation-delay:-15s;">
+                            <div class="rounded-2xl bg-white/95 backdrop-blur p-3 shadow-lg shadow-purple-200/40 ring-1 ring-purple-100">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-accent/10 text-brand-accent">
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-bold text-brand-deep leading-none">在线预约</p>
+                                        <p class="text-[10px] text-brand-deep/50 mt-1 leading-none">手机一点即借</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 服务亮点 ==================== -->
+    <section>
+        <div data-reveal="services" data-delay="0" class="flex items-end justify-between flex-wrap gap-4 mb-8 md:mb-10 reveal-hidden">
+            <div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-primary/70">图书馆服务</p>
+                <h2 class="mt-2 font-heading text-3xl md:text-4xl font-bold text-brand-deep">为每一位读者而设</h2>
+            </div>
+            <p class="max-w-md text-sm leading-7 text-brand-deep/55">从书目检索到借阅归还，每一步都为你打磨得简单流畅。</p>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+            <article data-reveal="services" data-delay="1" class="group relative overflow-hidden rounded-3xl bg-white/80 p-6 shadow-glass ring-1 ring-pink-100 transition-all hover:-translate-y-1 hover:shadow-pink-lg backdrop-blur-sm reveal-hidden">
+                <div class="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-brand-primary/10 blur-2xl transition-opacity group-hover:opacity-100 opacity-50"></div>
+                <div class="relative">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-primary transition-all group-hover:bg-brand-primary group-hover:text-white">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    </div>
+                    <h3 class="mt-5 font-heading text-xl font-bold text-brand-deep">丰富馆藏</h3>
+                    <p class="mt-2 text-sm leading-6 text-brand-deep/55">逾万册纸质与电子图书，覆盖艺术、设计、人文等学科。</p>
+                </div>
+            </article>
+
+            <article data-reveal="services" data-delay="2" class="group relative overflow-hidden rounded-3xl bg-white/80 p-6 shadow-glass ring-1 ring-purple-100 transition-all hover:-translate-y-1 hover:shadow-pink-lg backdrop-blur-sm reveal-hidden">
+                <div class="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-brand-accent/10 blur-2xl transition-opacity group-hover:opacity-100 opacity-50"></div>
+                <div class="relative">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-accent/10 text-brand-accent transition-all group-hover:bg-brand-accent group-hover:text-white">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <h3 class="mt-5 font-heading text-xl font-bold text-brand-deep">智能检索</h3>
+                    <p class="mt-2 text-sm leading-6 text-brand-deep/55">按书名、作者、分类多维查询，结果即时返回。</p>
+                </div>
+            </article>
+
+            <article data-reveal="services" data-delay="3" class="group relative overflow-hidden rounded-3xl bg-white/80 p-6 shadow-glass ring-1 ring-amber-100 transition-all hover:-translate-y-1 hover:shadow-pink-lg backdrop-blur-sm reveal-hidden">
+                <div class="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-amber-400/10 blur-2xl transition-opacity group-hover:opacity-100 opacity-50"></div>
+                <div class="relative">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-400/15 text-amber-600 transition-all group-hover:bg-amber-500 group-hover:text-white">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                    </div>
+                    <h3 class="mt-5 font-heading text-xl font-bold text-brand-deep">在线借阅</h3>
+                    <p class="mt-2 text-sm leading-6 text-brand-deep/55">线上预约、续借、归还提醒一站完成，无需排队。</p>
+                </div>
+            </article>
+
+            <article data-reveal="services" data-delay="4" class="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-primary to-brand-accent p-6 shadow-pink-lg transition-all hover:-translate-y-1 hover:shadow-2xl text-white reveal-hidden">
+                <div class="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-white/15 blur-2xl"></div>
+                <div class="relative">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-white backdrop-blur-sm">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </div>
+                    <h3 class="mt-5 font-heading text-xl font-bold">读者社区</h3>
+                    <p class="mt-2 text-sm leading-6 text-white/80">书评分享、推荐书单、读者动态，让阅读更有共鸣。</p>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ==================== 收尾 CTA ==================== -->
+    {% if not current_user.is_authenticated %}
+    <section data-reveal="services" data-delay="5" class="relative overflow-hidden rounded-3xl md:rounded-[2.5rem] bg-gradient-to-br from-brand-deep via-rose-900 to-brand-accent/90 p-8 md:p-14 text-white shadow-pink-lg reveal-hidden">
+        <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-primary/30 blur-3xl"></div>
+        <div class="pointer-events-none absolute -left-16 -bottom-16 h-56 w-56 rounded-full bg-brand-accent/30 blur-3xl"></div>
+
+        <div class="relative grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-center">
+            <div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-pink-200/80">开始阅读</p>
+                <h2 class="mt-3 font-heading text-3xl md:text-5xl font-bold leading-tight">
+                    准备好<span class="italic text-pink-200">翻开</span>下一本书了吗？
+                </h2>
+                <p class="mt-4 max-w-xl text-sm leading-7 text-pink-100/80">
+                    注册即可解锁完整馆藏检索、个人借阅记录与到期提醒，让每一次阅读都不被遗忘。
+                </p>
+            </div>
+            <div class="flex flex-col gap-3 md:items-end">
+                <a href="{{ url_for('auth.register') }}" class="inline-flex w-full md:w-auto items-center justify-center gap-3 rounded-2xl bg-white px-8 py-4 text-sm font-bold text-brand-deep shadow-xl transition-all hover:bg-pink-50 hover:scale-[1.02]">
+                    立即注册账号
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5-5 5M6 7l5 5-5 5"/></svg>
+                </a>
+                <a href="{{ url_for('auth.login') }}" class="inline-flex w-full md:w-auto items-center justify-center rounded-2xl border-2 border-white/30 bg-white/5 px-8 py-4 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10">
+                    我已有账号 · 登录
+                </a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('page-loader');
+    const main = document.getElementById('main-content');
+
+    function revealPhase(group, baseDelay) {
+        const els = document.querySelectorAll('[data-reveal="' + group + '"]');
+        els.forEach(function(el) {
+            var d = parseInt(el.getAttribute('data-delay') || '0', 10);
+            setTimeout(function() {
+                el.classList.remove('reveal-hidden');
+                el.classList.add('reveal-visible');
+            }, baseDelay + d * 150);
+        });
+        var maxDelay = 0;
+        els.forEach(function(el) {
+            var d = parseInt(el.getAttribute('data-delay') || '0', 10);
+            if (d > maxDelay) maxDelay = d;
+        });
+        return baseDelay + (maxDelay + 1) * 150 + 400;
+    }
+
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            loader.style.opacity = '0';
+            loader.style.transition = 'opacity 0.5s ease';
+            setTimeout(function() {
+                loader.style.display = 'none';
+                main.style.opacity = '1';
+
+                var t1 = revealPhase('hero', 100);
+                revealPhase('bookspine', t1);
+                revealPhase('services', t1);
+            }, 500);
+        }, 300);
+    });
+});
+</script>
+
+{% endblock %}
+</content>
+</invoke>

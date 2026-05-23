@@ -63,3 +63,9 @@ class Config:
         'max_overflow': DB_POOL_MAX_OVERFLOW,
         'pool_timeout': DB_POOL_TIMEOUT_SECONDS,
     }
+
+    # ── Session Cookie 安全配置 ──
+    SESSION_COOKIE_SECURE = is_production()
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    PERMANENT_SESSION_LIFETIME = 43200  # 12小时

@@ -252,5 +252,5 @@
 
 {% block scripts %}
 <script>window.authCsrfToken = {{ auth_action_csrf_token|tojson }};</script>
-<script src="{{ url_for('static', filename='js/register.js') }}?v=3"></script>
+<script src="{{ versioned_url('js/register.js') }}?v=3"></script>
 {% endblock %}

@@ -4,13 +4,14 @@ import time
 from flask import Flask, session, redirect, url_for, flash, request, render_template, jsonify
 from flask_login import current_user, logout_user
 from sqlalchemy import text
-from sqlalchemy.exc import OperationalError, ProgrammingError, DatabaseError
+from sqlalchemy.exc import OperationalError, ProgrammingError, DatabaseError, SQLAlchemyError
 
 logger = logging.getLogger(__name__)
 
 from config import Config
-from extensions import db, login_manager
+from extensions import db, login_manager, socketio
 from utils import cst_now, cleanup_expired_online_users, authenticate_active_session, get_client_ip
+from utils.static_hash import versioned_url
 
 def create_app():
     app = Flask(__name__, template_folder='static/html')
@@ -18,7 +19,7 @@ def create_app():
 
     app.config['UPLOAD_FOLDER'] = 'static/images'
     app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
-    app.config['LOG_FOLDER'] = 'static/logs'
+    app.config['LOG_FOLDER'] = 'logs'
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -27,6 +28,9 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
+    socketio.init_app(app, async_mode='threading')
+
+    app.jinja_env.globals['versioned_url'] = versioned_url
 
     from blueprints.auth import auth_bp
     from blueprints.user import user_bp
@@ -43,6 +47,8 @@ def create_app():
     with app.app_context():
         ensure_runtime_schema()
 
+    import socketio_events  # noqa: F401 — registers @socketio.on handlers
+
     @login_manager.user_loader
     def load_user(user_id):
         from models import User, Admin
@@ -51,7 +57,10 @@ def create_app():
             if user_type == 'admin':
                 return db.session.get(Admin, int(user_id))
             return db.session.get(User, int(user_id))
-        except Exception:
+        except (ValueError, TypeError):
+            return None
+        except SQLAlchemyError:
+            logger.error("load_user 数据库异常 | user_id=%s", user_id, exc_info=True)
             return None
 
     # ── 统一 AJAX 检测 ──
@@ -258,9 +267,30 @@ def create_app():
             return jsonify({'ok': False}), 401
         return jsonify({'ok': True})
 
+    # ── 安全响应头 ──
+    @app.after_request
+    def set_security_headers(response):
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+        response.headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()'
+        response.headers['Content-Security-Policy'] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline' https://webapi.amap.com; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: blob:; "
+            "connect-src 'self' wss: https://restapi.amap.com; "
+            "font-src 'self'; "
+            "frame-src 'none'; "
+            "object-src 'none'; "
+            "base-uri 'self';"
+        )
+        return response
+
     return app
 
 app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
+    app.run(debug=debug_mode, host='0.0.0.0', port=5000, use_reloader=False)

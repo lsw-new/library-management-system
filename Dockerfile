@@ -1,67 +1,37 @@
-# 多阶段构建 - 构建阶段
-FROM python:3.11-slim as builder
+FROM python:3.12-slim AS builder
 
-# 设置构建时环境变量
-ENV PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
-
-# 安装构建依赖
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    default-libmysqlclient-dev \
-    pkg-config \
-    && rm -rf /var/lib/apt/lists/*
-
-# 设置工作目录
-WORKDIR /app
-
-# 复制并安装Python依赖
+WORKDIR /build
 COPY requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt gunicorn
 
-# 生产阶段
-FROM python:3.11-slim as production
+FROM python:3.12-slim
 
-# 创建非root用户
-RUN groupadd -r appuser && useradd -r -g appuser appuser
-
-# 设置环境变量
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/home/appuser/.local/bin:$PATH" \
-    FLASK_APP=app.py \
-    FLASK_ENV=production
+    TZ=Asia/Shanghai \
+    HOME=/home/appuser
 
-# 安装运行时依赖
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    default-libmysqlclient-dev \
-    curl \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
-
-# 从构建阶段复制Python包
-COPY --from=builder /root/.local /home/appuser/.local
-
-# 设置工作目录
 WORKDIR /app
 
-# 复制项目文件
-COPY --chown=appuser:appuser . .
+COPY --from=builder /install /usr/local
 
-# 创建必要的目录并设置权限
-RUN mkdir -p static/images static/logs docker/logs \
-    && chown -R appuser:appuser /app \
-    && chmod -R 755 /app
+COPY . .
 
-# 切换到非root用户
+RUN mkdir -p static/images static/images/avatars static/logs /app/default-assets \
+    && cp static/images/default-book.jpg /app/default-assets/default-book.jpg \
+    && cp -r static/js /app/default-assets/js \
+    && cp -r static/css /app/default-assets/css \
+    && cp -r static/fonts /app/default-assets/fonts \
+    && chmod +x docker-entrypoint.sh \
+    && useradd -r -m -d /home/appuser -s /sbin/nologin appuser \
+    && chown -R appuser:appuser /app /home/appuser
+
 USER appuser
 
-# 暴露端口
 EXPOSE 5000
 
-# 健康检查
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:5000/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD python -c "import urllib.request;urllib.request.urlopen('http://localhost:5000/health')" || exit 1
 
-# 启动命令
-CMD ["python", "app.py"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+CMD ["gunicorn", "-w", "1", "-k", "eventlet", "-b", "0.0.0.0:5000", "--timeout", "120", "--worker-connections", "1000", "--access-logfile", "-", "app:app"]

@@ -1,5 +1,5 @@
-from hmac import compare_digest
 import secrets
+from hmac import compare_digest
 
 from flask import request, session
 

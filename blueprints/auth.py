@@ -1,4 +1,5 @@
 import logging
+import re
 import time
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
@@ -21,6 +22,7 @@ auth_bp = Blueprint('auth', __name__)
 logger = logging.getLogger(__name__)
 
 AUTH_ACTION_CSRF_SESSION_KEY = 'auth_action_csrf_token'
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 EMAIL_CODE_LIMIT = 10
 EMAIL_CODE_WINDOW_SECONDS = 300
 LOGIN_LIMIT = 8
@@ -124,7 +126,12 @@ def forgot_password():
     return render_template('forgot_password.html', form_data={})
 
 
+FORGOT_PASSWORD_RESET_LIMIT = 5
+FORGOT_PASSWORD_RESET_WINDOW_SECONDS = 300
+
+
 @auth_bp.route('/forgot-password/reset', methods=['GET', 'POST'])
+@rate_limit('password_reset', FORGOT_PASSWORD_RESET_LIMIT, FORGOT_PASSWORD_RESET_WINDOW_SECONDS, '重置密码操作过于频繁，请 5 分钟后再试')
 def forgot_password_reset():
     user_id = session.get('reset_user_id')
     if not user_id:
@@ -300,6 +307,9 @@ def register_complete():
 
         if not email or not password or not verification_code:
             return fail('请填写所有必填字段')
+
+        if not EMAIL_REGEX.match(email):
+            return fail('邮箱格式不正确')
 
         if len(password) < 6:
             return fail('密码长度至少 6 位字符')

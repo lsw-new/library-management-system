@@ -1,5 +1,15 @@
 ﻿/* 基础样式 - 图书管理系统 */
 
+:root {
+    --color-brand-primary: #EC4899;
+    --color-brand-primary-hover: #DB2777;
+    --color-brand-accent: #a855f7;
+    --color-brand-deep: #831843;
+    --color-brand-primary-rgb: 236, 72, 153;
+    --color-brand-accent-rgb: 168, 85, 247;
+    --color-brand-deep-rgb: 131, 24, 67;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-attachment: fixed;
@@ -10,9 +20,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 :is(a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])):focus-visible {
-    outline: 3px solid rgba(131, 24, 67, 0.75);
+    outline: 3px solid rgba(var(--color-brand-deep-rgb), 0.75);
     outline-offset: 3px;
-    box-shadow: 0 0 0 5px rgba(236, 72, 153, 0.16);
+    box-shadow: 0 0 0 5px rgba(var(--color-brand-primary-rgb), 0.16);
 }
 
 /* 玻璃态面板效果 */
@@ -39,8 +49,8 @@ h1, h2, h3, h4, h5, h6 {
     transition: color 0.25s ease, background 0.25s ease;
 }
 .footer-link:hover {
-    color: #EC4899;
-    background: rgba(236, 72, 153, 0.06);
+    color: var(--color-brand-primary);
+    background: rgba(var(--color-brand-primary-rgb), 0.06);
 }
 .footer-link-icon {
     width: 13px;
@@ -114,8 +124,8 @@ h1, h2, h3, h4, h5, h6 {
 .nav-glass {
     background: #ffffff;
     border: 1px solid rgba(249, 168, 212, 0.45);
-    box-shadow: 0 8px 24px -10px rgba(236, 72, 153, 0.18),
-                0 2px 8px -2px rgba(131, 24, 67, 0.06);
+    box-shadow: 0 8px 24px -10px rgba(var(--color-brand-primary-rgb), 0.18),
+                0 2px 8px -2px rgba(var(--color-brand-deep-rgb), 0.06);
 }
 
 /* 滚动时整个 header 平滑收起；上滑或回到顶部再恢复 */
@@ -132,13 +142,13 @@ header.site-header.is-hidden {
 
 /* 主按钮样式 */
 .btn-primary {
-    background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-primary-hover) 100%);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px -5px rgba(236, 72, 153, 0.4);
+    box-shadow: 0 10px 20px -5px rgba(var(--color-brand-primary-rgb), 0.4);
 }
 
 /* 导航链接效果 */
@@ -154,7 +164,7 @@ header.site-header.is-hidden {
     left: 50%;
     width: 0;
     height: 2px;
-    background: #EC4899;
+    background: var(--color-brand-primary);
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
@@ -166,16 +176,16 @@ header.site-header.is-hidden {
 .nav-avatar {
     width: 40px; height: 40px; flex-shrink: 0;
     border-radius: 1rem;
-    background: linear-gradient(135deg, #ec4899, #a855f7);
+    background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent));
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 0 2.5px rgba(255,255,255,0.85), 0 0 0 4.5px rgba(236,72,153,0.15);
+    box-shadow: 0 0 0 2.5px rgba(255,255,255,0.85), 0 0 0 4.5px rgba(var(--color-brand-primary-rgb),0.15);
     overflow: hidden;
     transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s;
     cursor: pointer;
 }
 .nav-avatar:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 0 2.5px rgba(255,255,255,0.9), 0 0 0 5px rgba(236,72,153,0.25), 0 6px 16px -6px rgba(236,72,153,0.3);
+    box-shadow: 0 0 0 2.5px rgba(255,255,255,0.9), 0 0 0 5px rgba(var(--color-brand-primary-rgb),0.25), 0 6px 16px -6px rgba(var(--color-brand-primary-rgb),0.3);
 }
 .nav-avatar-img { width: 100%; height: 100%; object-fit: cover; }
 .nav-avatar-letter {
@@ -200,7 +210,7 @@ header.site-header.is-hidden {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #EC4899;
+    background: var(--color-brand-primary);
 }
 
 /* 移动端优化 */
@@ -250,7 +260,7 @@ header.site-header.is-hidden {
 .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5); }
 /* 布局容器 */
 .page-shell, .admin-shell, .records-shell { max-width: 1200px; margin: 0 auto; }
-.card, .panel { background: rgba(255,255,255,.86); border: 1px solid rgba(236,72,153,.14); border-radius: 1rem; }
+.card, .panel { background: rgba(255,255,255,.86); border: 1px solid rgba(var(--color-brand-primary-rgb),.14); border-radius: 1rem; }
 
 /* ==================== Kickout 弹窗 ==================== */
 @keyframes kickoutFadeIn { from { opacity: 0; } to { opacity: 1; } }

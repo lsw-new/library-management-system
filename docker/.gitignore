@@ -1,16 +1,24 @@
-# Docker 部署文件
-docker-compose.yml
+# Docker 环境变量
 .env
+.env.*
+*.env
 
-# 数据卷
+# 离线镜像包
+*.tar
+*.tar.gz
+*.zip
+
+# 数据和日志
 mysql_data/
-web_logs/
-web_images/
+app_logs/
+app_images/
+logs/
 
 # SSL 证书
 nginx/ssl/*.pem
 nginx/ssl/*.key
+nginx/ssl/*.crt
 
 # 备份文件
-*.sql
 backup_*.sql
+*.sql.backup

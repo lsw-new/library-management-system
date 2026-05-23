@@ -1,3 +1,5 @@
+import enum
+
 from extensions import db, cst_now, naive_cst_now
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -5,7 +7,25 @@ from werkzeug.security import generate_password_hash, check_password_hash
 STUDENT_ID_LENGTH = 13
 
 
-class User(UserMixin, db.Model):
+class BorrowStatus(enum.Enum):
+    PENDING = 'pending'
+    PICKED_UP = 'picked_up'
+    RETURNED = 'returned'
+    REJECTED = 'rejected'
+    EXPIRED = 'expired'
+
+
+class PasswordMixin:
+    password_hash = db.Column(db.String(255), nullable=False)
+
+    def set_password(self, password: str) -> None:
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password: str) -> bool:
+        return check_password_hash(self.password_hash, password)
+
+
+class User(PasswordMixin, UserMixin, db.Model):
     __tablename__ = 'users'
     __table_args__ = (
         db.CheckConstraint(
@@ -16,7 +36,6 @@ class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     student_id = db.Column(db.String(STUDENT_ID_LENGTH), unique=True, nullable=True)
     real_name = db.Column(db.String(50), nullable=True)
@@ -51,31 +70,18 @@ class User(UserMixin, db.Model):
     def unban(self):
         self.banned_until = None
 
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
     @property
     def is_admin(self):
         return False
 
 
-class Admin(UserMixin, db.Model):
+class Admin(PasswordMixin, UserMixin, db.Model):
     __tablename__ = 'admins'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     last_login = db.Column(db.DateTime)
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
 
     @property
     def is_admin(self):
@@ -177,7 +183,7 @@ class BorrowRecord(db.Model):
     # returned = 已归还（用户已还书，流程结束）
     # rejected = 已拒绝（管理员手动拒绝）
     # expired = 已逾期（超时自动拒绝）
-    status = db.Column(db.String(20), default='pending', index=True)
+    status = db.Column(db.String(20), default=BorrowStatus.PENDING.value, index=True)
 
     user = db.relationship('User', backref='borrow_records')
     book = db.relationship('Book', backref='borrow_records')

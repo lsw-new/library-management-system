@@ -11,14 +11,21 @@ from utils import naive_cst_now, get_csrf_token, validate_csrf_token
 SEARCH_MAX_LENGTH = 64
 BOOK_SORT_OPTIONS = {'newest', 'popular', 'available', 'title'}
 DEFAULT_BOOK_SORT = 'newest'
+_FULLTEXT_OPERATOR_RE = re.compile(r'[+\-><()~*"@]')
 BORROW_STATUS_KEYS = ('pending', 'picked_up', 'returned', 'rejected', 'expired')
 BORROW_ACTION_CSRF_SESSION_KEY = 'borrow_action_csrf_token'
 AVATAR_MAX_SIZE = 2 * 1024 * 1024
 AVATAR_SUBFOLDER = 'avatars'
 
 
+def _sanitize_fulltext_query(q: str) -> str:
+    """Remove MySQL FULLTEXT BOOLEAN MODE operators to prevent query injection."""
+    return _FULLTEXT_OPERATOR_RE.sub(' ', q).strip()
+
+
 def normalize_book_search(raw_search: str) -> str:
-    return re.sub(r'\s+', ' ', raw_search).strip()[:SEARCH_MAX_LENGTH]
+    sanitized = _sanitize_fulltext_query(raw_search)
+    return re.sub(r'\s+', ' ', sanitized).strip()[:SEARCH_MAX_LENGTH]
 
 
 def normalize_sort(value: str | None) -> str:

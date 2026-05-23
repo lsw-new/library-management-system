@@ -1,8 +1,17 @@
+import secrets
+import string
+
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
 
 from models import db, User
 from utils import log_action, admin_required, db_transaction, kick_active_session
+
+
+def _generate_temp_password(length: int = 12) -> str:
+    """Generate a random temporary password using letters and digits."""
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(length))
 
 
 def register_user_routes(bp: Blueprint) -> None:
@@ -75,13 +84,32 @@ def register_user_routes(bp: Blueprint) -> None:
         if not user:
             return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-        if not user.student_id:
-            return jsonify({'success': False, 'message': '该用户没有学号，无法初始化密码'}), 400
+        temp_password = _generate_temp_password()
 
         with db_transaction() as tx:
-            user.set_password(user.student_id)
+            user.set_password(temp_password)
         if tx.error:
             return jsonify({'success': False, 'message': tx.error}), 500
 
-        log_action('初始化密码', f'用户: {user.username}, 密码已重置为学号')
-        return jsonify({'success': True, 'message': f'已将 {user.username} 的密码初始化为学号'})
+        email_sent = False
+        if user.email:
+            try:
+                from email_utils import send_temp_password_email
+                success, _ = send_temp_password_email(user.email, user.username, temp_password)
+                email_sent = success
+            except (ImportError, Exception):
+                pass
+
+        log_action('重置密码', f'用户: {user.username}, 密码已重置为随机临时密码, 邮件通知: {"成功" if email_sent else "未发送"}')
+
+        result: dict[str, object] = {
+            'success': True,
+            'message': f'已重置 {user.username} 的密码为随机临时密码',
+            'temp_password': temp_password,
+            'email_sent': email_sent,
+        }
+        if email_sent:
+            result['message'] += '，已通过邮件通知用户'
+        else:
+            result['message'] += '，请手动通知用户新密码'
+        return jsonify(result)

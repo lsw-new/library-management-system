@@ -2,10 +2,13 @@ import threading
 
 from flask import Blueprint, jsonify
 from flask_login import login_required
+from sqlalchemy.orm import joinedload
 
 from email_utils import send_rejection_email
-from models import db, BorrowRecord
-from utils import log_action, cst_now, admin_required, db_transaction
+from models import BorrowRecord, db
+from socketio_emitters import emit_borrow_status, emit_reservation_changed, emit_stock_changed
+from utils import admin_required, cst_now, db_transaction, log_action
+from utils.cache import cache_delete_pattern
 
 
 def register_borrow_routes(bp: Blueprint) -> None:
@@ -14,7 +17,7 @@ def register_borrow_routes(bp: Blueprint) -> None:
     @login_required
     @admin_required()
     def approve_reservation(record_id):
-        record = db.session.get(BorrowRecord, record_id)
+        record = db.session.get(BorrowRecord, record_id, options=[joinedload(BorrowRecord.user), joinedload(BorrowRecord.book)])
         if not record or record.status != 'pending':
             return jsonify({'success': False, 'message': '当前记录不可操作'}), 409
         username = record.user.username
@@ -36,13 +39,16 @@ def register_borrow_routes(bp: Blueprint) -> None:
         if action_error:
             return jsonify({'success': False, 'message': action_error}), 409
         log_action('审核预约', f'同意用户 {username} 领取图书: {book_title}')
+        cache_delete_pattern('dashboard_stats:*')
+        emit_reservation_changed('approve')
+        emit_borrow_status(record.user_id)
         return jsonify({'success': True, 'message': '已同意领取图书'})
 
     @bp.route('/admin/reject_reservation/<int:record_id>', methods=['POST'])
     @login_required
     @admin_required()
     def reject_reservation(record_id):
-        record = db.session.get(BorrowRecord, record_id)
+        record = db.session.get(BorrowRecord, record_id, options=[joinedload(BorrowRecord.user), joinedload(BorrowRecord.book)])
         if not record or record.status != 'pending':
             return jsonify({'success': False, 'message': '当前记录不可操作'}), 409
         user = record.user
@@ -66,6 +72,10 @@ def register_borrow_routes(bp: Blueprint) -> None:
         if action_error:
             return jsonify({'success': False, 'message': action_error}), 409
         log_action('拒绝预约', f'拒绝用户 {user.username} 领取图书: {book.title}')
+        cache_delete_pattern('dashboard_stats:*')
+        emit_reservation_changed('reject')
+        emit_borrow_status(user.id)
+        emit_stock_changed(book.id)
         threading.Thread(
             target=send_rejection_email,
             args=(
@@ -82,7 +92,7 @@ def register_borrow_routes(bp: Blueprint) -> None:
     @login_required
     @admin_required()
     def admin_return_book(record_id):
-        record = db.session.get(BorrowRecord, record_id)
+        record = db.session.get(BorrowRecord, record_id, options=[joinedload(BorrowRecord.user), joinedload(BorrowRecord.book)])
         if not record or record.status != 'picked_up':
             return jsonify({'success': False, 'message': '当前记录不可操作'}), 409
         book = record.book
@@ -106,4 +116,8 @@ def register_borrow_routes(bp: Blueprint) -> None:
         if action_error:
             return jsonify({'success': False, 'message': action_error}), 409
         log_action('管理员归还图书', f'书名: {book.title}, 记录ID: {record_id}')
+        cache_delete_pattern('dashboard_stats:*')
+        emit_reservation_changed('return')
+        emit_borrow_status(record.user_id)
+        emit_stock_changed(book.id)
         return jsonify({'success': True, 'message': '归还成功'})

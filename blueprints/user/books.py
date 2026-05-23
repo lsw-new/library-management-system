@@ -1,9 +1,6 @@
-from flask import Blueprint, render_template, request, abort, jsonify
-
+from flask import Blueprint, abort, jsonify, render_template, request
 from flask_login import login_required
 
-from models import db, Book, BorrowRecord
-from utils import process_expired_reservations
 from blueprints.user_helpers import (
     DEFAULT_BOOK_SORT,
     apply_book_search_filters,
@@ -12,9 +9,36 @@ from blueprints.user_helpers import (
     normalize_book_search,
     normalize_sort,
 )
+from models import Book, BorrowRecord, db
+from utils.cache import cache_get, cache_set
 
 MAX_STOCK_QUERY_IDS = 50
 BOOKS_PER_PAGE = 4
+
+
+def _get_categories_cached(search: str):
+    cache_key = f'book_categories:{search or "ALL"}'
+    cached = cache_get(cache_key)
+    if cached:
+        return [(c, n) for c, n in cached['categories']], cached['total']
+
+    base_query = apply_book_search_filters(Book.query, search)
+    categories = base_query.filter(
+        Book.category.isnot(None),
+        Book.category != ''
+    ).with_entities(
+        Book.category,
+        db.func.count(Book.id)
+    ).group_by(Book.category).order_by(
+        db.func.count(Book.id).desc()
+    ).all()
+    total = sum(count for _, count in categories)
+
+    cache_set(cache_key, {
+        'categories': [(c, n) for c, n in categories],
+        'total': total,
+    }, ttl_seconds=120)
+    return categories, total
 
 
 def register_book_routes(bp: Blueprint) -> None:
@@ -33,26 +57,14 @@ def register_book_routes(bp: Blueprint) -> None:
         only_available = request.args.get('only_available') == '1'
         page = request.args.get('page', 1, type=int)
 
-        base_query = apply_book_search_filters(Book.query, search)
-        query = base_query
+        query = apply_book_search_filters(Book.query, search)
 
         if category:
             query = query.filter(Book.category == category)
         if only_available:
             query = query.filter(Book.stock > 0)
 
-        categories = base_query.filter(
-            Book.category.isnot(None),
-            Book.category != ''
-        ).with_entities(
-            Book.category,
-            db.func.count(Book.id)
-        ).group_by(
-            Book.category
-        ).order_by(
-            db.func.count(Book.id).desc()
-        ).all()
-        categories_total = base_query.count()
+        categories, categories_total = _get_categories_cached(search)
 
         pagination = apply_book_sort(query, sort).paginate(
             page=page, per_page=BOOKS_PER_PAGE, error_out=False
@@ -120,7 +132,6 @@ def register_book_routes(bp: Blueprint) -> None:
         id_list = list(dict.fromkeys(int(i) for i in ids.split(',') if i.isdigit()))[:MAX_STOCK_QUERY_IDS]
         if not id_list:
             return jsonify({})
-        process_expired_reservations(id_list)
         books_result = Book.query.filter(Book.id.in_(id_list)).all()
         return jsonify({b.id: {'stock': b.stock, 'total': b.total, 'available': b.available} for b in books_result})
 
@@ -128,15 +139,7 @@ def register_book_routes(bp: Blueprint) -> None:
     @login_required
     def books_categories():
         search = normalize_book_search(request.args.get('search', ''))
-        base_query = apply_book_search_filters(Book.query, search)
-        categories = base_query.filter(
-            Book.category.isnot(None),
-            Book.category != ''
-        ).with_entities(
-            Book.category,
-            db.func.count(Book.id)
-        ).group_by(Book.category).all()
-        total = base_query.count()
+        categories, total = _get_categories_cached(search)
         return jsonify({
             'categories': {cat: count for cat, count in categories},
             'total': total

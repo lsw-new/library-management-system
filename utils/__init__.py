@@ -1,6 +1,6 @@
 from extensions import cst_now, naive_cst_now
 
-from .helpers import get_client_ip, is_mobile_device, allowed_file
+from .helpers import get_client_ip, is_mobile_device, allowed_file, validate_image_content, ALLOWED_MIMES
 from .logging import get_user_logger, log_action
 from .db_config import _get_db_config, refresh_sqlalchemy_engines, update_config_file
 from .sessions import (
@@ -17,7 +17,7 @@ from .csrf import get_csrf_token, validate_csrf_token
 
 __all__ = [
     'cst_now', 'naive_cst_now',
-    'get_client_ip', 'is_mobile_device', 'allowed_file',
+    'get_client_ip', 'is_mobile_device', 'allowed_file', 'validate_image_content', 'ALLOWED_MIMES',
     'get_user_logger', 'log_action',
     '_get_db_config', 'refresh_sqlalchemy_engines', 'update_config_file',
     'HEARTBEAT_THROTTLE_SECONDS', 'SESSION_EXPIRE_MINUTES',

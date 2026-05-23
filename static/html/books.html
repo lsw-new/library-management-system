@@ -18,8 +18,8 @@
     <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:items-start">
 
         {# ========== 侧边栏 ========== #}
-        <aside class="lg:sticky lg:top-4 lg:self-start lg:h-[calc(100vh-2rem)] lg:flex lg:flex-col">
-            <div id="books-sidebar-content" class="lg:flex lg:h-full lg:min-h-0 lg:flex-col">
+        <aside class="lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:flex lg:flex-col">
+            <div id="books-sidebar-content" class="lg:flex lg:min-h-0 lg:flex-col">
 
                 {# 移动端横向标签 #}
                 <div class="lg:hidden mb-4 lg:flex-shrink-0">
@@ -42,7 +42,7 @@
                 </div>
 
                 {# 桌面端垂直侧边栏 #}
-                <div class="hidden lg:flex lg:h-full lg:min-h-0 lg:flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="hidden lg:flex lg:min-h-0 lg:flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
                     <div class="px-6 py-4 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-pink-100 flex-shrink-0">
                         <div class="flex items-center gap-3">
                             <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-fuchsia-400 rounded-xl flex items-center justify-center">
@@ -90,10 +90,10 @@
         </aside>
 
         {# ========== 主内容区 ========== #}
-        <div id="books-main-content" class="bg-white rounded-2xl shadow-lg overflow-hidden lg:h-[calc(100vh-2rem)] lg:overflow-y-auto">
+        <div id="books-main-content" class="bg-white rounded-2xl shadow-lg overflow-hidden">
 
             {# 头部:标题 + 搜索 + 工具条 #}
-            <div class="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex flex-col gap-3 sm:gap-4 lg:sticky lg:top-0 lg:bg-white lg:z-10">
+            <div class="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex flex-col gap-3 sm:gap-4">
                 <div id="books-summary" class="flex items-end justify-between gap-3">
                     <div>
                         <h2 class="text-lg sm:text-xl lg:text-2xl font-heading font-semibold text-brand-deep">
@@ -147,12 +147,9 @@
                             <span class="book-card-status {% if book.available %}is-available{% else %}is-unavailable{% endif %}">
                                 {% if book.available %}可借阅{% else %}已借出{% endif %}
                             </span>
-                            <img class="lazy-img"
-                                 alt="{{ book.title }}"
-                                 src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3C/svg%3E"
-                                 data-src="{{ url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') }}"
-                                 loading="lazy"
-                                 decoding="async">
+                            <img alt="{{ book.title }}"
+                                 src="{{ url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') }}">
+                            <span class="book-card-shine"></span>
                         </div>
                         <div class="p-3 sm:p-4 flex-1 flex flex-col">
                             <h3 class="text-sm sm:text-base font-heading font-semibold text-brand-deep mb-1 line-clamp-2">{{ book.title }}</h3>
@@ -187,29 +184,34 @@
                     {% endfor %}
                 </div>
 
-                {# 分页 #}
+                {# 分页 — 始终渲染7个槽位，宽度固定 #}
                 {% if pagination.pages > 1 %}
-                <nav class="flex flex-wrap items-center justify-center gap-2 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-100">
-                    {% if pagination.has_prev %}
-                    <a href="{{ url_for('user.books', page=pagination.prev_num, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) }}"
-                       class="px-3 sm:px-4 py-2 text-sm font-medium text-brand-primary border-2 border-brand-primary/20 hover:bg-pink-50 rounded-xl transition-colors active:scale-95">上一页</a>
-                    {% endif %}
-                    {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
-                        {% if p %}
-                            {% if p == pagination.page %}
-                            <span class="px-3 sm:px-4 py-2 text-sm font-bold text-white bg-brand-primary rounded-xl shadow-sm">{{ p }}</span>
-                            {% else %}
-                            <a href="{{ url_for('user.books', page=p, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) }}"
-                               class="px-3 sm:px-4 py-2 text-sm font-medium text-brand-deep/60 hover:text-brand-primary hover:bg-pink-50 rounded-xl transition-colors active:scale-95">{{ p }}</a>
-                            {% endif %}
+                {% set tp = pagination.pages %}
+                {% set cp = pagination.page %}
+                {% if tp <= 7 %}
+                    {% set pnums = range(1, tp + 1) | list %}
+                {% elif cp <= 4 %}
+                    {% set pnums = [1, 2, 3, 4, 5, 0, tp] %}
+                {% elif cp >= tp - 3 %}
+                    {% set pnums = [1, 0, tp - 4, tp - 3, tp - 2, tp - 1, tp] %}
+                {% else %}
+                    {% set pnums = [1, 0, cp - 1, cp, cp + 1, 0, tp] %}
+                {% endif %}
+                <nav class="flex items-center justify-center gap-1.5 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-100">
+                    <a href="{{ url_for('user.books', page=pagination.prev_num, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) if pagination.has_prev else '#' }}"
+                       class="shrink-0 w-16 py-2 text-sm font-medium text-center rounded-xl transition-colors active:scale-95 {% if pagination.has_prev %}text-brand-primary border-2 border-brand-primary/20 hover:bg-pink-50{% else %}text-gray-300 border-2 border-gray-100 pointer-events-none{% endif %}">上一页</a>
+                    {% for p in pnums %}
+                        {% if p == 0 %}
+                            <span class="w-10 py-2 text-sm text-center text-gray-400">...</span>
+                        {% elif p == cp %}
+                            <span class="w-10 py-2 text-sm font-bold text-center text-white bg-brand-primary rounded-xl shadow-sm">{{ p }}</span>
                         {% else %}
-                            <span class="px-2 text-gray-400">...</span>
+                            <a href="{{ url_for('user.books', page=p, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) }}"
+                               class="w-10 py-2 text-sm font-medium text-center text-brand-deep/60 hover:text-brand-primary hover:bg-pink-50 rounded-xl transition-colors active:scale-95">{{ p }}</a>
                         {% endif %}
                     {% endfor %}
-                    {% if pagination.has_next %}
-                    <a href="{{ url_for('user.books', page=pagination.next_num, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) }}"
-                       class="px-3 sm:px-4 py-2 text-sm font-medium text-brand-primary border-2 border-brand-primary/20 hover:bg-pink-50 rounded-xl transition-colors active:scale-95">下一页</a>
-                    {% endif %}
+                    <a href="{{ url_for('user.books', page=pagination.next_num, search=search, category=category, sort=sort if sort != 'newest' else None, only_available='1' if only_available else None) if pagination.has_next else '#' }}"
+                       class="shrink-0 w-16 py-2 text-sm font-medium text-center rounded-xl transition-colors active:scale-95 {% if pagination.has_next %}text-brand-primary border-2 border-brand-primary/20 hover:bg-pink-50{% else %}text-gray-300 border-2 border-gray-100 pointer-events-none{% endif %}">下一页</a>
                 </nav>
                 {% endif %}
 
@@ -241,5 +243,5 @@ window.__BOOKS_CONFIG__ = {
     categoriesUrl: {{ url_for('user.books_categories')|tojson }}
 };
 </script>
-<script src="{{ url_for('static', filename='js/books.js') }}" defer></script>
+<script src="{{ versioned_url('js/books.js') }}" defer></script>
 {% endblock %}

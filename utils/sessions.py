@@ -4,6 +4,7 @@ from flask import session
 from flask_login import current_user
 
 from extensions import db, naive_cst_now
+from .helpers import get_user_type
 
 HEARTBEAT_THROTTLE_SECONDS = 30
 SESSION_EXPIRE_MINUTES = 5
@@ -23,9 +24,13 @@ def _mark_login_history_offline(login_history_id, when):
 def create_login_session_record(user, user_type: str) -> None:
     from models import LoginHistory, OnlineSession
     from .helpers import get_client_ip
+    from .ip_location import get_ip_location
 
     now = naive_cst_now()
     ip_address = get_client_ip()
+
+    location = get_ip_location(ip_address)
+    geo_location = location if location not in ('未知', '本机') else None
 
     existing = OnlineSession.query.filter_by(user_id=user.id, user_type=user_type).first()
     if existing:
@@ -50,6 +55,7 @@ def create_login_session_record(user, user_type: str) -> None:
         existing.last_seen = now
         existing.login_history_id = login_record.id
         existing.is_kicked = False
+        existing.geo_location = geo_location
     else:
         db.session.add(OnlineSession(
             user_id=user.id,
@@ -60,6 +66,7 @@ def create_login_session_record(user, user_type: str) -> None:
             last_seen=now,
             login_history_id=login_record.id,
             is_kicked=False,
+            geo_location=geo_location,
         ))
 
     session['login_history_id'] = login_record.id
@@ -73,7 +80,7 @@ def mark_current_session_offline() -> None:
     _mark_login_history_offline(login_history_id, now)
 
     if current_user.is_authenticated:
-        user_type = 'admin' if getattr(current_user, 'is_admin', False) else 'user'
+        user_type = get_user_type(current_user)
         OnlineSession.query.filter_by(
             user_id=current_user.id, user_type=user_type
         ).delete(synchronize_session=False)
@@ -82,16 +89,31 @@ def mark_current_session_offline() -> None:
 
 
 def cleanup_expired_online_users() -> None:
-    from models import OnlineSession
+    from models import LoginHistory, OnlineSession
     cutoff = naive_cst_now() - timedelta(minutes=SESSION_EXPIRE_MINUTES)
     expired = OnlineSession.query.filter(OnlineSession.last_seen < cutoff).all()
     if not expired:
         return
+    history_updates = []
     for sess in expired:
-        _mark_login_history_offline(sess.login_history_id, sess.last_seen)
-        db.session.delete(sess)
+        if sess.login_history_id:
+            history_updates.append((sess.login_history_id, sess.last_seen))
+    if history_updates:
+        history_ids = [h_id for h_id, _ in history_updates]
+        LoginHistory.query.filter(
+            LoginHistory.id.in_(history_ids),
+            LoginHistory.is_online == True,
+        ).update({
+            LoginHistory.is_online: False,
+            LoginHistory.last_seen: cutoff,
+            LoginHistory.logout_time: cutoff,
+        }, synchronize_session=False)
+    expired_ids = [sess.id for sess in expired]
+    OnlineSession.query.filter(OnlineSession.id.in_(expired_ids)).delete(synchronize_session=False)
     try:
         db.session.commit()
+        from socketio_emitters import emit_online_changed
+        emit_online_changed()
     except Exception:
         db.session.rollback()
 
@@ -154,9 +176,12 @@ def authenticate_active_session(user_id: int, user_type: str,
     if (now - sess.last_seen).total_seconds() >= HEARTBEAT_THROTTLE_SECONDS:
         sess.last_seen = now
         sess.ip_address = ip
-        try:
-            db.session.commit()
-        except Exception:
-            db.session.rollback()
+        if not sess.geo_location:
+            from .ip_location import get_ip_location_cached, schedule_ip_lookup
+            cached = get_ip_location_cached(ip)
+            if cached and cached not in ('未知', '本机'):
+                sess.geo_location = cached
+            else:
+                schedule_ip_lookup(ip)
 
     return 'ok'

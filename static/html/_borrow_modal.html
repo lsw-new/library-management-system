@@ -5,16 +5,16 @@
 -->
 
 <!-- 弹窗容器：全屏遮罩层，默认隐藏 -->
-<div id="borrowModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+<div id="borrowModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="borrow-modal-title">
     <!-- 弹窗主体：白色卡片，圆角，阴影，动画效果 -->
     <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300">
         <!-- ==================== 弹窗头部 ==================== -->
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
                 <!-- 标题 -->
-                <h3 class="text-xl font-heading font-semibold text-brand-deep">预约图书</h3>
+                <h3 id="borrow-modal-title" class="text-xl font-heading font-semibold text-brand-deep">预约图书</h3>
                 <!-- 关闭按钮 -->
-                <button onclick="closeBorrowModal()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 cursor-pointer">
+                <button onclick="closeBorrowModal()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 cursor-pointer" aria-label="关闭预约弹窗">
                     <!-- X 图标 -->
                     <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>

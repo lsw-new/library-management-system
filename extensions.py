@@ -1,12 +1,15 @@
-from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime, timedelta, timezone
+
 from flask_login import LoginManager
-from datetime import datetime, timezone, timedelta
+from flask_socketio import SocketIO
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+socketio = SocketIO()
 
-# ==================== 时区配置 ====================
 CST = timezone(timedelta(hours=8))
+
 
 def cst_now():
     """获取当前北京时间（带时区信息）"""

@@ -278,17 +278,17 @@
                 </div>
 
                 <!-- 完成入口 -->
-                <div id="finishArea" class="hidden mt-auto rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50/50 p-5">
-                    <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-[0_6px_16px_-4px_rgba(16,185,129,0.4)]">
+                <div id="finishArea" class="mt-auto rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100/50 p-5 transition-all duration-500">
+                    <div id="finishIcon" class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-300 text-white transition-all duration-500">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                         </svg>
                     </div>
-                    <p class="text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-700/70">全部就绪</p>
-                    <h4 class="mt-0.5 text-sm font-bold text-emerald-900">初始化已完成</h4>
-                    <p class="mt-1 mb-4 text-[11px] leading-4 text-emerald-800/70">数据库与演示数据均已就绪，现在可以进入系统首页继续使用。</p>
-                    <a href="{{ url_for('user.index') }}"
-                       class="inline-flex w-full min-h-[42px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_12px_-3px_rgba(16,185,129,0.35)] transition-all hover:from-emerald-700 hover:to-teal-700 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgba(16,185,129,0.4)]">
+                    <p id="finishLabel" class="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400 transition-colors duration-500">等待初始化</p>
+                    <h4 id="finishTitle" class="mt-0.5 text-sm font-bold text-slate-500 transition-colors duration-500">请先同步表结构</h4>
+                    <p id="finishDesc" class="mt-1 mb-4 text-[11px] leading-4 text-slate-400 transition-colors duration-500">完成表结构同步后，即可进入系统首页。</p>
+                    <a id="finishLink" href="{{ url_for('user.index') }}" aria-disabled="true"
+                       class="inline-flex w-full min-h-[42px] items-center justify-center gap-2 rounded-xl bg-slate-300 px-5 py-2.5 text-sm font-bold text-white pointer-events-none cursor-not-allowed transition-all duration-500">
                         <span>进入主页面</span>
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5-5 5M6 7l5 5-5 5"/>
@@ -329,6 +329,6 @@ window.setupConfig = {
     csrfToken: {{ setup_action_csrf_token|tojson }}
 };
 </script>
-<script src="{{ url_for('static', filename='js/init-db-shared.js') }}"></script>
-<script src="{{ url_for('static', filename='js/init-db-actions.js') }}"></script>
+<script src="{{ versioned_url('js/init-db-shared.js') }}"></script>
+<script src="{{ versioned_url('js/init-db-actions.js') }}"></script>
 {% endblock %}

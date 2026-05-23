@@ -1,17 +1,17 @@
+import re
 from datetime import timedelta
 from functools import wraps
 from ipaddress import ip_address
-import re
 from urllib.parse import quote
 
-from flask import Blueprint, render_template, request, jsonify, current_app
-from flask_login import current_user
 import pymysql
+from flask import Blueprint, current_app, jsonify, render_template, request
+from flask_login import current_user
 
 from config import is_production
 from data.test_books import TEST_BOOKS, TEST_USER_STUDENT_ID, build_demo_borrow_count, is_demo_book_match
-from models import db, Admin, User, Book, BorrowRecord
-from utils import _get_db_config, update_config_file, cst_now, get_csrf_token, validate_csrf_token
+from models import Admin, Book, BorrowRecord, User, db
+from utils import _get_db_config, cst_now, get_csrf_token, update_config_file, validate_csrf_token
 
 setup_bp = Blueprint('setup', __name__)
 
@@ -83,9 +83,37 @@ def ensure_runtime_schema():
                         ))
                     except Exception:
                         pass
+        if inspector.has_table('online_sessions'):
+            os_cols = {c['name'] for c in inspector.get_columns('online_sessions')}
+            if 'geo_location' not in os_cols:
+                with db.engine.begin() as conn:
+                    conn.execute(text(
+                        'ALTER TABLE online_sessions ADD COLUMN geo_location VARCHAR(100) NULL'
+                    ))
     except Exception as e:
         current_app.logger.warning(f'补齐运行时字段失败: {e}')
 
+
+def _inspect_database(cursor, db_name: str) -> dict:
+    cursor.execute("SHOW DATABASES")
+    if db_name not in [d[0] for d in cursor.fetchall()]:
+        return {'db_exists': False, 'tables': [], 'demo_data_ready': False}
+
+    cursor.execute(f"USE `{db_name}`")
+    cursor.execute("SHOW TABLES")
+    tables = [t[0] for t in cursor.fetchall()]
+
+    demo_data_ready = False
+    if {'admins', 'users', 'books'}.issubset(tables):
+        cursor.execute("SELECT COUNT(*) FROM admins WHERE username = %s", ('admin',))
+        has_admin = cursor.fetchone()[0] > 0
+        cursor.execute("SELECT COUNT(*) FROM users WHERE username = %s", ('user1',))
+        has_demo_user = cursor.fetchone()[0] > 0
+        cursor.execute("SELECT COUNT(*) FROM books")
+        has_books = cursor.fetchone()[0] > 0
+        demo_data_ready = has_admin and has_demo_user and has_books
+
+    return {'db_exists': True, 'tables': tables, 'demo_data_ready': demo_data_ready}
 
 
 @setup_bp.route('/init_db')
@@ -97,6 +125,7 @@ def init_db_page():
         setup_action_csrf_token=get_setup_action_csrf_token(),
     )
 
+
 @setup_bp.route('/init_db/actions')
 def init_db_actions_page():
     db_defaults = _get_db_config()
@@ -105,6 +134,7 @@ def init_db_actions_page():
         db_defaults=db_defaults,
         setup_action_csrf_token=get_setup_action_csrf_token(),
     )
+
 
 @setup_bp.route('/api/test_connection', methods=['POST'])
 @setup_api_required
@@ -145,30 +175,9 @@ def test_connection():
 
         connection = pymysql.connect(**cfg)
         cursor = connection.cursor()
-        db_exists = False
-        tables = []
-        demo_data_ready = False
-
-        if db_name:
-            cursor.execute("SHOW DATABASES")
-            if db_name in [d[0] for d in cursor.fetchall()]:
-                db_exists = True
-                cursor.execute(f"USE `{db_name}`")
-                cursor.execute("SHOW TABLES")
-                tables = [t[0] for t in cursor.fetchall()]
-
-                table_set = set(tables)
-                required_tables = {'admins', 'users', 'books'}
-
-                if required_tables.issubset(table_set):
-                    cursor.execute("SELECT COUNT(*) FROM admins WHERE username = %s", ('admin',))
-                    has_admin = cursor.fetchone()[0] > 0
-                    cursor.execute("SELECT COUNT(*) FROM users WHERE username = %s", ('user1',))
-                    has_demo_user = cursor.fetchone()[0] > 0
-                    cursor.execute("SELECT COUNT(*) FROM books")
-                    has_books = cursor.fetchone()[0] > 0
-                    demo_data_ready = has_admin and has_demo_user and has_books
-
+        db_info = _inspect_database(cursor, db_name) if db_name else {
+            'db_exists': False, 'tables': [], 'demo_data_ready': False,
+        }
         cursor.close()
 
         if host and not update_config_file(temp_uri):
@@ -177,10 +186,8 @@ def test_connection():
         return jsonify({
             'success': True,
             'message': '数据库连接验证成功！',
-            'db_exists': db_exists,
-            'tables': tables,
             'db_name': db_name,
-            'demo_data_ready': demo_data_ready
+            **db_info,
         })
     except Exception:
         current_app.logger.exception('测试数据库连接失败')
@@ -188,6 +195,7 @@ def test_connection():
     finally:
         if connection:
             connection.close()
+
 
 @setup_bp.route('/api/create_tables', methods=['POST'])
 @setup_api_required
@@ -231,6 +239,7 @@ def create_tables():
     finally:
         if connection:
             connection.close()
+
 
 @setup_bp.route('/api/insert_test_data', methods=['POST'])
 @setup_api_required
@@ -304,6 +313,7 @@ def insert_test_data():
         db.session.rollback()
         current_app.logger.exception('插入测试数据失败')
         return jsonify({'success': False, 'message': '插入失败，请检查表结构和数据库写入权限。'}), 500
+
 
 @setup_bp.route('/api/reset_database', methods=['POST'])
 @setup_api_required

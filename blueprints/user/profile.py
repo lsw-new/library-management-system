@@ -155,12 +155,17 @@ def register_profile_routes(bp: Blueprint) -> None:
         raw_name = secure_filename(file.filename) or 'avatar.jpg'
         timestamp = cst_now().strftime('%Y%m%d%H%M%S')
         new_filename = f'{current_user.id}_{timestamp}_{raw_name}'
-        file.save(os.path.join(avatar_dir, new_filename))
+        saved_path = os.path.join(avatar_dir, new_filename)
+        file.save(saved_path)
 
         old_avatar = current_user.avatar
         with db_transaction(error_message='头像保存失败，请稍后重试') as tx:
             current_user.avatar = new_filename
         if tx.error:
+            try:
+                os.remove(saved_path)
+            except OSError:
+                pass
             return jsonify({'success': False, 'message': tx.error}), 500
 
         if old_avatar:

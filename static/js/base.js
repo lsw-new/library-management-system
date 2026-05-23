@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
             flashMessages.forEach(function(msg) {
                 const category = msg[0];
                 const message = msg[1];
-                const type = (category === 'success' || category === 'message') ? 'success' : (category === 'danger' ? 'error' : category);
+                const type = category === 'success' ? 'success' : category === 'danger' ? 'error' : category === 'message' ? 'info' : category;
                 showToast(message, type);
             });
         } catch (e) {

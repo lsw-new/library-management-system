@@ -264,6 +264,6 @@
         csrfToken: {{ setup_action_csrf_token|tojson }}
     };
 </script>
-<script src="{{ url_for('static', filename='js/init-db-shared.js') }}"></script>
-<script src="{{ url_for('static', filename='js/init-db.js') }}"></script>
+<script src="{{ versioned_url('js/init-db-shared.js') }}"></script>
+<script src="{{ versioned_url('js/init-db.js') }}"></script>
 {% endblock %}

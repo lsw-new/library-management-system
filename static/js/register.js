@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSendCodeButton();
 });
 
+
 function initOtpInputs() {
     const digits = document.querySelectorAll('.otp-digit');
     const hiddenInput = document.getElementById('verification_code');
@@ -42,7 +43,6 @@ function initOtpInputs() {
         });
     });
 }
-
 
 function initSendCodeButton() {
     const btn = document.getElementById('send-code-btn');

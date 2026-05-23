@@ -150,23 +150,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.getElementById('togglePassword');
-    const pwd = document.getElementById('password');
-    if (btn && pwd) {
-        btn.addEventListener('click', function() {
-            const isPassword = pwd.type === 'password';
-            pwd.type = isPassword ? 'text' : 'password';
-            btn.textContent = isPassword ? '隐藏' : '显示';
-        });
-    }
-
-    const mobileKeywords = ['mobile','android','iphone','ipad','ipod','blackberry','windows phone','opera mini','iemobile'];
-    if (mobileKeywords.some(k => navigator.userAgent.toLowerCase().includes(k))) {
-        const adminLink = document.getElementById('admin-login-link');
-        if (adminLink) adminLink.style.display = 'none';
-    }
-});
-</script>
+<script src="{{ versioned_url('js/login.js') }}"></script>
 {% endblock %}

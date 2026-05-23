@@ -78,22 +78,38 @@ def send_verification_email(to_email: str, code: str) -> bool:
     return _send_email(to_email, '景艺大图书馆 — 邮箱验证码', html_content)
 
 
-def store_verification_code(email: str, code: str) -> None:
+def store_verification_code(email: str, code: str) -> bool:
     from models import VerificationCode
     from extensions import naive_cst_now
     now = naive_cst_now()
     expires_at = now + timedelta(minutes=_CODE_TTL_MINUTES)
 
-    record = VerificationCode.query.filter_by(email=email).first()
-    if record:
-        record.code = code
-        record.expires_at = expires_at
-        record.created_at = now
-    else:
-        db.session.add(VerificationCode(email=email, code=code, expires_at=expires_at))
+    try:
+        record = VerificationCode.query.filter_by(email=email).first()
+        if record:
+            record.code = code
+            record.expires_at = expires_at
+            record.created_at = now
+        else:
+            db.session.add(VerificationCode(email=email, code=code, expires_at=expires_at))
 
-    VerificationCode.query.filter(VerificationCode.expires_at < now).delete()
-    db.session.commit()
+        VerificationCode.query.filter(VerificationCode.expires_at < now).delete()
+        db.session.commit()
+        return True
+    except Exception:
+        db.session.rollback()
+        logger.error("验证码存储失败 email=%s", _mask_email(email), exc_info=True)
+        return False
+
+
+def delete_verification_code(email: str) -> None:
+    from models import VerificationCode
+    try:
+        VerificationCode.query.filter_by(email=email).delete()
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        logger.error("验证码清理失败 email=%s", _mask_email(email), exc_info=True)
 
 
 def verify_code(email: str, code: str) -> tuple[bool, str]:
@@ -120,9 +136,13 @@ def verify_code(email: str, code: str) -> tuple[bool, str]:
 
 def send_code_to_email(email: str) -> tuple[bool, str]:
     code = generate_code()
+    # 先存库再发邮件，确保验证码不会丢失
+    if not store_verification_code(email, code):
+        return False, "验证码存储失败，请稍后重试"
     if send_verification_email(email, code):
-        store_verification_code(email, code)
         return True, "验证码已发送，请查收邮件"
+    # 发送失败，清理已存储的验证码
+    delete_verification_code(email)
     return False, "验证码发送失败，请稍后重试"
 
 

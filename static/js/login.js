@@ -1,25 +1,18 @@
-/**
- * 登录页面JavaScript - 图书管理系统
- * 处理移动端设备检测和管理员登录按钮显示
- */
+document.addEventListener('DOMContentLoaded', function () {
+    var btn = document.getElementById('togglePassword');
+    var pwd = document.getElementById('password');
 
-// ==================== 移动端设备检测 ====================
-function isMobileDevice() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const mobileKeywords = [
-        'mobile', 'android', 'iphone', 'ipad', 'ipod', 'blackberry',
-        'windows phone', 'opera mini', 'iemobile', 'webos', 'palm'
-    ];
-    return mobileKeywords.some(keyword => userAgent.includes(keyword));
-}
+    if (btn && pwd) {
+        btn.addEventListener('click', function () {
+            var isPassword = pwd.type === 'password';
+            pwd.type = isPassword ? 'text' : 'password';
+            btn.textContent = isPassword ? '隐藏' : '显示';
+        });
+    }
 
-// ==================== 页面加载时执行 ====================
-document.addEventListener('DOMContentLoaded', function() {
-    // 如果是移动端，隐藏管理员登录按钮
-    if (isMobileDevice()) {
-        const adminBtn = document.getElementById('admin-login-btn');
-        if (adminBtn) {
-            adminBtn.style.display = 'none';
-        }
+    var mobileKeywords = ['mobile', 'android', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone', 'opera mini', 'iemobile'];
+    if (mobileKeywords.some(function (k) { return navigator.userAgent.toLowerCase().includes(k); })) {
+        var adminLink = document.getElementById('admin-login-link');
+        if (adminLink) adminLink.style.display = 'none';
     }
 });

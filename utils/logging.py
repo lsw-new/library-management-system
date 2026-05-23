@@ -8,6 +8,11 @@ from flask_login import current_user
 
 from .helpers import get_client_ip
 
+_logger = logging.getLogger(__name__)
+
+# 安全的默认日志目录：项目根目录下的 logs/（避免使用 static/logs/ 被 Nginx 公开）
+_DEFAULT_LOG_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs')
+
 
 def get_user_logger(username: str | None = None) -> logging.Logger:
     if username is None:
@@ -17,7 +22,7 @@ def get_user_logger(username: str | None = None) -> logging.Logger:
             username = 'guest'
 
     today = datetime.now().strftime('%Y-%m-%d')
-    log_folder = current_app.config.get('LOG_FOLDER', 'static/logs')
+    log_folder = current_app.config.get('LOG_FOLDER', _DEFAULT_LOG_DIR)
     os.makedirs(log_folder, exist_ok=True)
 
     log_filename = f"{username}_{today}.log"
@@ -77,4 +82,4 @@ def log_action(action: str, details: str = '', username: str | None = None) -> N
         db.session.add(log_record)
         db.session.commit()
     except Exception:
-        pass
+        _logger.warning("log_action failed", exc_info=True)

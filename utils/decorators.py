@@ -1,3 +1,4 @@
+import logging
 from contextlib import contextmanager
 from functools import wraps
 
@@ -6,6 +7,8 @@ from flask_login import current_user
 
 from extensions import db
 from .helpers import is_mobile_device
+
+_logger = logging.getLogger(__name__)
 
 
 def admin_required(json_response: bool = True):
@@ -31,6 +34,7 @@ def admin_required(json_response: bool = True):
 def db_transaction(error_message: str = '操作失败'):
     class _Tx:
         error = None
+        exception = None
     tx = _Tx()
     try:
         yield tx
@@ -38,6 +42,8 @@ def db_transaction(error_message: str = '操作失败'):
     except Exception as e:
         db.session.rollback()
         tx.error = error_message
+        tx.exception = e
+        _logger.exception("db_transaction 失败 [%s]: %s", error_message, e)
         try:
             current_app.logger.exception(e)
         except Exception:

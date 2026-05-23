@@ -209,26 +209,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-// 同步库存进度条与计数 — 监听 bookDetailPageState data-* 变化
-(function () {
-    const state = document.getElementById('bookDetailPageState');
-    if (!state) return;
-    const bar = document.getElementById('detailStockBar');
-    const stockNow = document.getElementById('detailStockNow');
-    if (!bar && !stockNow) return;
-
-    const sync = () => {
-        const stock = parseInt(state.dataset.bookStock, 10) || 0;
-        const total = parseInt(state.dataset.bookTotal, 10) || 0;
-        if (stockNow) stockNow.textContent = String(stock);
-        if (bar) bar.style.width = (total > 0 ? Math.round((stock * 100) / total) : 0) + '%';
-    };
-
-    new MutationObserver(sync).observe(state, {
-        attributes: true,
-        attributeFilter: ['data-book-stock', 'data-book-total']
-    });
-})();
-</script>
+<script src="{{ versioned_url('js/book-detail.js') }}"></script>
 {% endblock %}

@@ -2,7 +2,7 @@
  * 图书列表页交互
  * - 即时搜索 / 分类切换 / 排序 / 仅显示可借
  * - 可见性感知轮询(页面隐藏时暂停)
- * - IntersectionObserver 图片懒加载
+ * - 图片即时加载
  */
 (function () {
     const config = window.__BOOKS_CONFIG__ || {};
@@ -10,8 +10,8 @@
     const booksStockUrl = config.stockUrl;
     const booksCategoriesUrl = config.categoriesUrl;
 
-    const STOCK_POLL_MS = 8000;
-    const CATEGORY_POLL_MS = 6000;
+    const STOCK_POLL_MS = 120000;
+    const CATEGORY_POLL_MS = 120000;
     const SEARCH_DEBOUNCE_MS = 300;
 
     let searchForm = document.getElementById('books-search-form');
@@ -26,7 +26,6 @@
     let pollCategoriesInterval = null;
     let activeCategoryLink = null;
     let isToolbarBound = false;
-    let imageObserver = null;
 
     let currentBooksSearch = normalizeSearch(searchInput ? searchInput.value : '');
     let currentBooksCategory = readHiddenInput('category');
@@ -93,46 +92,19 @@
         currentBooksCategory = nextCategory || '';
     }
 
-    function ensureImageObserver() {
-        if (imageObserver || !('IntersectionObserver' in window)) return imageObserver;
-        imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                observer.unobserve(entry.target);
-                loadImageNow(entry.target);
-            });
-        }, { rootMargin: '200px 0px' });
-        return imageObserver;
-    }
-
     function loadImageNow(img) {
         const src = img.dataset.src;
-        if (!src) {
-            img.classList.add('is-loaded');
-            return;
-        }
+        if (!src) return;
         img.removeAttribute('data-src');
-        const markLoaded = () => img.classList.add('is-loaded');
-        img.addEventListener('load', markLoaded, { once: true });
-        img.addEventListener('error', markLoaded, { once: true });
         img.src = src;
     }
 
     function bindLazyImages() {
         const images = document.querySelectorAll('img.lazy-img:not([data-bound])');
         if (!images.length) return;
-        const observer = ensureImageObserver();
         images.forEach(img => {
             img.dataset.bound = '1';
-            // 没有 data-src:已经是最终 src,标记为已加载即可
-            if (!img.dataset.src) {
-                if (img.complete) img.classList.add('is-loaded');
-                else img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
-                return;
-            }
-            // 有 data-src:走懒加载;无 IO 时立即加载
-            if (observer) observer.observe(img);
-            else loadImageNow(img);
+            if (img.dataset.src) loadImageNow(img);
         });
     }
 
@@ -394,10 +366,6 @@
                 window.location.href = nextPath;
                 return;
             }
-            if (!okToolbar) {
-                // optional region; ignore
-            }
-
             const nextCategoryEl = doc.querySelector('#books-search-form input[name="category"]');
             const nextSortEl = doc.querySelector('#books-search-form input[name="sort"]');
             const nextAvailEl = doc.querySelector('#books-search-form input[name="only_available"]');
@@ -613,6 +581,38 @@
                 window.scrollTo({ top: savedScrollY, behavior: 'instant' });
             });
         });
+    }
+
+    function handleStockPush(info) {
+        if (!info || !info.book_id) return;
+        var cards = document.querySelectorAll('[data-book-id="' + info.book_id + '"][data-book-title]');
+        cards.forEach(function(card) {
+            var stockEl = card.querySelector('[data-stock-text]');
+            var badge = card.querySelector('.book-card-status');
+            var actions = card.querySelector('[data-actions]');
+            var borrowBtn = actions ? actions.querySelector('button[data-book-id]') : null;
+            if (stockEl) {
+                stockEl.textContent = info.stock + '/' + info.total;
+                stockEl.className = 'text-xs font-semibold ' + (info.stock > 0 ? 'text-emerald-600' : 'text-rose-600');
+                stockEl.dataset.stockText = '';
+            }
+            if (badge) {
+                badge.textContent = info.available ? '可借阅' : '已借出';
+                badge.className = 'book-card-status ' + (info.available ? 'is-available' : 'is-unavailable');
+            }
+            if (borrowBtn) {
+                borrowBtn.dataset.bookStock = String(info.stock);
+                if (!info.available) borrowBtn.remove();
+            } else if (info.available && actions && card.dataset.bookTitle) {
+                actions.appendChild(createBorrowButton(info.book_id, card.dataset.bookTitle, info.stock));
+            }
+        });
+    }
+
+    var socket = window._socket;
+    if (socket) {
+        socket.emit('join_books_room');
+        socket.on('book_stock_changed', handleStockPush);
     }
 
     bindSearchEvents();

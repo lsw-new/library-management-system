@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVerifyCodeButton();
 });
 
+
 function initOtpInputs() {
     const digits = document.querySelectorAll('.otp-digit');
     if (!digits.length) return;
@@ -84,13 +85,13 @@ function initSendCodeButton() {
                 if (btnText) btnText.textContent = '发送验证码';
                 if (btnIcon) btnIcon.classList.remove('animate-spin');
                 btn.disabled = false;
-                alert(data.message || '发送失败');
+                showToast(data.message || '发送失败', 'error');
             }
         } catch {
             if (btnText) btnText.textContent = '发送验证码';
             if (btnIcon) btnIcon.classList.remove('animate-spin');
             btn.disabled = false;
-            alert('网络错误，请稍后重试');
+            showToast('网络错误，请稍后重试', 'error');
         }
     });
 }
@@ -129,12 +130,12 @@ function initVerifyCodeButton() {
             } else {
                 btn.disabled = false;
                 if (btnText) btnText.textContent = '验证';
-                alert(data.message || '验证失败');
+                showToast(data.message || '验证失败', 'error');
             }
         } catch {
             btn.disabled = false;
             if (btnText) btnText.textContent = '验证';
-            alert('网络错误，请稍后重试');
+            showToast('网络错误，请稍后重试', 'error');
         }
     });
 }

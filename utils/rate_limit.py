@@ -1,37 +1,44 @@
-import threading
 import time
-from collections import defaultdict, deque
 from collections.abc import Callable
 from functools import wraps
 
 from flask import flash, jsonify, redirect, request
 
-_RATE_LIMIT_BUCKETS: dict[str, deque[float]] = defaultdict(deque)
-_RATE_LIMIT_LOCK = threading.Lock()
+
+def _get_redis():
+    try:
+        from utils.cache import get_redis
+        return get_redis()
+    except Exception:
+        return None
 
 
 def _rate_limit_identity(identity: str | None = None) -> str:
     return identity or request.remote_addr or 'unknown'
 
 
-def _rate_limit_key(scope: str, identity: str | None = None) -> str:
-    return f'{scope}:{_rate_limit_identity(identity)}'
+def is_rate_limited(scope: str, limit: int, window_seconds: int,
+                    identity: str | None = None) -> bool:
+    ident = _rate_limit_identity(identity)
+    key = f'rl:{scope}:{ident}'
+    r = _get_redis()
+    if not r:
+        return False
+    try:
+        now = time.time()
+        pipe = r.pipeline()
+        pipe.zremrangebyscore(key, 0, now - window_seconds)
+        pipe.zcard(key)
+        pipe.zadd(key, {str(now): now})
+        pipe.expire(key, window_seconds)
+        results = pipe.execute()
+        return results[1] >= limit
+    except Exception:
+        return False
 
 
-def is_rate_limited(scope: str, limit: int, window_seconds: int, identity: str | None = None) -> bool:
-    now = time.monotonic()
-    key = _rate_limit_key(scope, identity)
-    with _RATE_LIMIT_LOCK:
-        bucket = _RATE_LIMIT_BUCKETS[key]
-        while bucket and now - bucket[0] >= window_seconds:
-            bucket.popleft()
-        if len(bucket) >= limit:
-            return True
-        bucket.append(now)
-    return False
-
-
-def rate_limit(scope: str, limit: int, window_seconds: int, message: str) -> Callable[[Callable], Callable]:
+def rate_limit(scope: str, limit: int, window_seconds: int,
+               message: str) -> Callable[[Callable], Callable]:
     def decorator(view: Callable) -> Callable:
         @wraps(view)
         def wrapper(*args, **kwargs):

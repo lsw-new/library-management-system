@@ -163,7 +163,7 @@ def check_new_reservations():
 @login_required
 @admin_required()
 def get_logs():
-    limit = request.args.get('limit', 50, type=int)
+    limit = min(request.args.get('limit', 50, type=int), 500)
     logs = LoginHistory.query.filter(
         LoginHistory.action.isnot(None)
     ).order_by(LoginHistory.login_time.desc()).limit(limit).all()

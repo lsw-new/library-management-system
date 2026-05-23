@@ -6,43 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}图书管理系统{% endblock %}</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ versioned_url('css/tailwind.css') }}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            deep: '#831843',
-                            primary: '#EC4899',
-                            soft: '#FBCFE8',
-                            accent: '#8B5CF6',
-                            bg: '#FDF2F8',
-                            glass: 'rgba(255, 255, 255, 0.7)'
-                        },
-                        primary: '#EC4899',
-                        secondary: '#8B5CF6',
-                        accent: '#10b981',
-                        textDark: '#831843'
-                    },
-                    fontFamily: {
-                        heading: ['Cormorant', 'serif'],
-                        sans: ['Montserrat', 'sans-serif']
-                    },
-                    boxShadow: {
-                        'glass': '0 8px 32px 0 rgba(236, 72, 153, 0.08)',
-                        'pink-lg': '0 10px 15px -3px rgba(236, 72, 153, 0.2), 0 4px 6px -4px rgba(236, 72, 153, 0.1)'
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ versioned_url('css/fonts.css') }}">
+    <link rel="preload" href="/static/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/cormorant-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ versioned_url('css/base.css') }}">
+    {% if current_user.is_authenticated %}
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" defer></script>
+    {% endif %}
     {% block head_extra %}{% endblock %}
 </head>
 <body class="bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-pink-100 via-brand-bg to-white min-h-screen flex flex-col overflow-x-hidden">
@@ -194,21 +166,64 @@
     </footer>
     {% endblock %}
 
-    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    <script src="{{ versioned_url('js/base.js') }}" defer></script>
+    {% if current_user.is_authenticated %}
+    <script src="{{ versioned_url('js/socket-client.js') }}" defer></script>
+    {% endif %}
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div id="flash-messages-data" style="display:none" data-messages='{{ messages|tojson }}'></div>
         {% endif %}
     {% endwith %}
+    {% if current_user.is_authenticated and amap_js_key %}
+    <script>window._AMapSecurityConfig = { securityJsCode: '{{ amap_security_key }}' };</script>
+    <script>
+    (function() {
+        if (localStorage.getItem('_geo_sent')) return;
+        setTimeout(function() {
+            var sent = false;
+            function sendLoc(loc) {
+                if (sent || !loc) return;
+                sent = true;
+                fetch("{{ url_for('update_location') }}", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                    body: JSON.stringify({ location: loc }),
+                    credentials: 'same-origin'
+                }).then(function() { localStorage.setItem('_geo_sent', '1'); });
+            }
+            var script = document.createElement('script');
+            script.src = 'https://webapi.amap.com/maps?v=2.0&key={{ amap_js_key }}&plugin=AMap.Geolocation,AMap.Geocoder';
+            script.onload = function() {
+                var geo = new AMap.Geolocation({ timeout: 8000, noIpLocate: 0, noGeoLocation: 3, useNative: false, needAddress: true });
+                geo.getCityInfo(function(status, result) {
+                    if (status === 'complete' && result.province) {
+                        var loc = (result.province || '') + (result.city && result.city !== result.province ? result.city : '');
+                        sendLoc(loc);
+                    }
+                });
+                geo.getCurrentPosition(function(status, result) {
+                    if (status !== 'complete' || !result.position) return;
+                    new AMap.Geocoder().getAddress(result.position, function(s, r) {
+                        if (s !== 'complete' || !r.regeocode) return;
+                        var a = r.regeocode.addressComponent;
+                        sendLoc((a.province || '') + (a.city && a.city !== a.province ? a.city : '') + (a.district || ''));
+                    });
+                });
+            };
+            script.onerror = function() {};
+            document.head.appendChild(script);
+        }, 3000);
+    })();
+    </script>
+    {% endif %}
     {% if current_user.is_authenticated %}
     <script>
     (function() {
         var loginUrl = "{{ url_for('auth.login') }}";
-        var pingUrl = "{{ url_for('session_ping') }}";
-        var redirecting = false;
 
-        function showKickoutModal(message) {
+        window.showKickoutModal = function showKickoutModal(message) {
             if (document.querySelector('.kickout-overlay')) return;
             var seconds = 3;
             var overlay = document.createElement('div');
@@ -253,25 +268,6 @@
             });
         }
 
-        function ping() {
-            if (redirecting) return;
-            fetch(pingUrl, {
-                method: 'GET',
-                credentials: 'same-origin',
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                cache: 'no-store'
-            }).then(function(resp) {
-                if (resp.status === 401) {
-                    redirecting = true;
-                    resp.json().then(function(d) {
-                        showKickoutModal((d && d.message) ? d.message : '会话已失效，请重新登录');
-                    }).catch(function() {
-                        showKickoutModal('会话已失效，请重新登录');
-                    });
-                }
-            }).catch(function() { /* 网络错误忽略 */ });
-        }
-        setInterval(ping, 3000);
     })();
     </script>
     {% endif %}

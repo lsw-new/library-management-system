@@ -273,7 +273,7 @@
         </div>
 
         <!-- 动态 Tab 内容 -->
-        <div class="glass-panel admin-tab-content rounded-2xl md:rounded-[3rem] shadow-sm overflow-hidden border border-white/50 lg:flex-1 lg:flex lg:flex-col">
+        <div class="glass-panel admin-tab-content rounded-2xl md:rounded-[3rem] shadow-sm overflow-hidden border border-white/50 lg:flex-1 lg:flex lg:flex-col" aria-live="polite">
             {% if tab == 'online' %}
                 <!-- 实时活跃会话 - 头部 -->
                 <div class="px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
@@ -1048,6 +1048,12 @@ window.adminConfig = Object.assign({}, window.adminConfig || {}, {
     csrfToken: {{ admin_action_csrf_token|tojson }}
 });
 </script>
-<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin-utils.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/admin-tabs.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/admin-books.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/admin-users.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/admin-online.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/admin-logs.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/admin-reservations.js') }}" defer></script>
 {% endblock %}
 

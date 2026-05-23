@@ -143,7 +143,39 @@ function updateCredentialsReady() {
 }
 
 function showFinishArea() {
-    if (dom.finishArea) dom.finishArea.classList.remove('hidden');
+    if (!dom.finishArea) return;
+    dom.finishArea.className = 'mt-auto rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50/50 p-5 transition-all duration-500';
+    const icon = document.getElementById('finishIcon');
+    if (icon) icon.className = 'mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-[0_6px_16px_-4px_rgba(16,185,129,0.4)] transition-all duration-500';
+    const label = document.getElementById('finishLabel');
+    if (label) { label.textContent = '全部就绪'; label.className = 'text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-700/70 transition-colors duration-500'; }
+    const title = document.getElementById('finishTitle');
+    if (title) { title.textContent = '初始化已完成'; title.className = 'mt-0.5 text-sm font-bold text-emerald-900 transition-colors duration-500'; }
+    const desc = document.getElementById('finishDesc');
+    if (desc) { desc.textContent = '数据库与演示数据均已就绪，现在可以进入系统首页继续使用。'; desc.className = 'mt-1 mb-4 text-[11px] leading-4 text-emerald-800/70 transition-colors duration-500'; }
+    const link = document.getElementById('finishLink');
+    if (link) {
+        link.className = 'inline-flex w-full min-h-[42px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_12px_-3px_rgba(16,185,129,0.35)] transition-all duration-500 hover:from-emerald-700 hover:to-teal-700 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgba(16,185,129,0.4)]';
+        link.removeAttribute('aria-disabled');
+    }
+}
+
+function resetFinishArea() {
+    if (!dom.finishArea) return;
+    dom.finishArea.className = 'mt-auto rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100/50 p-5 transition-all duration-500';
+    const icon = document.getElementById('finishIcon');
+    if (icon) icon.className = 'mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-300 text-white transition-all duration-500';
+    const label = document.getElementById('finishLabel');
+    if (label) { label.textContent = '等待初始化'; label.className = 'text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400 transition-colors duration-500'; }
+    const title = document.getElementById('finishTitle');
+    if (title) { title.textContent = '请先同步表结构'; title.className = 'mt-0.5 text-sm font-bold text-slate-500 transition-colors duration-500'; }
+    const desc = document.getElementById('finishDesc');
+    if (desc) { desc.textContent = '完成表结构同步后，即可进入系统首页。'; desc.className = 'mt-1 mb-4 text-[11px] leading-4 text-slate-400 transition-colors duration-500'; }
+    const link = document.getElementById('finishLink');
+    if (link) {
+        link.className = 'inline-flex w-full min-h-[42px] items-center justify-center gap-2 rounded-xl bg-slate-300 px-5 py-2.5 text-sm font-bold text-white pointer-events-none cursor-not-allowed transition-all duration-500';
+        link.setAttribute('aria-disabled', 'true');
+    }
 }
 
 async function createTables() {
@@ -161,6 +193,7 @@ async function createTables() {
         if (data.success) {
             showMessage(dom.consoleEls, data.message, 'success', '表结构同步成功');
             setPageStatus(dom.statusEls, '表结构已同步', 'success');
+            showFinishArea();
             refreshPreview();
         } else {
             showMessage(dom.consoleEls, data.message, 'error');
@@ -223,7 +256,7 @@ async function resetDatabase() {
         if (data.success) {
             showMessage(dom.consoleEls, data.message, 'success', '数据库已重置');
             setPageStatus(dom.statusEls, '数据库已重置', 'success');
-            if (dom.finishArea) dom.finishArea.classList.add('hidden');
+            resetFinishArea();
             if (dom.credentialsStatusBadge) {
                 dom.credentialsStatusBadge.textContent = '未导入';
                 dom.credentialsStatusBadge.className = 'rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-slate-500 transition-all duration-300';

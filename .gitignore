@@ -54,6 +54,10 @@ Thumbs.db
 .coverage
 htmlcov/
 .playwright-mcp/
+test_report.md
+
+# 代码索引
+.codegraph/
 
 # 验证截图（调试产物）
 /test-*.png
@@ -65,6 +69,7 @@ htmlcov/
 # Docker 运行时
 docker/mysql/data/
 docker/logs/
+docker/docker_ios/.env.seeded
 
 # 证书和密钥
 *.pem
@@ -74,3 +79,10 @@ docker/logs/
 # 备份
 *.backup
 *.sql.backup
+
+# Node (Tailwind 构建工具)
+node_modules/
+package-lock.json
+
+# 构建产物
+*.tar.gz

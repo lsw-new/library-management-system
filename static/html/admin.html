@@ -2,8 +2,10 @@
 
 {% block title %}后台管理 - 图书管理系统{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+<link rel="stylesheet" href="{{ versioned_url('css/admin.css') }}">
 {% endblock %}
+{% block main_class %}flex-1 px-4 sm:px-6 pb-10 pt-4 md:pt-6 animate-in fade-in duration-700 mt-20 md:mt-24{% endblock %}
+{% block content_wrapper %}admin-workspace-wrapper mx-auto{% endblock %}
 
 {% macro search_form(tab_value, placeholder, value='') -%}
 <form method="GET" class="relative group flex-1 max-w-sm w-full">
@@ -34,9 +36,9 @@
     'users': '查看所有账号，按需封禁或解除封禁。'
 } %}
 
-<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 md:gap-8 lg:items-stretch">
+<div class="admin-layout-shell grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 md:gap-8 lg:items-stretch">
     <!-- 侧边导航栏 -->
-    <aside class="admin-sidebar glass-panel p-5 md:p-6 rounded-2xl md:rounded-[2.5rem] shadow-xl border-l-4 border-brand-primary lg:sticky lg:top-4 lg:flex lg:flex-col lg:max-h-[calc(100vh-2rem)] lg:overflow-hidden">
+    <aside class="admin-sidebar admin-sidebar-panel glass-panel p-5 md:p-6 rounded-2xl md:rounded-[2.5rem] shadow-xl border-l-4 border-brand-primary lg:sticky lg:top-4 lg:flex lg:flex-col lg:max-h-[calc(100vh-2rem)] lg:overflow-hidden">
         <!-- 头部标识 -->
         <div class="hidden lg:flex lg:flex-col lg:justify-center mb-6 pb-6 border-b border-pink-100/60" style="min-height: calc(73px + 30px);">
             <div class="flex items-center gap-3 mb-2">
@@ -201,10 +203,9 @@
     </aside>
 
     <!-- 主展示区 -->
-    <section class="space-y-5 md:space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 lg:flex lg:flex-col lg:min-h-screen">
+    <section class="admin-main-panel space-y-5 md:space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 lg:flex lg:flex-col lg:min-h-screen">
         <!-- 头部概览 -->
-        <div class="glass-panel p-5 md:p-7 rounded-2xl md:rounded-3xl shadow-sm relative overflow-hidden">
-            <div class="absolute -right-20 -top-20 w-64 h-64 bg-brand-primary/5 rounded-full blur-3xl"></div>
+        <div class="admin-hero-panel glass-panel p-5 md:p-7 rounded-2xl md:rounded-3xl shadow-sm relative overflow-hidden">
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
                 <div>
                     <p class="text-[10px] font-bold text-brand-primary/70 uppercase tracking-widest mb-1.5">管理控制台</p>
@@ -221,7 +222,7 @@
         </div>
 
         <!-- KPI 概览条 -->
-        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4">
+        <div class="admin-kpi-grid grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4">
             <a href="{{ url_for('admin.admin_index', tab='online') }}" class="admin-kpi tone-online block">
                 <div class="admin-kpi-icon">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
@@ -273,10 +274,10 @@
         </div>
 
         <!-- 动态 Tab 内容 -->
-        <div class="glass-panel admin-tab-content rounded-2xl md:rounded-[3rem] shadow-sm overflow-hidden border border-white/50 lg:flex-1 lg:flex lg:flex-col" aria-live="polite">
+        <div class="glass-panel admin-tab-content admin-tab-panel rounded-2xl md:rounded-[3rem] shadow-sm overflow-hidden border border-white/50 lg:flex-1 lg:flex lg:flex-col" aria-live="polite">
             {% if tab == 'online' %}
                 <!-- 实时活跃会话 - 头部 -->
-                <div class="px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
+                <div class="admin-section-toolbar px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
                     <div class="flex items-center gap-3">
                         <h3 class="text-base font-bold text-brand-deep">实时活跃会话</h3>
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-black rounded-full border border-emerald-100">
@@ -295,7 +296,7 @@
                     {% if search %}
                     <p class="text-xs text-brand-deep/50 mb-3">搜索到 <span class="font-bold text-brand-primary">{{ online_users|length }}</span> 个用户</p>
                     {% endif %}
-                    <div id="online-users-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                    <div id="online-users-grid" class="admin-online-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                         {% for user in online_users %}
                         {% set is_admin = user.user_type == 'admin' %}
                         <article class="online-user-card" data-uid="{{ user.user_id }}" data-utype="{{ user.user_type }}">
@@ -352,7 +353,7 @@
 
             {% elif tab == 'books' %}
                 <!-- 搜索 + 统计 -->
-                <div class="px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
+                <div class="admin-section-toolbar px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
                     {{ search_form('books', '搜索书名、作者、ISBN...', search) }}
                     <div class="flex items-center gap-2.5 shrink-0">
                         <span class="text-[10px] font-bold text-brand-deep/35 uppercase tracking-widest">检索结果</span>
@@ -362,7 +363,7 @@
                 <!-- 卡片网格 -->
                 <div class="p-4 md:p-6 overflow-visible lg:overflow-auto admin-content-fixed">
                     {% if books %}
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+                    <div class="admin-books-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
                         {% for book in books %}
                         {% set stock_percentage = (book.stock / book.total * 100) if book.total > 0 else 0 %}
                         <article class="admin-book-card group">
@@ -420,7 +421,7 @@
                 {% set requested_current_status = request.args.get('status') %}
                 {% set current_default_status = requested_current_status if requested_current_status in ('pending', 'picked_up') else ('pending' if current_pending_count > 0 or current_picked_up_count == 0 else 'picked_up') %}
                 <!-- 当前借阅处理 - 头部 -->
-                <div class="px-5 md:px-8 pt-4 pb-0 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white lg:sticky lg:top-0 lg:z-10" data-current-default-status="{{ current_default_status }}">
+                <div class="admin-section-toolbar px-5 md:px-8 pt-4 pb-0 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white lg:sticky lg:top-0 lg:z-10" data-current-default-status="{{ current_default_status }}">
                     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mb-4">
                         <div class="flex items-center gap-3">
                             <h3 class="text-base font-bold text-brand-deep">当前借阅处理</h3>
@@ -449,7 +450,7 @@
                 <!-- 卡片网格 -->
                 <div class="history-records-fixed overflow-visible lg:overflow-auto p-4 md:p-6">
                     {% if current_records %}
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div class="admin-records-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {% for record in current_records %}
                         <article class="admin-history-card" data-current-record-status="{{ record.status }}"{% if record.status != current_default_status %} hidden{% endif %}>
                             <div class="flex items-center gap-3 mb-4">
@@ -524,7 +525,7 @@
                 </div>
             {% elif tab == 'history' %}
                 <!-- 历史借阅记录 - 头部 -->
-                <div class="px-5 md:px-8 pt-4 pb-0 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white lg:sticky lg:top-0 lg:z-10">
+                <div class="admin-section-toolbar px-5 md:px-8 pt-4 pb-0 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white lg:sticky lg:top-0 lg:z-10">
                     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mb-4">
                         <div class="flex items-center gap-3">
                             <h3 class="text-base font-bold text-brand-deep">历史借阅记录</h3>
@@ -554,7 +555,7 @@
                 <!-- 今日预约记录 -->
                 <div id="todayRecordsTab" class="history-tab-content history-records-fixed overflow-visible lg:overflow-auto p-4 md:p-6">
                     {% if today_records %}
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div class="admin-records-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {% for record in today_records %}
                         <article class="admin-history-card">
                             <div class="flex items-center gap-3 mb-4">
@@ -621,7 +622,7 @@
                 <!-- 过往借阅记录 -->
                 <div id="pastRecordsTab" class="history-tab-content history-records-fixed overflow-visible lg:overflow-auto p-4 md:p-6 hidden">
                     {% if past_records %}
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div class="admin-records-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {% for record in past_records %}
                         <article class="admin-history-card">
                             <div class="flex items-center gap-3 mb-4">
@@ -687,7 +688,7 @@
 
             {% elif tab == 'users' %}
                 <!-- 用户管理 - 头部 -->
-                <div class="px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
+                <div class="admin-section-toolbar px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
                     <div class="flex items-center gap-3">
                         <h3 class="text-base font-bold text-brand-deep">账号一览</h3>
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-50 text-purple-700 text-[10px] font-black rounded-full border border-purple-100">
@@ -704,7 +705,7 @@
                 <!-- 用户卡片网格 -->
                 <div class="p-4 md:p-6 overflow-visible lg:overflow-auto admin-content-fixed">
                     {% if users_list %}
-                    <div id="users-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                    <div id="users-grid" class="admin-users-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                         {% for u in users_list %}
                         {% set banned = u.is_banned %}
                         <article class="user-card relative bg-white/90 rounded-2xl border {% if banned %}border-rose-200{% else %}border-pink-100/70{% endif %} p-4 shadow-sm hover:shadow-md transition-shadow"

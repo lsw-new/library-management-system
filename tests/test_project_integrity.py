@@ -119,6 +119,7 @@ class FrontendExperienceTests(unittest.TestCase):
             'book_detail.html': "versioned_url('css/book-detail.css')",
             'borrow_records.html': "versioned_url('css/borrow-records.css')",
             'profile.html': "versioned_url('css/profile.css')",
+            'admin.html': "versioned_url('css/admin.css')",
         }
         for template, marker in expected.items():
             content = (PROJECT_ROOT / 'static' / 'html' / template).read_text(encoding='utf-8')

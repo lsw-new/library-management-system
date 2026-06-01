@@ -11,7 +11,6 @@ from utils import (
     cst_now,
     mark_current_session_offline,
     create_login_session_record,
-    is_mobile_device,
     rate_limit,
     get_csrf_token,
     validate_csrf_token,
@@ -477,13 +476,6 @@ def login_email_send_code():
 @auth_bp.route('/admin/login', methods=['GET', 'POST'])
 @rate_limit('admin_login', LOGIN_LIMIT, LOGIN_WINDOW_SECONDS, '登录尝试过于频繁，请稍后再试')
 def admin_login():
-    if is_mobile_device():
-        if request.method == 'POST':
-            return {"success": False, "message": "手机端不能进入管理员页面，请切换PC端"}, 403
-        else:
-            flash('手机端不能进入管理员页面，请切换PC端', 'warning')
-            return redirect(url_for('auth.login'))
-
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')

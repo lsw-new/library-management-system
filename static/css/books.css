@@ -136,3 +136,117 @@
 /* 图书结果区数量徽章过渡 */
 [data-category] { transition: transform 0.25s ease; }
 [data-category].scale-110 { transform: scale(1.15); }
+
+/* ==================== Phone/tablet catalogue experience ==================== */
+@media (max-width: 639px) {
+    #books-sidebar-content {
+        margin-top: -0.25rem;
+    }
+    #books-mobile-categories {
+        padding: 0 0.15rem 0.45rem;
+        scroll-snap-type: x mandatory;
+    }
+    #books-main-content {
+        border-radius: 1.35rem;
+        box-shadow: 0 18px 42px -30px rgba(var(--color-brand-primary-rgb), 0.42);
+    }
+    #books-toolbar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 0.25rem;
+        scrollbar-width: none;
+    }
+    #books-toolbar::-webkit-scrollbar { display: none; }
+    #books-toolbar .chip {
+        flex: 0 0 auto;
+        min-height: 42px;
+        padding-inline: 0.82rem;
+    }
+    #books-results-content > .grid,
+    #books-results-content .grid.grid-cols-2 {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 0.85rem !important;
+    }
+    .book-card {
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr);
+        min-height: 160px;
+        border-radius: 1.15rem;
+    }
+    .book-card:hover {
+        transform: none;
+    }
+    .book-card-cover {
+        width: 112px;
+        height: 100%;
+        min-height: 160px;
+        aspect-ratio: auto;
+        border-radius: 0;
+    }
+    .book-card-status {
+        top: 0.45rem;
+        left: 0.45rem;
+        padding: 3px 8px;
+        font-size: 10px;
+    }
+    .book-card .p-3,
+    .book-card .sm\:p-4 {
+        padding: 0.85rem !important;
+    }
+    .book-card h3 {
+        font-size: 1.04rem;
+        line-height: 1.25;
+        margin-bottom: 0.25rem;
+    }
+    .book-card [data-actions] {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+    }
+    .book-card [data-actions] a,
+    .book-card [data-actions] button {
+        min-height: 42px;
+        border-radius: 0.85rem;
+    }
+    nav[aria-label],
+    #books-results-content nav {
+        overflow-x: auto;
+        justify-content: flex-start !important;
+        padding-bottom: 0.35rem;
+        scrollbar-width: none;
+    }
+    #books-results-content nav::-webkit-scrollbar { display: none; }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+    #books-main-content {
+        border-radius: 1.5rem;
+    }
+    #books-results-content > .grid,
+    #books-results-content .grid.grid-cols-2 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    .book-card {
+        border-radius: 1.1rem;
+    }
+}
+
+@media (max-width: 639px) {
+    .guest-book-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 0.9rem !important;
+    }
+    .guest-book-card {
+        display: grid !important;
+        grid-template-columns: 112px minmax(0, 1fr);
+        min-height: 164px;
+    }
+    .guest-book-card > img {
+        width: 112px;
+        height: 100% !important;
+        min-height: 164px;
+    }
+    .guest-book-card .touch-target {
+        min-height: 42px;
+    }
+}

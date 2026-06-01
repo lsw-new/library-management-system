@@ -1,5 +1,8 @@
 (function () {
-    var toast = function (msg, type) { return window.showToast ? window.showToast(msg, type) : alert(msg); };
+    var toast = function (msg, type) {
+        if (window.showToast) return window.showToast(msg, type);
+        console.warn(msg);
+    };
 
 
     // ====== 标签页切换 ======
@@ -328,6 +331,15 @@
             if (newPw.length < 6) { toast('新密码至少 6 位字符', 'warning'); return; }
             if (newPw !== confirmPw) { toast('两次输入的新密码不一致', 'warning'); return; }
             if (!verCode) { toast('请输入邮箱验证码', 'warning'); return; }
+
+            if (typeof showConfirm === 'function' && passwordForm.dataset.confirmed !== '1') {
+                showConfirm('更新密码', '确认提交新的登录密码吗？完成后请使用新密码登录。', function () {
+                    passwordForm.dataset.confirmed = '1';
+                    passwordForm.requestSubmit();
+                }, 'warning', { confirmText: '确认更新', cancelText: '再检查一下' });
+                return;
+            }
+            delete passwordForm.dataset.confirmed;
 
             withLoadingBtn(passwordBtn, '更新中…', function () {
                 return postJson('/profile/password', {

@@ -26,8 +26,11 @@
         var msg = data.reason || '您已被管理员下线';
         if (typeof window.showKickoutModal === 'function') {
             window.showKickoutModal(msg);
+        } else if (typeof window.showNotice === 'function') {
+            window.showNotice('登录已失效', msg, 'danger', [
+                { label: '重新登录', href: '/login', primary: true }
+            ]);
         } else {
-            alert(msg);
             window.location.href = '/login';
         }
     });

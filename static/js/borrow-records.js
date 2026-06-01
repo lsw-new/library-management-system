@@ -5,7 +5,10 @@
     if (!filters || !list) return;
 
     const emptyHint = document.getElementById('records-empty-filter');
-    const toast = (msg, type = 'success') => (window.showToast ? window.showToast(msg, type) : alert(msg));
+    const toast = (msg, type = 'success') => {
+        if (window.showToast) return window.showToast(msg, type);
+        console.warn(msg);
+    };
     let currentFilter = 'all';
     let searchKeyword = '';
 

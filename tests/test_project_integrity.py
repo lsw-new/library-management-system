@@ -1,5 +1,6 @@
 import ast
 import os
+import re
 import shutil
 import subprocess
 import unittest
@@ -73,6 +74,43 @@ class RouteContractTests(unittest.TestCase):
         base_html = (PROJECT_ROOT / 'static' / 'html' / 'base.html').read_text(encoding='utf-8')
         self.assertIn("url_for('update_location')", base_html)
         self.assertIn('update_location', self.endpoints)
+
+
+class FrontendExperienceTests(unittest.TestCase):
+    def test_mobile_shell_replaces_old_mobile_block(self):
+        base_html = (PROJECT_ROOT / 'static' / 'html' / 'base.html').read_text(encoding='utf-8')
+        self.assertNotIn('mobile-block', base_html)
+        self.assertIn('mobile-menu', base_html)
+        self.assertIn('mobile-bottom-nav', base_html)
+        self.assertIn("url_for('admin.admin_index', tab='books')", base_html)
+        self.assertIn("url_for('auth.register')", base_html)
+
+    def test_dialog_helpers_are_available(self):
+        base_js = (PROJECT_ROOT / 'static' / 'js' / 'base.js').read_text(encoding='utf-8')
+        self.assertIn('function appShowConfirm', base_js)
+        self.assertIn('function showNotice', base_js)
+        self.assertIn('function initLogoutConfirm', base_js)
+        self.assertIn('window.showNotice = showNotice', base_js)
+
+    def test_borrow_success_uses_notice_dialog(self):
+        borrow_js = (PROJECT_ROOT / 'static' / 'js' / 'borrow-modal.js').read_text(encoding='utf-8')
+        borrow_template = (PROJECT_ROOT / 'static' / 'html' / '_borrow_modal.html').read_text(encoding='utf-8')
+        self.assertIn("showNotice('预约已提交'", borrow_js)
+        self.assertIn('查看借阅记录', borrow_js)
+        self.assertIn('recordsUrl', borrow_template)
+
+    def test_admin_login_allows_mobile_and_tablet(self):
+        auth_py = (PROJECT_ROOT / 'blueprints' / 'auth.py').read_text(encoding='utf-8')
+        self.assertNotIn('is_mobile_device', auth_py)
+        self.assertNotIn('手机端不能进入管理员页面', auth_py)
+
+    def test_static_scripts_do_not_use_native_alerts(self):
+        offenders = []
+        for path in (PROJECT_ROOT / 'static' / 'js').glob('*.js'):
+            content = path.read_text(encoding='utf-8')
+            if re.search(r'\balert\s*\(', content):
+                offenders.append(str(path.relative_to(PROJECT_ROOT)))
+        self.assertEqual(offenders, [])
 
 
 class GitSafetyTests(unittest.TestCase):

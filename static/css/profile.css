@@ -455,3 +455,71 @@
 @media (max-width: 640px) {
     .pf-shortcuts { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 520px) {
+    .pf-topbar {
+        margin-bottom: 0.9rem;
+    }
+    .pf-logout {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 0.95rem;
+    }
+    .pf-logout svg {
+        width: 18px;
+        height: 18px;
+    }
+    .pf-logout {
+        font-size: 0;
+    }
+    .pf-hero {
+        padding: 1.75rem 1rem 1rem;
+        border-radius: 1.35rem;
+    }
+    .pf-stats {
+        grid-template-columns: 1fr;
+    }
+    .pf-stat {
+        justify-content: flex-start;
+    }
+    .pf-tabs {
+        position: sticky;
+        top: 0.75rem;
+        z-index: 30;
+        border-radius: 1rem;
+    }
+    .pf-tab {
+        min-height: 44px;
+        padding-inline: 0.75rem;
+        font-size: 0.8rem;
+    }
+    .pf-panel {
+        padding: 1.15rem;
+        border-radius: 1.25rem;
+    }
+    .pf-panel-head {
+        flex-wrap: wrap;
+        gap: 0.55rem;
+    }
+    .pf-panel-badge {
+        width: 100%;
+        margin-left: 0;
+    }
+    .pf-input-wrap.has-code-btn {
+        display: grid;
+        gap: 0.55rem;
+    }
+    .pf-input-wrap.has-code-btn .pf-input {
+        padding-right: 1rem;
+    }
+    .pf-send-code {
+        position: static;
+        min-height: 42px;
+    }
+    .crop-dialog {
+        border-radius: 1.35rem;
+        padding: 1rem;
+    }
+}

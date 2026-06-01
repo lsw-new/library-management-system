@@ -237,10 +237,14 @@ const BorrowModal = (() => {
             if (data.success) {
                 const borrowedBookId = currentBookId;
                 close();
-                if (typeof showToast === 'function') {
+                const successMessage = data.message || '预约成功，等待管理员审核后即可领取图书。';
+                if (typeof showNotice === 'function') {
+                    showNotice('预约已提交', successMessage, 'success', [
+                        { label: '查看借阅记录', href: (window.borrowModalConfig || {}).recordsUrl || '/borrow_records', primary: true },
+                        { label: '继续浏览' }
+                    ]);
+                } else if (typeof showToast === 'function') {
                     showToast(data.message || '预约成功', 'success');
-                } else {
-                    alert(data.message || '预约成功');
                 }
                 if (data.stock !== undefined) {
                     window.dispatchEvent(new CustomEvent('library:book-stock-changed', {

@@ -41,10 +41,10 @@
         <div class="p-6">
             {% if books %}
             <!-- 响应式网格：移动端1列，平板2列，桌面4列 -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="guest-book-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {% for book in books %}
                 <!-- 图书卡片 -->
-                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-200 flex flex-col">
+                <div class="guest-book-card bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-200 flex flex-col">
                     <!-- 图书封面：固定高度，对象适配 -->
                     <img src="{{ url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') }}"
                          class="w-full h-56 object-cover" alt="{{ book.title }}">

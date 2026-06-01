@@ -239,8 +239,8 @@ async function insertTestData() {
     }
 }
 
-async function resetDatabase() {
-    if (!confirm('⚠ 确定要完全重置数据库吗？此操作不可撤销，所有数据将被清除！')) return;
+async function resetDatabase(options = {}) {
+    if (!options.skipConfirm && !window.confirm('⚠ 确定要完全重置数据库吗？此操作不可撤销，所有数据将被清除！')) return;
 
     setButtonLoading(dom.resetDatabaseButton, true, '正在重置...');
     setPageStatus(dom.statusEls, '正在重置数据库', 'pending');
@@ -275,6 +275,23 @@ async function resetDatabase() {
         setButtonLoading(dom.resetDatabaseButton, false);
     }
 }
+
+const resetDatabaseWithNativeConfirm = resetDatabase;
+resetDatabase = async function resetDatabaseWithDialog() {
+    if (typeof showConfirm === 'function') {
+        const confirmed = await showConfirm({
+            title: '重置数据库',
+            message: '此操作会清空当前数据库并且不可撤销，请确认已经完成备份。',
+            type: 'danger',
+            confirmText: '确认重置',
+            cancelText: '再检查一下'
+        });
+        if (!confirmed) return;
+        await resetDatabaseWithNativeConfirm({ skipConfirm: true });
+        return;
+    }
+    await resetDatabaseWithNativeConfirm();
+};
 
 async function refreshPreview() {
     try {

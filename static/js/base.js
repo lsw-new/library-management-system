@@ -11,12 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (menuBtn && menu) {
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            menu.classList.toggle('hidden');
+            const isOpen = menu.classList.toggle('hidden') === false;
+            menuBtn.classList.toggle('is-open', isOpen);
+            menuBtn.setAttribute('aria-expanded', String(isOpen));
         });
 
         document.addEventListener('click', (e) => {
             if (!menu.contains(e.target) && !menuBtn.contains(e.target)) {
                 menu.classList.add('hidden');
+                menuBtn.classList.remove('is-open');
+                menuBtn.setAttribute('aria-expanded', 'false');
             }
         });
     }
@@ -33,7 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 header.classList.remove('is-hidden');
             } else {
                 header.classList.add('is-hidden');
-                if (menu) menu.classList.add('hidden');
+                if (menu) {
+                    menu.classList.add('hidden');
+                    if (menuBtn) {
+                        menuBtn.classList.remove('is-open');
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                    }
+                }
             }
 
             ticking = false;
@@ -46,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, { passive: true });
     }
+
+    initLogoutConfirm();
 });
 
 // ==================== Toast 通知函数 ====================
@@ -103,19 +115,31 @@ function showToast(message, type = 'success') {
 }
 
 // ==================== 全局确认弹窗 ====================
-function showConfirm(title, message, onConfirm, type = 'warning') {
+function showConfirm(title, message, onConfirm, type = 'warning', options = {}) {
     if (document.querySelector('.confirm-modal-overlay')) {
-        return;
+        return Promise.resolve(false);
     }
+
+    const opts = typeof title === 'object'
+        ? { ...title }
+        : { title, message, onConfirm, type, ...options };
+    const confirmTitle = opts.title || '确认操作';
+    const confirmMessage = opts.message || '';
+    const confirmType = opts.type || type || 'warning';
+    const confirmText = opts.confirmText || '确认执行';
+    const cancelText = opts.cancelText || '取消';
+    const confirmCallback = typeof opts.onConfirm === 'function' ? opts.onConfirm : onConfirm;
 
     const colors = {
         warning: 'text-amber-600 bg-amber-50',
         danger: 'text-rose-600 bg-rose-50',
+        success: 'text-emerald-600 bg-emerald-50',
         info: 'text-brand-primary bg-pink-50'
     };
     const btnColors = {
         warning: 'bg-amber-600 hover:bg-amber-700',
         danger: 'bg-rose-600 hover:bg-rose-700',
+        success: 'bg-emerald-600 hover:bg-emerald-700',
         info: 'bg-brand-primary hover:bg-brand-deep'
     };
 
@@ -129,11 +153,11 @@ function showConfirm(title, message, onConfirm, type = 'warning') {
     modal.innerHTML = `
         <div class="bg-white w-full max-w-sm rounded-[3rem] p-8 shadow-2xl animate-in zoom-in-95 duration-300" role="dialog" aria-modal="true" aria-labelledby="${titleId}" aria-describedby="${messageId}" tabindex="-1">
             <div class="flex flex-col items-center text-center">
-                <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-[2rem] ${colors[type] || colors.info}">
+                <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-[2rem] ${colors[confirmType] || colors.info}">
                     <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
-                <h3 id="${titleId}" class="mb-3 text-3xl font-heading font-bold text-brand-deep">${escapeHtml(title)}</h3>
-                <p id="${messageId}" class="mb-8 text-sm font-medium leading-relaxed text-brand-deep/60">${escapeHtml(message)}</p>
+                <h3 id="${titleId}" class="mb-3 text-3xl font-heading font-bold text-brand-deep">${escapeHtml(confirmTitle)}</h3>
+                <p id="${messageId}" class="mb-8 text-sm font-medium leading-relaxed text-brand-deep/60">${escapeHtml(confirmMessage)}</p>
                 <div class="flex w-full gap-4">
                     <button class="cancel-btn flex-1 rounded-2xl py-4 text-sm font-bold text-brand-soft transition-all cursor-pointer hover:bg-white/50">取消</button>
                     <button class="confirm-btn flex-1 rounded-2xl py-4 text-sm font-bold text-white cursor-pointer ${btnColors[type] || btnColors.info}">确认执行</button>
@@ -200,6 +224,114 @@ function showConfirm(title, message, onConfirm, type = 'warning') {
     });
     document.addEventListener('keydown', handleKeydown);
     cancelButton?.focus();
+}
+
+showConfirm = window.showConfirm = function appShowConfirm(title, message, onConfirm, type = 'warning', options = {}) {
+    if (document.querySelector('.confirm-modal-overlay')) return Promise.resolve(false);
+    const opts = typeof title === 'object' ? { ...title } : { title, message, onConfirm, type, ...options };
+    const dialogType = opts.type || type || 'warning';
+    const palette = {
+        warning: { icon: '!', bg: '#fffbeb', fg: '#d97706', btn: 'linear-gradient(135deg,#f59e0b,#d97706)' },
+        danger: { icon: '!', bg: '#fff1f2', fg: '#e11d48', btn: 'linear-gradient(135deg,#f43f5e,#be123c)' },
+        success: { icon: '✓', bg: '#ecfdf5', fg: '#059669', btn: 'linear-gradient(135deg,#10b981,#059669)' },
+        info: { icon: 'i', bg: '#fdf2f8', fg: 'var(--color-brand-primary)', btn: 'linear-gradient(135deg,var(--color-brand-primary),var(--color-brand-accent))' }
+    };
+    const selected = palette[dialogType] || palette.info;
+    const activeElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const overlay = document.createElement('div');
+    overlay.className = 'confirm-modal-overlay app-dialog-overlay';
+    overlay.innerHTML = `
+        <section class="app-dialog-card" role="dialog" aria-modal="true" tabindex="-1">
+            <div class="app-dialog-icon" style="background:${selected.bg};color:${selected.fg}">${escapeHtml(selected.icon)}</div>
+            <h3 class="app-dialog-title">${escapeHtml(opts.title || '确认操作')}</h3>
+            <p class="app-dialog-message">${escapeHtml(opts.message || '')}</p>
+            <div class="app-dialog-actions">
+                <button type="button" class="app-dialog-btn is-secondary" data-dialog-cancel>${escapeHtml(opts.cancelText || '取消')}</button>
+                <button type="button" class="app-dialog-btn is-primary" style="background:${selected.btn}" data-dialog-confirm>${escapeHtml(opts.confirmText || '确认执行')}</button>
+            </div>
+        </section>
+    `;
+    document.body.appendChild(overlay);
+    return new Promise((resolve) => {
+        const card = overlay.querySelector('.app-dialog-card');
+        const cancelBtn = overlay.querySelector('[data-dialog-cancel]');
+        const confirmBtn = overlay.querySelector('[data-dialog-confirm]');
+        function close(result) {
+            document.removeEventListener('keydown', onKeydown);
+            overlay.remove();
+            if (activeElement && document.contains(activeElement)) activeElement.focus();
+            resolve(result);
+        }
+        function onKeydown(event) {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                close(false);
+            }
+        }
+        cancelBtn?.addEventListener('click', () => close(false));
+        confirmBtn?.addEventListener('click', () => {
+            close(true);
+            if (typeof opts.onConfirm === 'function') opts.onConfirm();
+        });
+        overlay.addEventListener('click', (event) => {
+            if (event.target === overlay) close(false);
+        });
+        document.addEventListener('keydown', onKeydown);
+        card?.focus();
+    });
+};
+
+function showNotice(title, message, type = 'success', actions = []) {
+    const palette = {
+        success: { icon: '✓', bg: '#ecfdf5', fg: '#059669', accent: 'linear-gradient(135deg,#10b981,#059669)' },
+        warning: { icon: '!', bg: '#fffbeb', fg: '#d97706', accent: 'linear-gradient(135deg,#f59e0b,#d97706)' },
+        danger: { icon: '!', bg: '#fff1f2', fg: '#e11d48', accent: 'linear-gradient(135deg,#f43f5e,#be123c)' },
+        info: { icon: 'i', bg: '#fdf2f8', fg: 'var(--color-brand-primary)', accent: 'linear-gradient(135deg,var(--color-brand-primary),var(--color-brand-accent))' }
+    };
+    const selected = palette[type] || palette.info;
+    const normalizedActions = actions.length ? actions : [{ label: '知道了', primary: true }];
+    const overlay = document.createElement('div');
+    overlay.className = 'app-dialog-overlay app-notice-overlay';
+    overlay.innerHTML = `
+        <section class="app-dialog-card app-notice-card" role="dialog" aria-modal="true" tabindex="-1">
+            <div class="app-dialog-icon" style="background:${selected.bg};color:${selected.fg}">${escapeHtml(selected.icon)}</div>
+            <h3 class="app-dialog-title">${escapeHtml(title || '提示')}</h3>
+            <p class="app-dialog-message">${escapeHtml(message || '')}</p>
+            <div class="app-dialog-actions">
+                ${normalizedActions.map((action, index) => `
+                    <button type="button" class="app-dialog-btn ${action.primary ? 'is-primary' : 'is-secondary'}" ${action.primary ? `style="background:${selected.accent}"` : ''} data-notice-action="${index}">
+                        ${escapeHtml(action.label || action.text || '确定')}
+                    </button>
+                `).join('')}
+            </div>
+        </section>
+    `;
+    document.body.appendChild(overlay);
+    const close = () => overlay.remove();
+    overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) close();
+        const button = event.target.closest('[data-notice-action]');
+        if (!button) return;
+        const action = normalizedActions[Number(button.dataset.noticeAction)] || {};
+        close();
+        if (action.href) window.location.href = action.href;
+        if (typeof action.onClick === 'function') action.onClick();
+    });
+    overlay.querySelector('.app-dialog-card')?.focus();
+}
+window.showNotice = showNotice;
+
+function initLogoutConfirm() {
+    document.addEventListener('click', function(event) {
+        const link = event.target.closest('a[href]');
+        if (!link || link.dataset.noConfirm === 'true') return;
+        const url = new URL(link.href, window.location.href);
+        if (url.pathname !== '/logout') return;
+        event.preventDefault();
+        showConfirm('退出登录', '确认退出当前账号吗？退出后需要重新登录才能继续借阅和查看记录。', function() {
+            window.location.href = link.href;
+        }, 'warning', { confirmText: '退出登录', cancelText: '继续浏览' });
+    });
 }
 
 // ==================== 通用 fetch 封装 ====================

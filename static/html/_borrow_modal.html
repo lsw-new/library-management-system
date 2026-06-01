@@ -112,6 +112,7 @@
 <script>
 window.borrowModalConfig = Object.assign({}, window.borrowModalConfig || {}, {
     booksStockUrl: {{ url_for("user.books_stock")|tojson }},
+    recordsUrl: {{ url_for("user.borrow_records")|tojson }},
     csrfToken: {{ borrow_action_csrf_token|tojson }}
 });
 </script>

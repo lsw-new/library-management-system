@@ -681,6 +681,74 @@
     vertical-align: 1px;
 }
 
+/* ==================== Phone/tablet borrow records ==================== */
+@media (max-width: 1023px) {
+    #records-list {
+        max-height: none;
+        overflow: visible;
+    }
+    .borrow-aside {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+    }
+}
+
+@media (max-width: 639px) {
+    .borrow-page {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .borrow-hero {
+        margin-inline: 0;
+        border-radius: 1.35rem;
+        padding: 1.35rem 1rem 1rem;
+    }
+    .borrow-hero-inner {
+        align-items: stretch;
+    }
+    .borrow-hero-cta {
+        width: 100%;
+        min-height: 46px;
+        justify-content: center;
+    }
+    .borrow-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.55rem;
+    }
+    .borrow-stat-card {
+        padding: 0.75rem;
+        border-radius: 0.95rem;
+    }
+    .borrow-stat-card .stat-icon {
+        width: 32px;
+        height: 32px;
+    }
+    .borrow-stat-card .stat-value {
+        font-size: 1.35rem;
+    }
+    .records-tabs-head {
+        align-items: stretch;
+    }
+    .records-search {
+        max-width: none;
+        flex-basis: 100%;
+    }
+    .record-card {
+        border-radius: 1.15rem;
+        padding: 0.9rem;
+    }
+    .record-cover {
+        width: min(8.5rem, 54vw);
+    }
+    .record-confirm-card {
+        border-radius: 1.15rem;
+    }
+    .borrow-aside {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 /* ----- 主体两栏布局 ----- */
 .borrow-layout {
     display: grid;

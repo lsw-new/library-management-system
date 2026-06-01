@@ -77,4 +77,9 @@
 
         catsWrap.style.cursor = 'grab';
     }
+
+    window.addEventListener('library:book-catalog-changed', function () {
+        if (document.hidden) return;
+        location.reload();
+    });
 })();

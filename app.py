@@ -2,7 +2,7 @@ import logging
 import os
 import time
 from flask import Flask, session, redirect, url_for, flash, request, render_template, jsonify
-from flask_login import current_user, logout_user
+from flask_login import current_user, login_required, logout_user
 from sqlalchemy import text
 from sqlalchemy.exc import OperationalError, ProgrammingError, DatabaseError, SQLAlchemyError
 
@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 from config import Config
 from extensions import db, login_manager, socketio
 from utils import cst_now, cleanup_expired_online_users, authenticate_active_session, get_client_ip
+from utils.cache import init_cache
 from utils.static_hash import versioned_url
 
 def create_app():
@@ -28,9 +29,26 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
-    socketio.init_app(app, async_mode='threading')
+    login_manager.login_message = '请先登录后再访问该页面'
+    login_manager.login_message_category = 'warning'
+    socketio_async_mode = os.environ.get('SOCKETIO_ASYNC_MODE')
+    if socketio_async_mode:
+        socketio.init_app(app, async_mode=socketio_async_mode)
+    else:
+        socketio.init_app(app)
+
+    redis_url = os.environ.get('REDIS_URL')
+    if redis_url:
+        init_cache(redis_url)
 
     app.jinja_env.globals['versioned_url'] = versioned_url
+
+    @app.context_processor
+    def inject_map_config():
+        return {
+            'amap_js_key': os.environ.get('AMAP_JS_KEY', ''),
+            'amap_security_key': os.environ.get('AMAP_SECURITY_KEY', ''),
+        }
 
     from blueprints.auth import auth_bp
     from blueprints.user import user_bp
@@ -267,19 +285,47 @@ def create_app():
             return jsonify({'ok': False}), 401
         return jsonify({'ok': True})
 
+    @app.route('/api/update_location', methods=['POST'])
+    @login_required
+    def update_location():
+        data = request.get_json(silent=True) or {}
+        location = str(data.get('location') or '').strip()
+        if not location:
+            return jsonify({'success': False, 'message': '位置为空'}), 400
+        location = location[:100]
+        user_type = 'admin' if getattr(current_user, 'is_admin', False) else 'user'
+
+        try:
+            from models import OnlineSession
+            OnlineSession.query.filter_by(
+                user_id=current_user.id,
+                user_type=user_type,
+            ).update({OnlineSession.geo_location: location}, synchronize_session=False)
+            db.session.commit()
+            try:
+                from socketio_emitters import emit_online_changed
+                emit_online_changed()
+            except Exception:
+                pass
+            return jsonify({'success': True})
+        except Exception:
+            db.session.rollback()
+            logger.warning("更新用户定位失败 | user_id=%s", current_user.id, exc_info=True)
+            return jsonify({'success': False, 'message': '位置更新失败'}), 500
+
     # ── 安全响应头 ──
     @app.after_request
     def set_security_headers(response):
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['X-Frame-Options'] = 'DENY'
         response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-        response.headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()'
+        response.headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=(self)'
         response.headers['Content-Security-Policy'] = (
             "default-src 'self'; "
-            "script-src 'self' 'unsafe-inline' https://webapi.amap.com; "
+            "script-src 'self' 'unsafe-inline' https://webapi.amap.com https://cdn.socket.io; "
             "style-src 'self' 'unsafe-inline'; "
             "img-src 'self' data: blob:; "
-            "connect-src 'self' wss: https://restapi.amap.com; "
+            "connect-src 'self' ws: wss: https://restapi.amap.com; "
             "font-src 'self'; "
             "frame-src 'none'; "
             "object-src 'none'; "
@@ -293,4 +339,4 @@ app = create_app()
 
 if __name__ == '__main__':
     debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
-    app.run(debug=debug_mode, host='0.0.0.0', port=5000, use_reloader=False)
+    socketio.run(app, debug=debug_mode, host='0.0.0.0', port=5000, use_reloader=False)

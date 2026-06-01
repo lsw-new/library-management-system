@@ -81,5 +81,19 @@ def log_action(action: str, details: str = '', username: str | None = None) -> N
         )
         db.session.add(log_record)
         db.session.commit()
+        try:
+            from socketio_emitters import emit_new_log
+            emit_new_log({
+                'id': log_record.id,
+                'username': username_snapshot,
+                'user_type': user_type,
+                'ip': ip,
+                'time': log_record.login_time.strftime('%Y-%m-%d %H:%M:%S'),
+                'action': action,
+                'details': details,
+                'is_online': False,
+            })
+        except Exception:
+            pass
     except Exception:
         _logger.warning("log_action failed", exc_info=True)

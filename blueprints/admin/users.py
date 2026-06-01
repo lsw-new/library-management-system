@@ -1,17 +1,11 @@
-import secrets
-import string
-
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
+import re
 
 from models import db, User
 from utils import log_action, admin_required, db_transaction, kick_active_session
 
-
-def _generate_temp_password(length: int = 12) -> str:
-    """Generate a random temporary password using letters and digits."""
-    alphabet = string.ascii_letters + string.digits
-    return ''.join(secrets.choice(alphabet) for _ in range(length))
+EMAIL_PATTERN = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
 
 
 def register_user_routes(bp: Blueprint) -> None:
@@ -34,8 +28,9 @@ def register_user_routes(bp: Blueprint) -> None:
         if not user:
             return jsonify({'success': False, 'message': '用户不存在'}), 404
 
+        payload = request.get_json(silent=True) or {}
         try:
-            minutes = int(request.form.get('minutes') or (request.json or {}).get('minutes', 0))
+            minutes = int(request.form.get('minutes') or payload.get('minutes', 0))
         except (TypeError, ValueError):
             return jsonify({'success': False, 'message': '封禁时长必须是整数（分钟）'}), 400
 
@@ -84,10 +79,13 @@ def register_user_routes(bp: Blueprint) -> None:
         if not user:
             return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-        temp_password = _generate_temp_password()
+        if not user.student_id:
+            return jsonify({'success': False, 'message': '该用户未绑定学号，无法重置'}), 400
+
+        new_password = user.student_id
 
         with db_transaction() as tx:
-            user.set_password(temp_password)
+            user.set_password(new_password)
         if tx.error:
             return jsonify({'success': False, 'message': tx.error}), 500
 
@@ -95,21 +93,52 @@ def register_user_routes(bp: Blueprint) -> None:
         if user.email:
             try:
                 from email_utils import send_temp_password_email
-                success, _ = send_temp_password_email(user.email, user.username, temp_password)
+                success, _ = send_temp_password_email(user.email, user.username, new_password)
                 email_sent = success
-            except (ImportError, Exception):
+            except Exception:
                 pass
 
-        log_action('重置密码', f'用户: {user.username}, 密码已重置为随机临时密码, 邮件通知: {"成功" if email_sent else "未发送"}')
+        log_action('重置密码', f'用户: {user.username}, 密码已重置为学号, 邮件通知: {"成功" if email_sent else "未发送"}')
 
         result: dict[str, object] = {
             'success': True,
-            'message': f'已重置 {user.username} 的密码为随机临时密码',
-            'temp_password': temp_password,
+            'message': f'已重置 {user.username} 的密码为学号',
             'email_sent': email_sent,
         }
         if email_sent:
             result['message'] += '，已通过邮件通知用户'
         else:
-            result['message'] += '，请手动通知用户新密码'
+            result['message'] += '，请手动通知用户'
         return jsonify(result)
+
+    @bp.route('/admin/change_email/<int:user_id>', methods=['POST'])
+    @login_required
+    @admin_required()
+    def change_email(user_id):
+        user = db.session.get(User, user_id)
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
+
+        payload = request.get_json(silent=True) or {}
+        new_email = (request.form.get('email') or payload.get('email') or '').strip().lower()
+        if not new_email:
+            return jsonify({'success': False, 'message': '请输入新邮箱地址'}), 400
+        if len(new_email) > 120 or not EMAIL_PATTERN.fullmatch(new_email):
+            return jsonify({'success': False, 'message': '邮箱格式不正确'}), 400
+        if new_email == (user.email or '').lower():
+            return jsonify({'success': False, 'message': '新邮箱与当前邮箱相同'}), 409
+
+        exists = db.session.query(
+            db.session.query(User).filter(User.email == new_email, User.id != user.id).exists()
+        ).scalar()
+        if exists:
+            return jsonify({'success': False, 'message': '该邮箱已被其他用户绑定'}), 409
+
+        old_email = user.email
+        with db_transaction(error_message='邮箱修改失败，请稍后重试') as tx:
+            user.email = new_email
+        if tx.error:
+            return jsonify({'success': False, 'message': tx.error}), 500
+
+        log_action('修改用户邮箱', f'用户: {user.username}, {old_email} -> {new_email}')
+        return jsonify({'success': True, 'message': f'已将 {user.username} 的邮箱修改为 {new_email}'})

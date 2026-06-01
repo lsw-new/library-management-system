@@ -1,3 +1,11 @@
+function refreshReservationsView() {
+    if (typeof window.refreshAdminPanel === 'function') {
+        window.refreshAdminPanel(null, { updateHistory: false });
+    } else {
+        location.reload();
+    }
+}
+
 function approveReservation(recordId) {
     showConfirm('同意领取', '确认同意该用户领取图书吗？', () => {
         fetch(`/admin/approve_reservation/${recordId}`, adminPostInit())
@@ -5,7 +13,7 @@ function approveReservation(recordId) {
             .then(data => {
                 if (data.success) {
                     showToast(data.message, 'success');
-                    setTimeout(() => location.reload(), 1500);
+                    refreshReservationsView();
                 } else {
                     showToast(data.message, 'error');
                 }
@@ -21,7 +29,7 @@ function rejectReservation(recordId) {
             .then(data => {
                 if (data.success) {
                     showToast(data.message, 'success');
-                    setTimeout(() => location.reload(), 1500);
+                    refreshReservationsView();
                 } else {
                     showToast(data.message, 'error');
                 }
@@ -37,7 +45,7 @@ function adminReturnBook(recordId) {
             .then(data => {
                 if (data.success) {
                     showToast(data.message, 'success');
-                    setTimeout(() => location.reload(), 1500);
+                    refreshReservationsView();
                 } else {
                     showToast(data.message, 'error');
                 }

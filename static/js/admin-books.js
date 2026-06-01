@@ -18,7 +18,7 @@ function previewImage(input, previewId) {
         if (oldImg) oldImg.remove();
         const img = document.createElement('img');
         img.src = e.target.result;
-        img.className = 'w-full h-full object-cover rounded-2xl';
+        img.className = 'w-full h-full object-cover rounded-2xl pointer-events-none';
         container.appendChild(img);
     };
     reader.readAsDataURL(input.files[0]);
@@ -77,7 +77,7 @@ function openEditBookModal(id, title, author, isbn, publisher, location, categor
     if (image) {
         const img = document.createElement('img');
         img.src = '/static/images/' + image;
-        img.className = 'w-full h-full object-cover rounded-2xl';
+        img.className = 'w-full h-full object-cover rounded-2xl pointer-events-none';
         preview.appendChild(img);
         preview.querySelectorAll('.preview-placeholder').forEach(el => el.style.display = 'none');
     }

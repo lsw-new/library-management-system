@@ -15,6 +15,7 @@ from email_templates import (
     build_borrow_notification_email,
     build_rejection_email,
     build_expiry_email,
+    build_password_reset_email,
     _CODE_TTL_MINUTES,
     _html_text,
 )
@@ -144,6 +145,13 @@ def send_code_to_email(email: str) -> tuple[bool, str]:
     # 发送失败，清理已存储的验证码
     delete_verification_code(email)
     return False, "验证码发送失败，请稍后重试"
+
+
+def send_temp_password_email(to_email: str, username: str, new_password: str) -> tuple[bool, str]:
+    html_content = build_password_reset_email(_html_text(username), _html_text(new_password))
+    if _send_email(to_email, '景艺大图书馆 — 密码重置通知', html_content):
+        return True, '邮件已发送'
+    return False, '邮件发送失败'
 
 
 def send_borrow_notification_email(to_email: str, username: str, book_title: str,

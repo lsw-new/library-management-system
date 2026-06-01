@@ -602,6 +602,11 @@
     border: 1px solid rgba(255, 255, 255, 0.7);
     box-shadow: 0 20px 50px -28px rgba(236, 72, 153, 0.28);
 }
+.borrow-empty-center {
+    max-width: 480px;
+    margin: 3rem auto;
+    padding: 4.5rem 2rem 3.5rem;
+}
 .borrow-empty-blob {
     position: absolute; z-index: 0;
     top: -60px; left: 50%;

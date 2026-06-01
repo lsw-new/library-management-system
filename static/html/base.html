@@ -180,27 +180,28 @@
     <script>window._AMapSecurityConfig = { securityJsCode: '{{ amap_security_key }}' };</script>
     <script>
     (function() {
-        if (localStorage.getItem('_geo_sent')) return;
+        var geoLevel = parseInt(localStorage.getItem('_geo_level') || '0', 10);
+        if (geoLevel >= 2) return;
         setTimeout(function() {
-            var sent = false;
-            function sendLoc(loc) {
-                if (sent || !loc) return;
-                sent = true;
+            var currentLevel = 0;
+            function sendLoc(loc, level) {
+                if (!loc || level <= currentLevel) return;
+                currentLevel = level;
                 fetch("{{ url_for('update_location') }}", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
                     body: JSON.stringify({ location: loc }),
                     credentials: 'same-origin'
-                }).then(function() { localStorage.setItem('_geo_sent', '1'); });
+                }).then(function() { localStorage.setItem('_geo_level', String(level)); });
             }
             var script = document.createElement('script');
             script.src = 'https://webapi.amap.com/maps?v=2.0&key={{ amap_js_key }}&plugin=AMap.Geolocation,AMap.Geocoder';
             script.onload = function() {
-                var geo = new AMap.Geolocation({ timeout: 8000, noIpLocate: 0, noGeoLocation: 3, useNative: false, needAddress: true });
+                var geo = new AMap.Geolocation({ timeout: 10000, noIpLocate: 0, noGeoLocation: 0, useNative: true, needAddress: true });
                 geo.getCityInfo(function(status, result) {
                     if (status === 'complete' && result.province) {
                         var loc = (result.province || '') + (result.city && result.city !== result.province ? result.city : '');
-                        sendLoc(loc);
+                        sendLoc(loc, 1);
                     }
                 });
                 geo.getCurrentPosition(function(status, result) {
@@ -208,7 +209,7 @@
                     new AMap.Geocoder().getAddress(result.position, function(s, r) {
                         if (s !== 'complete' || !r.regeocode) return;
                         var a = r.regeocode.addressComponent;
-                        sendLoc((a.province || '') + (a.city && a.city !== a.province ? a.city : '') + (a.district || ''));
+                        sendLoc((a.province || '') + (a.city && a.city !== a.province ? a.city : '') + (a.district || ''), 2);
                     });
                 });
             };

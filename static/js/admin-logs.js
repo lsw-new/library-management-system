@@ -44,12 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.getElementById('sidebarLogs')) return;
     loadSystemLogs();
 
-    var socket = window._socket;
-    if (socket) {
-        socket.on('new_log', function () {
-            loadSystemLogs();
-        });
-    }
+    window.addEventListener('library:new-log', function () {
+        loadSystemLogs();
+    });
 });
 
 document.addEventListener('visibilitychange', function () {

@@ -11,6 +11,7 @@ def emit_online_changed():
             'username': u.username,
             'user_type': u.user_type,
             'ip_address': u.ip_address or '',
+            'geo_location': u.geo_location or '',
             'last_seen': u.last_seen.strftime('%H:%M:%S'),
             'login_time': u.login_time.strftime('%H:%M:%S'),
         } for u in users],
@@ -21,14 +22,20 @@ def emit_reservation_changed(action: str = 'update'):
     from sqlalchemy import case, func
     from models import BorrowRecord
     from extensions import db
+    current_statuses = ['pending', 'picked_up']
+    history_statuses = ['returned', 'rejected', 'expired']
     result = db.session.query(
         func.sum(case((BorrowRecord.status == 'pending', 1), else_=0)).label('pending_count'),
+        func.sum(case((BorrowRecord.status.in_(current_statuses), 1), else_=0)).label('current_count'),
+        func.sum(case((BorrowRecord.status.in_(history_statuses), 1), else_=0)).label('history_count'),
         func.max(BorrowRecord.id).label('latest_id'),
     ).filter(
-        BorrowRecord.status.in_(['pending', 'picked_up'])
+        BorrowRecord.status.in_(current_statuses + history_statuses)
     ).one()
     socketio.emit('reservation_changed', {
         'pending_count': result.pending_count or 0,
+        'current_count': result.current_count or 0,
+        'history_count': result.history_count or 0,
         'latest_id': result.latest_id or 0,
         'action': action,
     }, room='admins')
@@ -48,14 +55,24 @@ def emit_borrow_status(user_id: int):
 
 def emit_stock_changed(book_id: int):
     from models import Book
-    book = Book.query.get(book_id)
+    from extensions import db
+    book = db.session.get(Book, book_id, populate_existing=True)
     if book:
         socketio.emit('book_stock_changed', {
             'book_id': book.id,
+            'title': book.title,
             'stock': book.stock,
             'total': book.total,
+            'borrow_count': book.borrow_count,
             'available': book.available,
         }, room='books')
+
+
+def emit_book_catalog_changed(action: str = 'update', book_id: int | None = None):
+    socketio.emit('book_catalog_changed', {
+        'action': action,
+        'book_id': book_id,
+    }, room='books')
 
 
 def emit_new_log(log_entry: dict):

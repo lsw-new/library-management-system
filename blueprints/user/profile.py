@@ -145,7 +145,7 @@ def register_profile_routes(bp: Blueprint) -> None:
 
         file.seek(0, 2)
         if file.tell() > AVATAR_MAX_SIZE:
-            return jsonify({'success': False, 'message': '图片大小不能超过 2MB'}), 400
+            return jsonify({'success': False, 'message': '图片大小不能超过 3MB'}), 400
         file.seek(0)
 
         from werkzeug.utils import secure_filename

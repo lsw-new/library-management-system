@@ -120,6 +120,7 @@ def register_borrow_routes(bp: Blueprint) -> None:
         return jsonify({
             'success': True,
             'message': '预约成功',
+            'book_id': book.id,
             'stock': book.stock,
             'total': book.total,
             'available': book.available,

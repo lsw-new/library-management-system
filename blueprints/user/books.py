@@ -128,12 +128,18 @@ def register_book_routes(bp: Blueprint) -> None:
     def books_stock():
         ids = request.args.get('ids', '')
         if not ids:
-            return jsonify({})
+            response = jsonify({})
+            response.headers['Cache-Control'] = 'no-store, max-age=0'
+            return response
         id_list = list(dict.fromkeys(int(i) for i in ids.split(',') if i.isdigit()))[:MAX_STOCK_QUERY_IDS]
         if not id_list:
-            return jsonify({})
+            response = jsonify({})
+            response.headers['Cache-Control'] = 'no-store, max-age=0'
+            return response
         books_result = Book.query.filter(Book.id.in_(id_list)).all()
-        return jsonify({b.id: {'stock': b.stock, 'total': b.total, 'available': b.available} for b in books_result})
+        response = jsonify({b.id: {'stock': b.stock, 'total': b.total, 'available': b.available} for b in books_result})
+        response.headers['Cache-Control'] = 'no-store, max-age=0'
+        return response
 
     @bp.route('/books/categories')
     @login_required

@@ -382,9 +382,10 @@
     }
 }
 
-/* 实时日志容器 - 固定最大高度，超出滚动 */
+/* 实时日志容器 - 固定高度，超出滚动 */
 .admin-sidebar #sidebarLogs {
-    max-height: 18rem !important;
+    height: 28rem;
+    max-height: 28rem;
     overflow-y: auto;
 }
 

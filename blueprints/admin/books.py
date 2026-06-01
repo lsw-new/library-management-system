@@ -2,6 +2,7 @@ from flask import Blueprint, abort, current_app, jsonify, request
 from flask_login import login_required
 
 from models import Book, BorrowRecord, db
+from socketio_emitters import emit_book_catalog_changed, emit_stock_changed
 from utils import admin_required, db_transaction, log_action, save_book_image, validate_book_form
 from utils.cache import cache_delete_pattern
 
@@ -29,6 +30,7 @@ def register_book_routes(bp: Blueprint) -> None:
             return jsonify({'success': False, 'message': tx.error}), 500
         log_action('添加图书', f"书名: {cleaned['title']}, 库存: {cleaned['stock']}")
         cache_delete_pattern('book_categories:*')
+        emit_book_catalog_changed('add', book.id)
         return jsonify({'success': True, 'message': '图书添加成功'})
 
     @bp.route('/book/edit/<int:book_id>', methods=['POST'])
@@ -64,6 +66,8 @@ def register_book_routes(bp: Blueprint) -> None:
             return jsonify({'success': False, 'message': tx.error}), 500
         log_action('编辑图书', f"书名: {cleaned['title']}, 库存: {cleaned['stock']}")
         cache_delete_pattern('book_categories:*')
+        emit_stock_changed(book.id)
+        emit_book_catalog_changed('edit', book.id)
         return jsonify({'success': True, 'message': '图书更新成功'})
 
     @bp.route('/book/delete/<int:book_id>', methods=['POST'])
@@ -86,4 +90,5 @@ def register_book_routes(bp: Blueprint) -> None:
             return jsonify({'success': False, 'message': tx.error}), 500
         log_action('删除图书', f'书名: {title}, ID: {book_id}')
         cache_delete_pattern('book_categories:*')
+        emit_book_catalog_changed('delete', book_id)
         return jsonify({'success': True, 'message': '图书删除成功'})

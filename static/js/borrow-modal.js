@@ -133,11 +133,19 @@ const BorrowModal = (() => {
     }
 
     // ==================== 公开方法 ====================
+    function setHeaderVisible(visible) {
+        var header = document.querySelector('.site-header');
+        if (header) header.style.display = visible ? '' : 'none';
+    }
+
     function open(bookId, title, stock) {
         currentBookId = bookId;
-        selectedStartDate = null;
         selectedEndDate = null;
         currentCalendarType = null;
+
+        var today = new Date();
+        var todayStr = formatDate(today);
+        selectedStartDate = todayStr;
 
         const modal = document.getElementById('borrowModal');
         const titleEl = document.getElementById('modalBookTitle');
@@ -151,16 +159,17 @@ const BorrowModal = (() => {
 
         if (titleEl) titleEl.textContent = title;
         if (stockEl) stockEl.textContent = stock;
-        if (startDisplay) startDisplay.value = '';
+        if (startDisplay) startDisplay.value = todayStr;
+        if (startHidden) startHidden.value = todayStr;
         if (endDisplay) endDisplay.value = '';
         if (durationEl) durationEl.textContent = '';
         if (errorEl) { errorEl.textContent = ''; errorEl.classList.add('hidden'); }
-        if (startHidden) startHidden.value = '';
         if (endHidden) endHidden.value = '';
 
         hideCalendar('start');
         hideCalendar('end');
 
+        setHeaderVisible(false);
         if (modal) modal.classList.remove('hidden');
     }
 
@@ -168,29 +177,19 @@ const BorrowModal = (() => {
         const modal = document.getElementById('borrowModal');
         if (modal) modal.classList.add('hidden');
         currentBookId = null;
+        setHeaderVisible(true);
     }
 
     function toggleCalendar(type) {
-        const calStart = document.getElementById('calendarStart');
+        if (type === 'start') return;
         const calEnd = document.getElementById('calendarEnd');
 
-        if (type === 'start') {
-            if (calEnd) calEnd.classList.add('hidden');
-            if (calStart && !calStart.classList.contains('hidden')) {
-                calStart.classList.add('hidden');
-                return;
-            }
-            renderCalendar('start');
-            if (calStart) calStart.classList.remove('hidden');
-        } else {
-            if (calStart) calStart.classList.add('hidden');
-            if (calEnd && !calEnd.classList.contains('hidden')) {
-                calEnd.classList.add('hidden');
-                return;
-            }
-            renderCalendar('end');
-            if (calEnd) calEnd.classList.remove('hidden');
+        if (calEnd && !calEnd.classList.contains('hidden')) {
+            calEnd.classList.add('hidden');
+            return;
         }
+        renderCalendar('end');
+        if (calEnd) calEnd.classList.remove('hidden');
     }
 
     function selectDate(type, dateStr) {
@@ -236,6 +235,7 @@ const BorrowModal = (() => {
             const { ok, data } = await postJson(`/book/borrow/${currentBookId}`, body);
 
             if (data.success) {
+                const borrowedBookId = currentBookId;
                 close();
                 if (typeof showToast === 'function') {
                     showToast(data.message || '预约成功', 'success');
@@ -243,8 +243,14 @@ const BorrowModal = (() => {
                     alert(data.message || '预约成功');
                 }
                 if (data.stock !== undefined) {
-                    const stockEl = document.querySelector(`[data-book-stock="${currentBookId}"]`);
-                    if (stockEl) stockEl.textContent = data.stock;
+                    window.dispatchEvent(new CustomEvent('library:book-stock-changed', {
+                        detail: {
+                            book_id: data.book_id || borrowedBookId,
+                            stock: data.stock,
+                            total: data.total,
+                            available: data.available
+                        }
+                    }));
                 }
             } else {
                 if (errorEl) {
@@ -268,6 +274,16 @@ const BorrowModal = (() => {
         const stock = btn.dataset.bookStock || '0';
         if (bookId) open(bookId, title, stock);
     }
+
+    function applyStockChange(info) {
+        if (!info || String(info.book_id) !== String(currentBookId)) return;
+        const stockEl = document.getElementById('modalBookStock');
+        if (stockEl) stockEl.textContent = String(info.stock);
+    }
+
+    window.addEventListener('library:book-stock-changed', function(event) {
+        applyStockChange(event.detail);
+    });
 
     // ==================== 导出公开 API ====================
     return { open, close, toggleCalendar, selectDate, confirmBorrow, showFromData };

@@ -1,6 +1,11 @@
 from flask import request
 
 
+def get_user_type(user) -> str:
+    from models import Admin
+    return 'admin' if isinstance(user, Admin) else 'user'
+
+
 def get_client_ip() -> str:
     forwarded_for = request.headers.get('X-Forwarded-For', '')
     if forwarded_for:

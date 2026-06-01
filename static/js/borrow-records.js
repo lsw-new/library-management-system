@@ -273,7 +273,32 @@
     }
 
     let syncInFlight = false;
+    let recordsRefreshInFlight = false;
     let userActionInFlight = false;
+
+    async function refreshRecordsView(stats) {
+        if (recordsRefreshInFlight || userActionInFlight || confirmEl.classList.contains('is-open') || document.hidden) return;
+        recordsRefreshInFlight = true;
+        try {
+            const resp = await fetch(window.location.pathname + window.location.search, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            if (!resp.ok) return;
+            const html = await resp.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const nextList = doc.getElementById('records-list');
+            const nextFilters = doc.getElementById('records-filters');
+            if (nextList) list.innerHTML = nextList.innerHTML;
+            if (nextFilters) filters.innerHTML = nextFilters.innerHTML;
+            setExactStats(stats);
+            applyFilter(currentFilter);
+        } catch (err) {
+            list.dataset.syncState = 'stale';
+        } finally {
+            recordsRefreshInFlight = false;
+        }
+    }
+
     async function syncRecords() {
         if (syncInFlight || userActionInFlight || confirmEl.classList.contains('is-open') || document.hidden) return;
         syncInFlight = true;
@@ -294,17 +319,26 @@
         }
     }
 
-    var socket = window._socket;
-    if (socket) {
-        socket.on('borrow_status_changed', function(data) {
-            if (!data || !Array.isArray(data.records)) return;
-            var changed = false;
-            data.records.forEach(function(record) { changed = syncRecord(record) || changed; });
-            setExactStats(data.stats);
-            list.dataset.syncState = 'ok';
-            if (changed) applyFilter(currentFilter);
+    window.addEventListener('library:borrow-status-changed', function(event) {
+        var data = event.detail;
+        if (!data || !Array.isArray(data.records)) return;
+        var changed = false;
+        var hasMissingRecord = false;
+        data.records.forEach(function(record) {
+            if (!list.querySelector('[data-record-id="' + record.id + '"]')) {
+                hasMissingRecord = true;
+                return;
+            }
+            changed = syncRecord(record) || changed;
         });
-    }
+        if (hasMissingRecord) {
+            refreshRecordsView(data.stats);
+            return;
+        }
+        setExactStats(data.stats);
+        list.dataset.syncState = 'ok';
+        if (changed) applyFilter(currentFilter);
+    });
     document.addEventListener('visibilitychange', function() { if (!document.hidden) syncRecords(); });
 
     list.addEventListener('click', async (e) => {

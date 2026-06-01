@@ -11,42 +11,34 @@ _PRIVATE_PREFIXES = (
     *(f'172.{i}.' for i in range(16, 32)),
 )
 
-_amap_rest_key: str = ''
 _location_cache: dict[str, str] = {}
 _pending_lookups: set[str] = set()
-
-
-def init_amap_key(key: str) -> None:
-    global _amap_rest_key
-    _amap_rest_key = key or ''
 
 
 def _is_private(ip: str) -> bool:
     return any(ip.startswith(p) for p in _PRIVATE_PREFIXES)
 
 
-def _lookup_amap(ip: str) -> str:
-    if not _amap_rest_key:
-        return ''
+def _lookup_ip_cn(ip: str) -> str:
     try:
         req = Request(
-            f'https://restapi.amap.com/v3/ip?ip={ip}&key={_amap_rest_key}',
-            headers={'User-Agent': 'LibraryAdmin/1.0'},
+            f'https://www.ip.cn/api/index?ip={ip}&type=0',
+            headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'},
         )
-        with urlopen(req, timeout=1.5) as resp:
+        with urlopen(req, timeout=3) as resp:
             data = json.loads(resp.read())
-        if data.get('status') != '1':
+        if data.get('rs') != 1:
             return ''
-        province = data.get('province') or ''
-        city = data.get('city') or ''
-        if isinstance(province, list):
-            province = ''
-        if isinstance(city, list):
-            city = ''
-        if province and city and city != province:
-            return f'{province}{city}'
-        return province or city or ''
-    except (URLError, OSError, json.JSONDecodeError, KeyError):
+        address = data.get('address', '')
+        parts = address.split()
+        if len(parts) >= 2:
+            province = parts[0]
+            city = parts[1] if parts[1] != province else ''
+            if province and city:
+                return f'{province}{city}'
+            return province
+        return address.strip() or ''
+    except (URLError, OSError, json.JSONDecodeError, KeyError, IndexError):
         return ''
 
 
@@ -79,7 +71,7 @@ def get_ip_location(ip: str) -> str:
     cached = _location_cache.get(ip)
     if cached:
         return cached
-    location = _lookup_amap(ip) or _lookup_ip_api(ip)
+    location = _lookup_ip_cn(ip) or _lookup_ip_api(ip)
     _location_cache[ip] = location
     return location
 
@@ -97,7 +89,7 @@ def schedule_ip_lookup(ip: str) -> None:
 
     def _do_lookup():
         try:
-            location = _lookup_amap(ip) or _lookup_ip_api(ip)
+            location = _lookup_ip_cn(ip) or _lookup_ip_api(ip)
             _location_cache[ip] = location
         finally:
             _pending_lookups.discard(ip)

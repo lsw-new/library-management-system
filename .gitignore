@@ -86,3 +86,9 @@ package-lock.json
 
 # 构建产物
 *.tar.gz
+
+# Runtime/generated app data
+data/stream_store/
+
+# Local debug screenshots
+admin-sidebar-logs*.png

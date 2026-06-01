@@ -29,8 +29,7 @@ def create_login_session_record(user, user_type: str) -> None:
     now = naive_cst_now()
     ip_address = get_client_ip()
 
-    location = get_ip_location(ip_address)
-    geo_location = location if location not in ('未知', '本机') else None
+    geo_location = get_ip_location(ip_address) or None
 
     existing = OnlineSession.query.filter_by(user_id=user.id, user_type=user_type).first()
     if existing:
@@ -150,6 +149,12 @@ def kick_active_session(user_id: int, user_type: str = 'user') -> str | None:
     except Exception:
         db.session.rollback()
         return None
+    try:
+        from socketio_emitters import emit_force_logout, emit_online_changed
+        emit_force_logout(user_id)
+        emit_online_changed()
+    except Exception:
+        pass
     return username
 
 
@@ -179,7 +184,7 @@ def authenticate_active_session(user_id: int, user_type: str,
         if not sess.geo_location:
             from .ip_location import get_ip_location_cached, schedule_ip_lookup
             cached = get_ip_location_cached(ip)
-            if cached and cached not in ('未知', '本机'):
+            if cached:
                 sess.geo_location = cached
             else:
                 schedule_ip_lookup(ip)

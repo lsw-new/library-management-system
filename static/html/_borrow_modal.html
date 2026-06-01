@@ -46,7 +46,7 @@
 
             <!-- 借阅时间段选择 -->
             <div class="space-y-4 mb-5">
-                <!-- 借阅开始时间 -->
+                <!-- 借阅开始时间（固定为当天） -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <svg class="w-4 h-4 inline-block mr-1 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,11 +55,10 @@
                         借阅开始时间
                     </label>
                     <div class="relative">
-                        <input type="text" id="borrowStartDateDisplay" readonly placeholder="选择开始日期"
-                               onclick="toggleCalendar('start')"
-                               class="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl bg-white text-gray-800 focus:border-purple-400 focus:outline-none transition-colors duration-200 text-sm cursor-pointer">
+                        <input type="text" id="borrowStartDateDisplay" readonly
+                               class="w-full px-4 py-2.5 border-2 border-purple-200 rounded-xl bg-gray-50 text-gray-600 text-sm cursor-default">
                         <input type="hidden" id="borrowStartDate">
-                        <div id="calendarStart" class="hidden absolute z-50 top-full mt-1 left-0 w-full"></div>
+                        <div id="calendarStart" class="hidden"></div>
                     </div>
                 </div>
                 <!-- 预计归还时间 -->

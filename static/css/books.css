@@ -1,15 +1,14 @@
 /* ==================== 图书列表页 ==================== */
 @keyframes books-fade-in {
-    from { opacity: 0.08; transform: translateY(22px); filter: blur(3px); }
-    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in { animation: books-fade-in 0.34s cubic-bezier(0.22, 1, 0.36, 1); }
+.animate-fade-in { animation: books-fade-in 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
 .is-results-transitioning {
-    opacity: 0.28;
-    transform: translateY(10px);
-    filter: blur(1.5px);
+    opacity: 0.3;
+    transform: translateY(6px);
     pointer-events: none;
-    transition: opacity 0.22s ease, transform 0.22s ease, filter 0.22s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 @media (prefers-reduced-motion: reduce) {
     .animate-fade-in { animation: none; }
@@ -52,6 +51,7 @@
 .book-card-cover img.lazy-img.is-loaded { opacity: 1; }
 .book-card-status {
     position: absolute;
+    z-index: 2;
     top: 0.5rem;
     left: 0.5rem;
     display: inline-flex;
@@ -61,15 +61,13 @@
     font-size: 11px;
     font-weight: 700;
     border-radius: 999px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 .book-card-status.is-available {
-    background: rgba(220, 252, 231, 0.92);
+    background: #dcfce7;
     color: #166534;
 }
 .book-card-status.is-unavailable {
-    background: rgba(254, 226, 226, 0.92);
+    background: #fee2e2;
     color: #991b1b;
 }
 .book-card-status::before {

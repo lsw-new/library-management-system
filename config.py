@@ -49,6 +49,18 @@ def get_database_uri() -> str:
     return DEV_DATABASE_URI
 
 
+def get_engine_options(database_uri: str) -> dict:
+    if database_uri.startswith('sqlite:'):
+        return {}
+    return {
+        'pool_size': DB_POOL_SIZE,
+        'pool_recycle': DB_POOL_RECYCLE_SECONDS,
+        'pool_pre_ping': True,
+        'max_overflow': DB_POOL_MAX_OVERFLOW,
+        'pool_timeout': DB_POOL_TIMEOUT_SECONDS,
+    }
+
+
 class Config:
     SECRET_KEY = get_secret_key()
 
@@ -56,13 +68,7 @@ class Config:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        'pool_size': DB_POOL_SIZE,
-        'pool_recycle': DB_POOL_RECYCLE_SECONDS,
-        'pool_pre_ping': True,
-        'max_overflow': DB_POOL_MAX_OVERFLOW,
-        'pool_timeout': DB_POOL_TIMEOUT_SECONDS,
-    }
+    SQLALCHEMY_ENGINE_OPTIONS = get_engine_options(SQLALCHEMY_DATABASE_URI)
 
     # ── Session Cookie 安全配置 ──
     SESSION_COOKIE_SECURE = is_production()

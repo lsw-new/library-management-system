@@ -1,3 +1,55 @@
+function refreshAdminPanel(targetUrl, options = {}) {
+    const scrollY = options.scrollY ?? window.scrollY;
+    const resolvedUrl = targetUrl ? new URL(targetUrl, window.location.origin) : new URL(window.location.href);
+
+    return fetch(`${resolvedUrl.pathname}${resolvedUrl.search}`, {
+        method: 'GET',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+        .then(res => res.text())
+        .then(htmlText => {
+            const parser     = new DOMParser();
+            const doc        = parser.parseFromString(htmlText, 'text/html');
+            const newAside   = doc.querySelector('aside');
+            const newSection = doc.querySelector('section');
+            const oldSection = document.querySelector('section');
+
+            if (!newSection || !oldSection || !newAside) return false;
+
+            newSection.classList.remove('animate-in', 'fade-in', 'slide-in-from-right-4', 'duration-700');
+            oldSection.replaceWith(newSection);
+            if (options.updateHistory !== false) {
+                window.history.replaceState({}, '', `${resolvedUrl.pathname}${resolvedUrl.search}`);
+            }
+
+            const tabs = ['online', 'books', 'users', 'current', 'history'];
+            tabs.forEach(key => {
+                const newBadge = newAside.querySelector(`#badge-${key}`);
+                const oldBadge = document.getElementById(`badge-${key}`);
+                if (newBadge && oldBadge) {
+                    oldBadge.textContent = newBadge.textContent;
+                }
+            });
+
+            initCurrentStatusFilter();
+            if (document.getElementById('todayTabBtn')) {
+                switchHistoryTab('today');
+            }
+            if (typeof checkOnlineUsers === 'function') {
+                checkOnlineUsers();
+            }
+            if (typeof loadSystemLogs === 'function') {
+                loadSystemLogs();
+            }
+            window.scrollTo(0, scrollY);
+            window.dispatchEvent(new CustomEvent('library:admin-panel-refreshed', {
+                detail: { url: `${resolvedUrl.pathname}${resolvedUrl.search}` }
+            }));
+            return true;
+        })
+        .catch(() => false);
+}
+
 function switchAdminTab(btn, tabKey) {
     const scrollY = window.scrollY;
 
@@ -19,37 +71,7 @@ function switchAdminTab(btn, tabKey) {
         if (currentStatus) targetUrl.searchParams.set('status', currentStatus);
     }
 
-    fetch(`${targetUrl.pathname}${targetUrl.search}`, {
-        method: 'GET',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    })
-        .then(res => res.text())
-        .then(htmlText => {
-            const parser     = new DOMParser();
-            const doc        = parser.parseFromString(htmlText, 'text/html');
-            const newAside   = doc.querySelector('aside');
-            const newSection = doc.querySelector('section');
-            const oldSection = document.querySelector('section');
-
-            if (!newSection || !oldSection || !newAside) return;
-
-            newSection.classList.remove('animate-in', 'fade-in', 'slide-in-from-right-4', 'duration-700');
-            oldSection.replaceWith(newSection);
-            window.history.replaceState({}, '', `${targetUrl.pathname}${targetUrl.search}`);
-
-            const tabs = ['online', 'books', 'current', 'history'];
-            tabs.forEach(key => {
-                const newBadge = newAside.querySelector(`#badge-${key}`);
-                const oldBadge = document.getElementById(`badge-${key}`);
-                if (newBadge && oldBadge) {
-                    oldBadge.textContent = newBadge.textContent;
-                }
-            });
-
-            initCurrentStatusFilter();
-            window.scrollTo(0, scrollY);
-        })
-        .catch(() => {});
+    refreshAdminPanel(targetUrl, { scrollY });
 }
 
 function initCurrentStatusFilter() {
@@ -137,3 +159,5 @@ document.addEventListener('DOMContentLoaded', function () {
         switchHistoryTab('today');
     }
 });
+
+window.refreshAdminPanel = refreshAdminPanel;

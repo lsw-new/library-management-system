@@ -34,6 +34,14 @@ VERIFY_CODE_WINDOW_SECONDS = 300
 RESET_CODE_VERIFIED_WINDOW_SECONDS = 600
 
 
+def _emit_online_changed_safe() -> None:
+    try:
+        from socketio_emitters import emit_online_changed
+        emit_online_changed()
+    except Exception:
+        pass
+
+
 def get_auth_action_csrf_token() -> str:
     return get_csrf_token(AUTH_ACTION_CSRF_SESSION_KEY)
 
@@ -362,16 +370,19 @@ def register_complete():
 @rate_limit('login', LOGIN_LIMIT, LOGIN_WINDOW_SECONDS, '登录尝试过于频繁，请稍后再试')
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
+        identity = request.form.get('identity', '').strip()
         password = request.form.get('password')
 
-        user = User.query.filter_by(username=username).first()
+        if EMAIL_REGEX.match(identity):
+            user = User.query.filter_by(email=identity).first()
+        else:
+            user = User.query.filter_by(username=identity).first()
 
         if user and user.check_password(password):
             if user.is_banned:
                 remaining = user.ban_remaining_seconds
                 mins = (remaining + 59) // 60
-                log_action('封禁拦截', f'用户 {username} 在封禁期内尝试登录', username)
+                log_action('封禁拦截', f'用户 {user.username} 在封禁期内尝试登录', user.username)
                 flash(f'账号已被封禁，剩余 {mins} 分钟后可重新登录', 'danger')
                 return redirect(url_for('auth.login'))
             mark_current_session_offline()
@@ -380,14 +391,88 @@ def login():
             login_user(user)
             create_login_session_record(user, 'user')
             db.session.commit()
-            log_action('用户登录', f'用户 {username} 登录成功', username)
+            _emit_online_changed_safe()
+            log_action('用户登录', f'用户 {user.username} 登录成功', user.username)
             flash('登录成功，欢迎回来！', 'success')
             return redirect(url_for('user.books'))
 
-        log_action('登录失败', f'用户名: {username}', 'guest')
-        flash('用户名或密码错误', 'danger')
+        log_action('登录失败', f'登录标识: {identity}', 'guest')
+        flash('用户名/邮箱或密码错误', 'danger')
 
     return render_template('login.html')
+
+
+@auth_bp.route('/login/email', methods=['GET', 'POST'])
+@rate_limit('login_email', LOGIN_LIMIT, LOGIN_WINDOW_SECONDS, '登录尝试过于频繁，请稍后再试')
+def login_email():
+    if request.method == 'POST':
+        email = request.form.get('email', '').strip()
+        code = request.form.get('code', '').strip()
+
+        if not email or not code:
+            flash('请填写邮箱和验证码', 'danger')
+            return render_template('login_email.html', form_email=email)
+
+        if not EMAIL_REGEX.match(email):
+            flash('邮箱格式不正确', 'danger')
+            return render_template('login_email.html', form_email=email)
+
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            flash('该邮箱未注册', 'danger')
+            return render_template('login_email.html', form_email=email)
+
+        is_valid, message = verify_code(email, code)
+        if not is_valid:
+            flash(f'验证码错误：{message}', 'danger')
+            return render_template('login_email.html', form_email=email)
+
+        if user.is_banned:
+            remaining = user.ban_remaining_seconds
+            mins = (remaining + 59) // 60
+            log_action('封禁拦截', f'用户 {user.username} 在封禁期内尝试登录(邮箱)', user.username)
+            flash(f'账号已被封禁，剩余 {mins} 分钟后可重新登录', 'danger')
+            return redirect(url_for('auth.login_email'))
+
+        mark_current_session_offline()
+        logout_user()
+        session['user_type'] = 'user'
+        login_user(user)
+        create_login_session_record(user, 'user')
+        db.session.commit()
+        _emit_online_changed_safe()
+        log_action('用户登录', f'用户 {user.username} 通过邮箱验证码登录成功', user.username)
+        flash('登录成功，欢迎回来！', 'success')
+        return redirect(url_for('user.books'))
+
+    return render_template('login_email.html', form_email='')
+
+
+@auth_bp.route('/login/email/send-code', methods=['POST'])
+@rate_limit('login_email_send_code', EMAIL_CODE_LIMIT, EMAIL_CODE_WINDOW_SECONDS, '验证码发送过于频繁，请稍后再试')
+def login_email_send_code():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '无效的请求数据'}), 400
+
+        email = (data.get('email') or '').strip()
+        if not email:
+            return jsonify({'success': False, 'message': '请输入邮箱地址'}), 400
+
+        if not EMAIL_REGEX.match(email):
+            return jsonify({'success': False, 'message': '邮箱格式不正确'}), 400
+
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return jsonify({'success': False, 'message': '该邮箱未注册'}), 400
+
+        success, message = send_code_to_email(email)
+        return jsonify({'success': success, 'message': message})
+    except Exception:
+        logger.error("邮箱登录发送验证码失败", exc_info=True)
+        return jsonify({'success': False, 'message': '服务器错误，请稍后重试'}), 500
+
 
 @auth_bp.route('/admin/login', methods=['GET', 'POST'])
 @rate_limit('admin_login', LOGIN_LIMIT, LOGIN_WINDOW_SECONDS, '登录尝试过于频繁，请稍后再试')
@@ -413,6 +498,7 @@ def admin_login():
             login_user(admin)
             create_login_session_record(admin, 'admin')
             db.session.commit()
+            _emit_online_changed_safe()
             log_action('管理员登录', f'管理员 {username} 登录成功', username)
             flash('管理员登录成功，欢迎回来！', 'success')
             return redirect(url_for('admin.admin_index'))
@@ -431,4 +517,5 @@ def logout():
     session.pop('user_type', None)
     logout_user()
     db.session.commit()
+    _emit_online_changed_safe()
     return redirect(url_for('user.index'))

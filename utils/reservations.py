@@ -30,6 +30,8 @@ def process_expired_reservations(book_ids=None) -> int:
 
     count = 0
     email_tasks = []
+    changed_book_ids = set()
+    changed_user_ids = set()
     for record in expired_records:
         try:
             nested = db.session.begin_nested()
@@ -52,12 +54,8 @@ def process_expired_reservations(book_ids=None) -> int:
             count += 1
             log_action('自动拒绝逾期预约', f'用户 {user.username} 预约图书 {book.title} 超过3分钟未处理，已自动标记为逾期')
             email_tasks.append((user.email, user.username, book.title, borrow_date.strftime('%Y-%m-%d %H:%M')))
-            try:
-                from socketio_emitters import emit_borrow_status, emit_stock_changed
-                emit_borrow_status(user.id)
-                emit_stock_changed(book.id)
-            except Exception:
-                pass
+            changed_user_ids.add(user.id)
+            changed_book_ids.add(book.id)
         except Exception:
             logger.exception(
                 "处理逾期预约失败 record_id=%s book_id=%s user_id=%s",
@@ -81,8 +79,12 @@ def process_expired_reservations(book_ids=None) -> int:
         except Exception:
             pass
         try:
-            from socketio_emitters import emit_reservation_changed
+            from socketio_emitters import emit_borrow_status, emit_reservation_changed, emit_stock_changed
             emit_reservation_changed('expired')
+            for user_id in changed_user_ids:
+                emit_borrow_status(user_id)
+            for book_id in changed_book_ids:
+                emit_stock_changed(book_id)
         except Exception:
             pass
         for email_args in email_tasks:

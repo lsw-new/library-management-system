@@ -6,7 +6,7 @@ from sqlalchemy.orm import joinedload
 
 from email_utils import send_rejection_email
 from models import BorrowRecord, db
-from socketio_emitters import emit_borrow_status, emit_reservation_changed, emit_stock_changed
+from socketio_emitters import emit_book_catalog_changed, emit_borrow_status, emit_reservation_changed, emit_stock_changed
 from utils import admin_required, cst_now, db_transaction, log_action
 from utils.cache import cache_delete_pattern
 
@@ -120,4 +120,5 @@ def register_borrow_routes(bp: Blueprint) -> None:
         emit_reservation_changed('return')
         emit_borrow_status(record.user_id)
         emit_stock_changed(book.id)
+        emit_book_catalog_changed('return', book.id)
         return jsonify({'success': True, 'message': '归还成功'})

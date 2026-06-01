@@ -91,8 +91,8 @@
         avatarInput.addEventListener('change', function () {
             var file = avatarInput.files[0];
             if (!file) return;
-            if (file.size > 2 * 1024 * 1024) {
-                toast('图片大小不能超过 2MB', 'warning');
+            if (file.size > 3 * 1024 * 1024) {
+                toast('图片大小不能超过 3MB', 'warning');
                 avatarInput.value = '';
                 return;
             }
@@ -179,7 +179,7 @@
             out.toBlob(function (blob) {
                 var fd = new FormData();
                 fd.append('avatar', blob, 'avatar.jpg');
-                fetch('/profile/avatar', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: fd })
+                fetch('/profile/avatar', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-Token': (window.borrowModalConfig || {}).csrfToken || '' }, body: fd })
                     .then(function (r) { return r.json(); })
                     .then(function (data) {
                         if (data.success) {
@@ -348,4 +348,11 @@
             });
         });
     }
+
+    window.addEventListener('library:borrow-status-changed', function () {
+        if (document.hidden) return;
+        if (document.activeElement && document.activeElement.closest && document.activeElement.closest('form')) return;
+        if (cropModal && !cropModal.classList.contains('hidden')) return;
+        location.reload();
+    });
 })();

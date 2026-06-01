@@ -10,8 +10,8 @@
     const booksStockUrl = config.stockUrl;
     const booksCategoriesUrl = config.categoriesUrl;
 
-    const STOCK_POLL_MS = 120000;
-    const CATEGORY_POLL_MS = 120000;
+    const STOCK_POLL_MS = 5000;
+    const CATEGORY_POLL_MS = 60000;
     const SEARCH_DEBOUNCE_MS = 300;
 
     let searchForm = document.getElementById('books-search-form');
@@ -26,6 +26,7 @@
     let pollCategoriesInterval = null;
     let activeCategoryLink = null;
     let isToolbarBound = false;
+    let booksRefreshTimer = null;
 
     let currentBooksSearch = normalizeSearch(searchInput ? searchInput.value : '');
     let currentBooksCategory = readHiddenInput('category');
@@ -525,6 +526,18 @@
         }
     }
 
+    function scheduleBooksRefresh() {
+        clearTimeout(booksRefreshTimer);
+        booksRefreshTimer = setTimeout(() => {
+            if (document.hidden) return;
+            updateBooksView(window.location.href, {
+                syncHistory: false,
+                animateResults: false,
+                showLoading: false
+            });
+        }, 200);
+    }
+
     function stopPolling() {
         if (pollStockInterval) { clearInterval(pollStockInterval); pollStockInterval = null; }
         if (pollCategoriesInterval) { clearInterval(pollCategoriesInterval); pollCategoriesInterval = null; }
@@ -586,6 +599,7 @@
     function handleStockPush(info) {
         if (!info || !info.book_id) return;
         var cards = document.querySelectorAll('[data-book-id="' + info.book_id + '"][data-book-title]');
+        var matchedCards = cards.length;
         cards.forEach(function(card) {
             var stockEl = card.querySelector('[data-stock-text]');
             var badge = card.querySelector('.book-card-status');
@@ -607,13 +621,18 @@
                 actions.appendChild(createBorrowButton(info.book_id, card.dataset.bookTitle, info.stock));
             }
         });
+        if (matchedCards && readHiddenInput('only_available') === '1' && !info.available) {
+            scheduleBooksRefresh();
+        }
     }
 
-    var socket = window._socket;
-    if (socket) {
-        socket.emit('join_books_room');
-        socket.on('book_stock_changed', handleStockPush);
-    }
+    window.addEventListener('library:book-stock-changed', function(event) {
+        handleStockPush(event.detail);
+    });
+    window.addEventListener('library:book-catalog-changed', function() {
+        pollCategories();
+        scheduleBooksRefresh();
+    });
 
     bindSearchEvents();
     bindCategoryLinks();

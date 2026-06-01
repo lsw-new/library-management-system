@@ -12,6 +12,7 @@ def handle_connect():
     if not current_user.is_authenticated:
         return False
     join_room(f'user_{current_user.id}')
+    join_room('books')
     if getattr(current_user, 'is_admin', False):
         join_room('admins')
 

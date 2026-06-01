@@ -397,6 +397,55 @@ def build_rejection_email(safe_username: str, safe_book_title: str,
 {_MAIL_OUTER_CLOSE}"""
 
 
+def build_password_reset_email(safe_username: str, safe_new_password: str) -> str:
+    return f"""{_MAIL_OUTER_OPEN}
+
+{_mail_header("密码已重置", f"{safe_username}，你的账号密码已被管理员重置")}
+
+  <tr>
+    <td class="m-bpad" style="padding:8px 48px 44px;">
+
+      <p style="margin:0 0 28px;font-size:15px;color:#9d4e7a;line-height:1.8;">
+        你好，<strong>{safe_username}</strong>！<br>
+        管理员已将你的登录密码重置为以下内容，请尽快登录并修改密码：
+      </p>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
+        <tr>
+          <td class="m-code-box" style="background:linear-gradient(135deg,rgba(252,231,243,0.6),rgba(243,232,255,0.4));border:1px solid rgba(233,213,255,0.25);border-radius:20px;padding:32px 20px;text-align:center;">
+            <table cellpadding="0" cellspacing="0" style="margin:0 auto 16px;">
+              <tr>
+                <td style="padding:4px 12px;background:linear-gradient(135deg,rgba(233,213,255,0.15),rgba(216,180,254,0.15));border-radius:999px;">
+                  <p style="margin:0;font-size:10px;color:#c084fc;letter-spacing:3px;text-transform:uppercase;font-weight:800;">
+                    New Password
+                  </p>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:0;font-size:28px;font-weight:800;color:#c084fc;font-family:'Courier New',monospace;letter-spacing:4px;">
+              {safe_new_password}
+            </p>
+            <p style="margin:20px 0 0;font-size:12px;color:rgba(157,78,122,0.45);">
+              即你的学号 &middot; 请登录后尽快修改
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      {_tip_box('&#x1F512;', '安全提示', [
+          '请尽快登录并在个人设置中修改为你自己的密码',
+          '请勿将密码分享给任何人',
+          '如非本人操作，请立即联系管理员',
+      ])}
+
+    </td>
+  </tr>
+
+{_MAIL_FOOTER}
+
+{_MAIL_OUTER_CLOSE}"""
+
+
 def build_expiry_email(safe_username: str, safe_book_title: str,
                        safe_borrow_date: str) -> str:
     return f"""{_MAIL_OUTER_OPEN}

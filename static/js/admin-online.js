@@ -17,6 +17,7 @@ function buildUserCard(u) {
     var username = escapeHtml(u.username || '');
     var usernameInitial = escapeHtml((u.username || '?').charAt(0).toUpperCase());
     var ipAddress = escapeHtml(u.ip_address || '—');
+    var geoLocation = escapeHtml(u.geo_location || '');
     var lastSeen  = escapeHtml(u.last_seen || '—');
     var kickBtn = isAdmin ? '' : `
         <div class="mt-2.5">
@@ -46,8 +47,11 @@ function buildUserCard(u) {
                 </span>
             </div>
             <div class="flex items-center justify-between text-[11px] pt-3 border-t border-pink-50">
-                <span class="font-mono text-brand-deep/50">${ipAddress}</span>
-                <span class="font-mono font-semibold text-brand-deep/70 online-last-seen">${lastSeen}</span>
+                <div class="flex items-center gap-1.5 min-w-0">
+                    <span class="font-mono text-brand-deep/50 shrink-0">${ipAddress}</span>
+                    ${geoLocation ? '<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-semibold rounded-md border border-blue-100 truncate online-geo"><svg class="w-2.5 h-2.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' + geoLocation + '</span>' : ''}
+                </div>
+                <span class="font-mono font-semibold text-brand-deep/70 online-last-seen shrink-0">${lastSeen}</span>
             </div>
             ${kickBtn}
         </article>`;
@@ -79,6 +83,11 @@ function renderOnlineUsers(users) {
             if (ts) ts.textContent = u.last_seen;
             var ip = el.querySelector('.font-mono.text-brand-deep\\/50');
             if (ip) ip.textContent = u.ip_address || '—';
+            var geo = el.querySelector('.online-geo');
+            if (u.geo_location && !geo) {
+                var geoHtml = '<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-semibold rounded-md border border-blue-100 truncate online-geo"><svg class="w-2.5 h-2.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' + escapeHtml(u.geo_location) + '</span>';
+                if (ip && ip.parentElement) ip.parentElement.insertAdjacentHTML('beforeend', geoHtml);
+            }
         } else {
             var tmp = document.createElement('div');
             tmp.innerHTML = buildUserCard(u).trim();
@@ -117,21 +126,31 @@ function checkOnlineUsers() {
 }
 
 function handleReservationEvent(data) {
+    if (!data) return;
+    var isLiveEvent = !!data.action;
     if (!reservationState.initialized) {
         reservationState.pendingCount  = data.pending_count;
         reservationState.latestId      = data.latest_id;
         reservationState.initialized   = true;
-        return;
+        if (!isLiveEvent) return;
     }
     var countChanged = data.pending_count !== reservationState.pendingCount;
     var newRecord    = data.latest_id > reservationState.latestId;
-    if (countChanged || newRecord) {
+    if (countChanged || newRecord || isLiveEvent) {
         if (data.pending_count > reservationState.pendingCount) {
             showToast('检测到新的预约记录', 'info');
         } else if (data.pending_count < reservationState.pendingCount) {
             showToast('预约状态已更新', 'info');
+        } else if (isLiveEvent) {
+            showToast('借阅状态已同步', 'info');
         }
-        setTimeout(function () { location.reload(); }, 1000);
+        reservationState.pendingCount = data.pending_count;
+        reservationState.latestId = data.latest_id;
+        if (typeof window.refreshAdminPanel === 'function') {
+            window.refreshAdminPanel(null, { updateHistory: false });
+        } else {
+            location.reload();
+        }
     }
 }
 
@@ -162,15 +181,13 @@ document.addEventListener('DOMContentLoaded', function () {
     checkOnlineUsers();
     startOnlineTimestampTick();
 
-    var socket = window._socket;
-    if (socket) {
-        socket.on('online_users_changed', function (data) {
-            renderOnlineUsers(data.users || []);
-        });
-        socket.on('reservation_changed', function (data) {
-            handleReservationEvent(data);
-        });
-    }
+    window.addEventListener('library:online-users-changed', function (event) {
+        var data = event.detail || {};
+        renderOnlineUsers(data.users || []);
+    });
+    window.addEventListener('library:reservation-changed', function (event) {
+        handleReservationEvent(event.detail || {});
+    });
 });
 
 document.addEventListener('visibilitychange', function () {

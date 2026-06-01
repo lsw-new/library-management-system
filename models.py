@@ -128,6 +128,7 @@ class OnlineSession(db.Model):
     login_history_id = db.Column(db.Integer, index=True)
     # 管理员踢出标记：被踢用户下次请求时由 before_request 强制登出
     is_kicked = db.Column(db.Boolean, default=False, nullable=False, index=True)
+    geo_location = db.Column(db.String(100))
 
 
 class Book(db.Model):

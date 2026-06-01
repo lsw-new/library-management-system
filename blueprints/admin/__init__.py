@@ -196,6 +196,7 @@ def get_online_users():
             'username': u.username,
             'user_type': u.user_type,
             'ip_address': u.ip_address or '',
+            'geo_location': u.geo_location or '',
             'last_seen': u.last_seen.strftime('%H:%M:%S'),
             'login_time': u.login_time.strftime('%H:%M:%S'),
         } for u in users]

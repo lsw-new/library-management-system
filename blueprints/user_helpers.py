@@ -14,7 +14,7 @@ DEFAULT_BOOK_SORT = 'newest'
 _FULLTEXT_OPERATOR_RE = re.compile(r'[+\-><()~*"@]')
 BORROW_STATUS_KEYS = ('pending', 'picked_up', 'returned', 'rejected', 'expired')
 BORROW_ACTION_CSRF_SESSION_KEY = 'borrow_action_csrf_token'
-AVATAR_MAX_SIZE = 2 * 1024 * 1024
+AVATAR_MAX_SIZE = 3 * 1024 * 1024
 AVATAR_SUBFOLDER = 'avatars'
 
 

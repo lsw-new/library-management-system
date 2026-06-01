@@ -1,43 +1,24 @@
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 错误页面样式 */
 
-/* 设置 `body { font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 body { font-family: 'Montserrat', sans-serif; }
-/* 设置 `h1, h2, h3 { font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 h1, h2, h3 { font-family: 'Cormorant', serif; }
 
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes pulse-ring {
-    /* 设置 `0%   { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%   { transform: scale(0.9); opacity: 0.6; }
-    /* 设置 `50%  { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     50%  { transform: scale(1.15); opacity: 0; }
-    /* 设置 `100% { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     100% { transform: scale(0.9); opacity: 0; }
-/* 结束当前 CSS 规则块。 */
 }
 
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes float-icon {
-    /* 设置 `0%, 100% { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%, 100% { transform: translateY(0); }
-    /* 设置 `50%      { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     50%      { transform: translateY(-8px); }
-/* 结束当前 CSS 规则块。 */
 }
 
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes fade-in-up {
-    /* 设置 `from { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     from { opacity: 0; transform: translateY(24px); }
-    /* 设置 `to   { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     to   { opacity: 1; transform: translateY(0); }
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 选择器 `.animate-fade-in-up` 的样式块开始，下面定义对应元素的视觉表现。 */
 .animate-fade-in-up {
-    /* 设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-/* 结束当前 CSS 规则块。 */
 }

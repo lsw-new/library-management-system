@@ -1,148 +1,77 @@
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */
 ﻿/* ==================== 初始化页面动画 ==================== */
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes setup-fade-up {
-    /* 设置 `from { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     from { opacity: 0; transform: translateY(18px); }
-    /* 设置 `to   { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     to   { opacity: 1; transform: translateY(0); }
-/* 结束当前 CSS 规则块。 */
 }
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes setup-fade-in {
-    /* 设置 `from { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     from { opacity: 0; }
-    /* 设置 `to   { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     to   { opacity: 1; }
-/* 结束当前 CSS 规则块。 */
 }
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes setup-scale-in {
-    /* 设置 `from { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     from { opacity: 0; transform: scale(0.92); }
-    /* 设置 `to   { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     to   { opacity: 1; transform: scale(1); }
-/* 结束当前 CSS 规则块。 */
 }
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes setup-shimmer {
-    /* 设置 `0%   { background-position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%   { background-position: -200% center; }
-    /* 设置 `100% { background-position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     100% { background-position: 200% center; }
-/* 结束当前 CSS 规则块。 */
 }
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes setup-drift {
-    /* 设置 `0%   { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%   { transform: translateY(-10%) translateX(0) rotate(0deg); opacity: 0; }
-    /* 设置 `10%  { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     10%  { opacity: 0.7; }
-    /* 设置 `90%  { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     90%  { opacity: 0.7; }
-    /* 设置 `100% { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     100% { transform: translateY(110vh) translateX(var(--dx, 40px)) rotate(var(--spin, 360deg)); opacity: 0; }
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 选择器 `.setup-animate-card` 的样式块开始，下面定义对应元素的视觉表现。 */
 .setup-animate-card {
-    /* 设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: setup-scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.setup-animate-up` 的样式块开始，下面定义对应元素的视觉表现。 */
 .setup-animate-up {
-    /* 设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: setup-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.setup-animate-fade` 的样式块开始，下面定义对应元素的视觉表现。 */
 .setup-animate-fade {
-    /* 设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: setup-fade-in 0.6s ease both;
-/* 结束当前 CSS 规则块。 */
 }
-/* 设置 `.setup-stagger-1 { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .setup-stagger-1 { animation-delay: 0.08s; }
-/* 设置 `.setup-stagger-2 { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .setup-stagger-2 { animation-delay: 0.16s; }
-/* 设置 `.setup-stagger-3 { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .setup-stagger-3 { animation-delay: 0.24s; }
-/* 设置 `.setup-stagger-4 { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .setup-stagger-4 { animation-delay: 0.32s; }
-/* 设置 `.setup-stagger-5 { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .setup-stagger-5 { animation-delay: 0.40s; }
 
-/* 选择器 `.setup-shimmer-btn::after` 的样式块开始，下面定义对应元素的视觉表现。 */
 .setup-shimmer-btn::after {
-    /* 设置 `content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     content: '';
-    /* 设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute;
-    /* 设置 `inset` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     inset: 0;
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
-    /* 设置 `background-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background-size: 200% 100%;
-    /* 设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: setup-shimmer 2.8s ease-in-out infinite;
-    /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: inherit;
-    /* 设置 `pointer-events` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     pointer-events: none;
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 选择器 `.setup-input-icon` 的样式块开始，下面定义对应元素的视觉表现。 */
 .setup-input-icon {
-    /* 设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: color 0.2s ease, transform 0.2s ease;
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 选择器 `.setup-float-petal` 的样式块开始，下面定义对应元素的视觉表现。 */
 .setup-float-petal {
-    /* 设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute;
-    /* 设置 `pointer-events` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     pointer-events: none;
-    /* 设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: setup-drift var(--dur, 12s) linear infinite;
-    /* 设置 `animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation-delay: var(--delay, 0s);
-    /* 设置 `opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     opacity: 0;
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 选择器 `.setup-step-line` 的样式块开始，下面定义对应元素的视觉表现。 */
 .setup-step-line {
-    /* 设置 `flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex: 1;
-    /* 设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: 2px;
-    /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1px;
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(90deg, var(--line-from, #f9a8d4), var(--line-to, #e2e8f0));
-    /* 设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: background 0.4s ease;
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (prefers-reduced-motion: reduce) {
-    /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .setup-animate-card,
-    /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .setup-animate-up,
-    /* 设置 `.setup-animate-fade { animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .setup-animate-fade { animation: none; opacity: 1; transform: none; }
-    /* 设置 `.setup-shimmer-btn` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .setup-shimmer-btn::after { animation: none; }
-    /* 设置 `.setup-float-petal { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .setup-float-petal { display: none; }
-/* 结束当前 CSS 规则块。 */
 }

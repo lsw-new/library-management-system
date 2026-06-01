@@ -1,499 +1,138 @@
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ==================== 图书列表页 ==================== */
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes books-fade-in {
-    /* 设置 `from { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     from { opacity: 0; transform: translateY(12px); }
-    /* 设置 `to   { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     to   { opacity: 1; transform: translateY(0); }
-/* 结束当前 CSS 规则块。 */
 }
-/* 设置 `.animate-fade-in { animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .animate-fade-in { animation: books-fade-in 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
-/* 选择器 `.is-results-transitioning` 的样式块开始，下面定义对应元素的视觉表现。 */
 .is-results-transitioning {
-    /* 设置 `opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     opacity: 0.3;
-    /* 设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(6px);
-    /* 设置 `pointer-events` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     pointer-events: none;
-    /* 设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: opacity 0.2s ease, transform 0.2s ease;
-/* 结束当前 CSS 规则块。 */
 }
-/* 响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (prefers-reduced-motion: reduce) {
-    /* 设置 `.animate-fade-in { animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .animate-fade-in { animation: none; }
-    /* 设置 `.is-results-transitioning { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .is-results-transitioning { opacity: 0.6; transform: none; filter: none; }
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 图书卡片 */
-/* 选择器 `.book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card {
-    /* 设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
-    /* 设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex;
-    /* 设置 `flex-direction` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex-direction: column;
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff;
-    /* 设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(var(--color-brand-primary-rgb), 0.08);
-    /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1rem;
-    /* 设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
-    /* 设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-                /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
                 box-shadow 0.35s ease,
-                /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
                 border-color 0.35s ease;
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.book-card:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card:hover {
-    /* 设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-4px);
-    /* 设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(var(--color-brand-primary-rgb), 0.25);
-    /* 设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 18px 40px -20px rgba(var(--color-brand-primary-rgb), 0.35),
-                /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
                 0 8px 16px -8px rgba(139, 92, 246, 0.2);
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.book-card-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-cover {
-    /* 设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
-    /* 设置 `aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     aspect-ratio: 3 / 4;
-    /* 设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.book-card-cover img` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-cover img {
-    /* 设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%;
-    /* 设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: 100%;
-    /* 设置 `object-fit` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     object-fit: cover;
-    /* 设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
-/* 结束当前 CSS 规则块。 */
 }
-/* 设置 `.book-card` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .book-card:hover .book-card-cover img { transform: scale(1.06); }
-/* 设置 `.book-card-cover img.lazy-img { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .book-card-cover img.lazy-img { opacity: 0; }
-/* 设置 `.book-card-cover img.lazy-img.is-loaded { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .book-card-cover img.lazy-img.is-loaded { opacity: 1; }
-/* 选择器 `.book-card-status` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-status {
-    /* 设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute;
-    /* 设置 `z-index` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     z-index: 2;
-    /* 设置 `top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     top: 0.5rem;
-    /* 设置 `left` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     left: 0.5rem;
-    /* 设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex;
-    /* 设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center;
-    /* 设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 4px;
-    /* 设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 4px 10px;
-    /* 设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 11px;
-    /* 设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700;
-    /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.book-card-status.is-available` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-status.is-available {
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #dcfce7;
-    /* 设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #166534;
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.book-card-status.is-unavailable` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-status.is-unavailable {
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fee2e2;
-    /* 设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #991b1b;
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.book-card-status::before` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-status::before {
-    /* 设置 `content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     content: '';
-    /* 设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 6px;
-    /* 设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: 6px;
-    /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 50%;
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: currentColor;
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 骨架屏 */
-/* 选择器 `.book-skeleton` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-skeleton {
-    /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1rem;
-    /* 设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff;
-    /* 设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(var(--color-brand-primary-rgb), 0.08);
-/* 结束当前 CSS 规则块。 */
 }
-/* 设置 `.book-skeleton-cover { aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .book-skeleton-cover { aspect-ratio: 3 / 4; }
-/* 选择器 `.skeleton-shimmer` 的样式块开始，下面定义对应元素的视觉表现。 */
 .skeleton-shimmer {
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(
-        /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         90deg,
-        /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(253, 242, 248, 0.5) 0%,
-        /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(243, 232, 255, 0.9) 50%,
-        /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(253, 242, 248, 0.5) 100%
-    /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     );
-    /* 设置 `background-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background-size: 200% 100%;
-    /* 设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: skeleton-shimmer 1.4s ease-in-out infinite;
-/* 结束当前 CSS 规则块。 */
 }
-/* CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes skeleton-shimmer {
-    /* 设置 `0%   { background-position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%   { background-position: 200% 0; }
-    /* 设置 `100% { background-position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     100% { background-position: -200% 0; }
-/* 结束当前 CSS 规则块。 */
 }
-/* 响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (prefers-reduced-motion: reduce) {
-    /* 设置 `.skeleton-shimmer { animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .skeleton-shimmer { animation: none; }
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 工具条芯片 */
-/* 选择器 `.chip` 的样式块开始，下面定义对应元素的视觉表现。 */
 .chip {
-    /* 设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex;
-    /* 设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center;
-    /* 设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     justify-content: center;
-    /* 设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     min-height: 44px;
-    /* 设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 6px;
-    /* 设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.625rem 0.875rem;
-    /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
-    /* 设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 12px;
-    /* 设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 600;
-    /* 设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(131, 24, 67, 0.7);
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff;
-    /* 设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(var(--color-brand-primary-rgb), 0.12);
-    /* 设置 `cursor` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     cursor: pointer;
-    /* 设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: all 0.25s ease;
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.chip:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .chip:hover {
-    /* 设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-primary);
-    /* 设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(var(--color-brand-primary-rgb), 0.4);
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(253, 242, 248, 0.6);
-/* 结束当前 CSS 规则块。 */
 }
-/* 选择器 `.chip.is-active` 的样式块开始，下面定义对应元素的视觉表现。 */
 .chip.is-active {
-    /* 设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #fff;
-    /* 设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-accent), var(--color-brand-primary));
-    /* 设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: transparent;
-    /* 设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 6px 14px -4px rgba(168, 85, 247, 0.5);
-/* 结束当前 CSS 规则块。 */
 }
 
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 图书结果区数量徽章过渡 */
-/* 设置 `[data-category] { transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 [data-category] { transition: transform 0.25s ease; }
-/* 设置 `[data-category].scale-110 { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 [data-category].scale-110 { transform: scale(1.15); }
-
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */
-/* ==================== Phone/tablet catalogue experience ==================== */
-/* 响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
-@media (max-width: 639px) {
-    /* 选择器 `#books-sidebar-content` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-sidebar-content {
-        /* 设置 `margin-top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        margin-top: -0.25rem;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `#books-mobile-categories` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-mobile-categories {
-        /* 设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        padding: 0 0.15rem 0.45rem;
-        /* 设置 `scroll-snap-type` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        scroll-snap-type: x mandatory;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `#books-main-content` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-main-content {
-        /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        border-radius: 1.35rem;
-        /* 设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        box-shadow: 0 18px 42px -30px rgba(var(--color-brand-primary-rgb), 0.42);
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `#books-toolbar` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-toolbar {
-        /* 设置 `overflow-x` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        overflow-x: auto;
-        /* 设置 `flex-wrap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        flex-wrap: nowrap;
-        /* 设置 `padding-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        padding-bottom: 0.25rem;
-        /* 设置 `scrollbar-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        scrollbar-width: none;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 设置 `#books-toolbar` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-    #books-toolbar::-webkit-scrollbar { display: none; }
-    /* 选择器 `#books-toolbar .chip` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-toolbar .chip {
-        /* 设置 `flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        flex: 0 0 auto;
-        /* 设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        min-height: 42px;
-        /* 设置 `padding-inline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        padding-inline: 0.82rem;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
-    #books-results-content > .grid,
-    /* 选择器 `#books-results-content .grid.grid-cols-2` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-results-content .grid.grid-cols-2 {
-        /* 设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        grid-template-columns: minmax(0, 1fr) !important;
-        /* 设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        gap: 0.85rem !important;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card {
-        /* 设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        display: grid;
-        /* 设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        grid-template-columns: 112px minmax(0, 1fr);
-        /* 设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        min-height: 160px;
-        /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        border-radius: 1.15rem;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.book-card:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card:hover {
-        /* 设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        transform: none;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.book-card-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card-cover {
-        /* 设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        width: 112px;
-        /* 设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        height: 100%;
-        /* 设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        min-height: 160px;
-        /* 设置 `aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        aspect-ratio: auto;
-        /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        border-radius: 0;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.book-card-status` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card-status {
-        /* 设置 `top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        top: 0.45rem;
-        /* 设置 `left` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        left: 0.45rem;
-        /* 设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        padding: 3px 8px;
-        /* 设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        font-size: 10px;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
-    .book-card .p-3,
-    /* 选择器 `.book-card .sm\:p-4` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card .sm\:p-4 {
-        /* 设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        padding: 0.85rem !important;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.book-card h3` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card h3 {
-        /* 设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        font-size: 1.04rem;
-        /* 设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        line-height: 1.25;
-        /* 设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        margin-bottom: 0.25rem;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.book-card [data-actions]` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card [data-actions] {
-        /* 设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        display: grid;
-        /* 设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        grid-template-columns: 1fr;
-        /* 设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        gap: 0.45rem;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
-    .book-card [data-actions] a,
-    /* 选择器 `.book-card [data-actions] button` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card [data-actions] button {
-        /* 设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        min-height: 42px;
-        /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        border-radius: 0.85rem;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
-    nav[aria-label],
-    /* 选择器 `#books-results-content nav` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-results-content nav {
-        /* 设置 `overflow-x` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        overflow-x: auto;
-        /* 设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        justify-content: flex-start !important;
-        /* 设置 `padding-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        padding-bottom: 0.35rem;
-        /* 设置 `scrollbar-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        scrollbar-width: none;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 设置 `#books-results-content nav` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-    #books-results-content nav::-webkit-scrollbar { display: none; }
-/* 结束当前 CSS 规则块。 */
-}
-
-/* 响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
-@media (min-width: 640px) and (max-width: 1023px) {
-    /* 选择器 `#books-main-content` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-main-content {
-        /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        border-radius: 1.5rem;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
-    #books-results-content > .grid,
-    /* 选择器 `#books-results-content .grid.grid-cols-2` 的样式块开始，下面定义对应元素的视觉表现。 */
-    #books-results-content .grid.grid-cols-2 {
-        /* 设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .book-card {
-        /* 设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        border-radius: 1.1rem;
-    /* 结束当前 CSS 规则块。 */
-    }
-/* 结束当前 CSS 规则块。 */
-}
-
-/* 响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
-@media (max-width: 639px) {
-    /* 选择器 `.guest-book-grid` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .guest-book-grid {
-        /* 设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        grid-template-columns: minmax(0, 1fr) !important;
-        /* 设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        gap: 0.9rem !important;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.guest-book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .guest-book-card {
-        /* 设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        display: grid !important;
-        /* 设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        grid-template-columns: 112px minmax(0, 1fr);
-        /* 设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        min-height: 164px;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.guest-book-card > img` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .guest-book-card > img {
-        /* 设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        width: 112px;
-        /* 设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        height: 100% !important;
-        /* 设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        min-height: 164px;
-    /* 结束当前 CSS 规则块。 */
-    }
-    /* 选择器 `.guest-book-card .touch-target` 的样式块开始，下面定义对应元素的视觉表现。 */
-    .guest-book-card .touch-target {
-        /* 设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
-        min-height: 42px;
-    /* 结束当前 CSS 规则块。 */
-    }
-/* 结束当前 CSS 规则块。 */
-}
-
-/* 已有 CSS 注释，标记样式分区或解释设计意图。 */

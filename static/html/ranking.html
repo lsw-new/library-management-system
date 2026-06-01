@@ -1,338 +1,175 @@
-{# Jinja 模板继承声明，复用基础页面骨架。 #}
 {% extends "base.html" %}
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block title %}借阅排行榜 - 景艺大图书馆{% endblock %}
 
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block header %}{% endblock %}
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block main_class %}flex-1 animate-in fade-in duration-500{% endblock %}
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block content_wrapper %}{% endblock %}
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block head_extra %}
-{# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/ranking.css', v='20260515-v11') }}">
-{# Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}
 
-{# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
 {% set total_borrows = books|sum(attribute='borrow_count') if books else 0 %}
-{# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
 {% set max_borrow = books[0].borrow_count if (books and books[0].borrow_count > 0) else 1 %}
-{# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
 {% set top_share = (books[0].borrow_count / total_borrows * 100)|round|int if total_borrows else 0 %}
 
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block content %}
-{# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
 <svg style="position:absolute;width:0;height:0" aria-hidden="true">
-    {# HTML `defs` 元素，构成页面结构、内容或交互区域。 #}
     <defs>
-        {# HTML `lineargradient` 元素，构成页面结构、内容或交互区域。 #}
         <linearGradient id="rkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            {# HTML `stop` 元素，构成页面结构、内容或交互区域。 #}
             <stop offset="0%" stop-color="#ec4899"/>
-            {# HTML `stop` 元素，构成页面结构、内容或交互区域。 #}
             <stop offset="100%" stop-color="#a855f7"/>
-        {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </linearGradient>
-    {# HTML 闭合标签，结束前面打开的页面结构。 #}
     </defs>
-{# HTML 闭合标签，结束前面打开的页面结构。 #}
 </svg>
-{# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
 <div class="rk">
-    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
     <a href="{{ url_for('user.books') }}" class="rk-back" aria-label="返回馆藏">
-        {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-        {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span>返回馆藏</span>
-    {# HTML 闭合标签，结束前面打开的页面结构。 #}
     </a>
-    {# HTML `header` 元素，构成页面结构、内容或交互区域。 #}
     <header class="rk-hero">
-        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="rk-hero-bg" aria-hidden="true"></div>
-        {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="rk-eyebrow">图书馆热门榜单</span>
-        {# HTML `h1` 元素，构成页面结构、内容或交互区域。 #}
         <h1 class="rk-title">借阅<span>排行榜</span></h1>
-        {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
         <p class="rk-sub">用真实借阅热度发现下一本值得翻开的书</p>
 
-        {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
         {% if books %}
-        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="rk-stats">
-            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <div class="rk-stat"><strong>{{ books|length }}</strong><span>上榜图书</span></div>
-            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <div class="rk-stat"><strong>{{ books[0].borrow_count }}</strong><span>最高借阅</span></div>
-            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <div class="rk-stat"><strong>{{ total_borrows }}</strong><span>总借阅量</span></div>
-            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <div class="rk-stat"><strong>{{ (total_borrows / books|length)|round|int }}</strong><span>平均热度</span></div>
-        {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
-        {# 结束当前 Jinja 条件块。 #}
         {% endif %}
-    {# HTML 闭合标签，结束前面打开的页面结构。 #}
     </header>
 
-    {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
     {% if books %}
-    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="rk-content">
-        {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
         {% if books|length >= 3 %}
-        {# HTML `section` 元素，构成页面结构、内容或交互区域。 #}
         <section class="rk-podium" aria-label="热门前三">
-            {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
             {% for idx in [1, 0, 2] %}
-            {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
             {% set book = books[idx] %}
-            {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
             {% set rank = idx + 1 %}
-            {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
             {% set medal = ['gold', 'silver', 'bronze'][idx] %}
-            {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
             {% set pct = (book.borrow_count / max_borrow * 100)|round|int %}
-            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <article class="rk-pod rk-pod--{{ medal }}" data-cat="{{ book.category or '' }}">
-                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <span class="rk-pod-badge">{{ rank }}</span>
-                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="rk-pod-cover">
-                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <img src="{{ url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') }}" alt="{{ book.title }}" loading="{% if rank == 1 %}eager{% else %}lazy{% endif %}" decoding="async">
-                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <a href="{{ url_for('user.book_detail', book_id=book.id) }}" class="rk-pod-name">{{ book.title }}</a>
-                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <p class="rk-pod-author">{{ book.author }}{% if book.category %} · {{ book.category }}{% endif %}</p>
-                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <div class="rk-bar"><span style="width:{{ pct }}%"></span></div>
-                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <span class="rk-pod-count">{{ book.borrow_count }} 次借阅</span>
-            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </article>
-            {# 结束当前 Jinja 循环块。 #}
             {% endfor %}
-        {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </section>
-        {# 结束当前 Jinja 条件块。 #}
         {% endif %}
 
-        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="rk-toolbar">
-            {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="rk-search-wrap">
-                {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                 <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                {# 输入控件，接收用户填写或隐藏提交的数据。 #}
                 <input type="search" id="rkSearch" placeholder="搜索书名或作者..." autocomplete="off">
-            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
-            {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
             {% if categories %}
-            {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="rk-cats" role="tablist" aria-label="分类筛选">
-                {# 按钮控件，触发提交、弹窗、切换或其他页面动作。 #}
                 <button class="rk-cat is-active" data-cat="all" role="tab" aria-selected="true">全部</button>
-                {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                 {% for c in categories %}
-                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <button class="rk-cat" data-cat="{{ c }}" role="tab" aria-selected="false">{{ c }}</button>
-                {# 结束当前 Jinja 循环块。 #}
                 {% endfor %}
-            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
-            {# 结束当前 Jinja 条件块。 #}
             {% endif %}
-        {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
 
-        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="rk-body">
-            {# HTML `main` 元素，构成页面结构、内容或交互区域。 #}
             <main class="rk-main">
-                {# HTML `ol` 元素，构成页面结构、内容或交互区域。 #}
                 <ol class="rk-list" id="rkList">
-                    {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                     {% for book in books %}
-                    {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
                     {% set pct = (book.borrow_count / max_borrow * 100)|round|int %}
-                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <li class="rk-row" data-t="{{ book.title|lower }}" data-a="{{ book.author|lower }}" data-cat="{{ book.category or '' }}">
-                        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                         <span class="rk-row-rank {% if loop.index <= 3 %}top{% endif %}">{{ loop.index }}</span>
-                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="rk-row-cover">
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <img src="{{ url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') }}" alt="" loading="lazy" decoding="async">
-                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="rk-row-info">
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <a href="{{ url_for('user.book_detail', book_id=book.id) }}" class="rk-row-title">{{ book.title }}</a>
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <p>{{ book.author }}{% if book.category %} · {{ book.category }}{% endif %}</p>
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <div class="rk-bar sm"><span style="width:{{ pct }}%"></span></div>
-                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="rk-row-num">
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <strong>{{ book.borrow_count }}</strong>
-                            {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                             <span>次借阅</span>
-                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </li>
-                    {# 结束当前 Jinja 循环块。 #}
                     {% endfor %}
-                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </ol>
-                {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                 <p class="rk-no-match" id="rkNoMatch" hidden>没有找到匹配的图书</p>
-            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </main>
 
-            {# HTML `aside` 元素，构成页面结构、内容或交互区域。 #}
             <aside class="rk-side">
-                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="rk-card">
-                    {# HTML `h3` 元素，构成页面结构、内容或交互区域。 #}
                     <h3>榜单概览</h3>
-                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="rk-overview">
-                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="rk-ring">
-                            {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                             <svg viewBox="0 0 120 120">
-                                {# HTML `circle` 元素，构成页面结构、内容或交互区域。 #}
                                 <circle cx="60" cy="60" r="48" class="rk-ring-bg"/>
-                                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                 <circle cx="60" cy="60" r="48" class="rk-ring-fg" stroke-dasharray="{{ (top_share / 100 * 301.59)|round(2) }} 301.59" transform="rotate(-90 60 60)"/>
-                            {# HTML 闭合标签，结束前面打开的页面结构。 #}
                             </svg>
-                            {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                             <div class="rk-ring-center">
-                                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                 <b>{{ top_share }}%</b>
-                                {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                                 <span>榜首占比</span>
-                            {# HTML 闭合标签，结束前面打开的页面结构。 #}
                             </div>
-                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                        {# HTML `ul` 元素，构成页面结构、内容或交互区域。 #}
                         <ul class="rk-ov-list">
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <li><i class="dot-pk" aria-hidden="true"></i>上榜图书<b>{{ books|length }}</b></li>
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <li><i class="dot-am" aria-hidden="true"></i>最高借阅<b>{{ books[0].borrow_count }}</b></li>
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <li><i class="dot-em" aria-hidden="true"></i>总借阅量<b>{{ total_borrows }}</b></li>
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <li><i class="dot-pu" aria-hidden="true"></i>平均热度<b>{{ (total_borrows / books|length)|round|int }}</b></li>
-                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </ul>
-                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
 
-                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="rk-card">
-                    {# HTML `h3` 元素，构成页面结构、内容或交互区域。 #}
                     <h3>热门前三</h3>
-                    {# HTML `ul` 元素，构成页面结构、内容或交互区域。 #}
                     <ul class="rk-mini3">
-                        {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                         {% for book in books[:3] %}
-                        {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
                         {% set pct = (book.borrow_count / max_borrow * 100)|round|int %}
-                        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                         <li class="r{{ loop.index }}">
-                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <span class="rk-mini3-rank">0{{ loop.index }}</span>
-                            {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                             <div class="rk-mini3-body">
-                                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                                 <div class="rk-mini3-head">
-                                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                     <span>{{ book.title }}</span>
-                                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                     <b>{{ book.borrow_count }}次</b>
-                                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                                 </div>
-                                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                 <div class="rk-bar xs"><span style="width:{{ pct }}%"></span></div>
-                            {# HTML 闭合标签，结束前面打开的页面结构。 #}
                             </div>
-                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </li>
-                        {# 结束当前 Jinja 循环块。 #}
                         {% endfor %}
-                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </ul>
-                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
 
-                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="rk-card">
-                    {# HTML `h3` 元素，构成页面结构、内容或交互区域。 #}
                     <h3>阅读发现</h3>
-                    {# HTML `ul` 元素，构成页面结构、内容或交互区域。 #}
                     <ul class="rk-tips">
-                        {# HTML `li` 元素，构成页面结构、内容或交互区域。 #}
                         <li><b>01</b><p>榜首与热门前三反映近期最受欢迎的图书。</p></li>
-                        {# HTML `li` 元素，构成页面结构、内容或交互区域。 #}
                         <li><b>02</b><p>热度条越长，说明与榜首的借阅差距越小。</p></li>
-                        {# HTML `li` 元素，构成页面结构、内容或交互区域。 #}
                         <li><b>03</b><p>点击书名可以直接进入详情页预约借阅。</p></li>
-                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </ul>
-                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </aside>
-        {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
-    {# HTML 闭合标签，结束前面打开的页面结构。 #}
     </div>
 
-    {# Jinja 条件的兜底分支，渲染未命中条件时的内容。 #}
     {% else %}
-    {# HTML `section` 元素，构成页面结构、内容或交互区域。 #}
     <section class="rk-empty">
-        {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        {# HTML `h3` 元素，构成页面结构、内容或交互区域。 #}
         <h3>榜单还在等待第一本热门图书</h3>
-        {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
         <p>从馆藏中借阅一本喜欢的书，让它成为第一本上榜作品吧</p>
-        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
         <a href="{{ url_for('user.books') }}" class="rk-empty-btn">浏览馆藏</a>
-    {# HTML 闭合标签，结束前面打开的页面结构。 #}
     </section>
-    {# 结束当前 Jinja 条件块。 #}
     {% endif %}
-{# HTML 闭合标签，结束前面打开的页面结构。 #}
 </div>
-{# Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}
 
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block scripts %}
-{# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
 <script src="{{ versioned_url('js/ranking.js') }}"></script>
-{# Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}

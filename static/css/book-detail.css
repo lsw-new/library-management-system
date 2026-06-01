@@ -1,294 +1,588 @@
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ==================== 图书详情页 ==================== */
+/* 逐行注释：选择器 `.detail-hero` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-hero {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.5rem;
+    /* 逐行注释：设置 `isolation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     isolation: isolate;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-hero::before` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-hero::before {
+    /* 逐行注释：设置 `content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     content: '';
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute;
+    /* 逐行注释：设置 `inset` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     inset: -10%;
+    /* 逐行注释：设置 `background-image` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background-image: var(--detail-cover, none);
+    /* 逐行注释：设置 `background-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background-size: cover;
+    /* 逐行注释：设置 `background-position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background-position: center;
+    /* 逐行注释：设置 `filter` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     filter: blur(40px) saturate(1.4);
+    /* 逐行注释：设置 `opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     opacity: 0.55;
+    /* 逐行注释：设置 `z-index` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     z-index: -2;
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: scale(1.2);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-hero::after` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-hero::after {
+    /* 逐行注释：设置 `content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     content: '';
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute;
+    /* 逐行注释：设置 `inset` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     inset: 0;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg,
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(255, 255, 255, 0.78) 0%,
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(253, 242, 248, 0.85) 55%,
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(243, 232, 255, 0.85) 100%);
+    /* 逐行注释：设置 `backdrop-filter` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     backdrop-filter: blur(8px);
+    /* 逐行注释：设置 `-webkit-backdrop-filter` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     -webkit-backdrop-filter: blur(8px);
+    /* 逐行注释：设置 `z-index` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     z-index: -1;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.detail-cover-shell` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-cover-shell {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.25rem;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     aspect-ratio: 3 / 4;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 30px 60px -25px rgba(131, 24, 67, 0.35),
+                /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
                 0 12px 24px -10px rgba(139, 92, 246, 0.25);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.detail-cover-shell` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .detail-cover-shell:hover { transform: translateY(-4px) scale(1.01); }
+/* 逐行注释：选择器 `.detail-cover-shell img` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-cover-shell img {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%; height: 100%;
+    /* 逐行注释：设置 `object-fit` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     object-fit: cover;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.6s ease, opacity 0.4s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.detail-meta-card` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-meta-card {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: flex-start;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 0.75rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.875rem 1rem;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.875rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255, 255, 255, 0.7);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(236, 72, 153, 0.08);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: border-color 0.3s ease, background 0.3s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-meta-card:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-meta-card:hover {
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(236, 72, 153, 0.25);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255, 255, 255, 0.95);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-meta-icon` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-meta-icon {
+    /* 逐行注释：设置 `flex-shrink` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex-shrink: 0;
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 2.25rem; height: 2.25rem;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.625rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center;
+    /* 逐行注释：设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     justify-content: center;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fbcfe8, #e9d5ff);
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-meta-label` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-meta-label {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 11px;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700;
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.08em;
+    /* 逐行注释：设置 `text-transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-transform: uppercase;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(131, 24, 67, 0.45);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-meta-value` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-meta-value {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.95rem;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 600;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+    /* 逐行注释：设置 `word-break` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     word-break: break-word;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.detail-stat` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-stat {
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 1rem 1.125rem;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #ffffff 0%, rgba(253, 242, 248, 0.7) 100%);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(236, 72, 153, 0.1);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-stat-label` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-stat-label {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 11px;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700;
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.08em;
+    /* 逐行注释：设置 `text-transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-transform: uppercase;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(131, 24, 67, 0.5);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-stat-value` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-stat-value {
+    /* 逐行注释：设置 `margin-top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-top: 0.25rem;
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 1.75rem;
+    /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     line-height: 1.1;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.detail-progress` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-progress {
+    /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: 8px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(236, 72, 153, 0.12);
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-progress-bar` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-progress-bar {
+    /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: 100%;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: inherit;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent));
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.detail-action-primary` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-action-primary {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.875rem 1rem;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.875rem;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #fff;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-accent) 100%);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 14px 24px -10px rgba(236, 72, 153, 0.6);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-action-primary:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-action-primary:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-1px);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 20px 32px -12px rgba(236, 72, 153, 0.7);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.detail-action-primary` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .detail-action-primary:active { transform: translateY(0); }
+/* 逐行注释：选择器 `.detail-action-secondary` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-action-secondary {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.75rem 1rem;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.875rem;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 600;
+    /* 逐行注释：设置 `text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-align: center;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(131, 24, 67, 0.7);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(236, 72, 153, 0.18);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.detail-action-secondary:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .detail-action-secondary:hover {
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-primary);
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(236, 72, 153, 0.5);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(253, 242, 248, 0.6);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 相关推荐 */
+/* 逐行注释：选择器 `.related-card` 的样式块开始，下面定义对应元素的视觉表现。 */
 .related-card {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex;
+    /* 逐行注释：设置 `flex-direction` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex-direction: column;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.875rem;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(236, 72, 153, 0.08);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.related-card:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .related-card:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-3px);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 16px 32px -16px rgba(236, 72, 153, 0.4);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.related-card-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .related-card-cover {
+    /* 逐行注释：设置 `aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     aspect-ratio: 3 / 4;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.related-card-cover img` 的样式块开始，下面定义对应元素的视觉表现。 */
 .related-card-cover img {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%; height: 100%; object-fit: cover;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.5s ease, opacity 0.4s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.related-card` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .related-card:hover .related-card-cover img { transform: scale(1.05); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ==================== Phone/tablet detail page ==================== */
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (max-width: 639px) {
+    /* 逐行注释：选择器 `.detail-hero` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-hero {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.35rem;
+        /* 逐行注释：设置 `margin-inline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-inline: -0.15rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.detail-cover-shell` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-cover-shell {
+        /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-width: 178px;
+        /* 逐行注释：设置 `margin-inline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-inline: auto;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.detail-stat` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-stat {
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 0.85rem;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 0.9rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.detail-stat-label` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-stat-label {
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: 10px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.detail-stat-value` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-stat-value {
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: 1.35rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `#bookDetailActionGroup` 的样式块开始，下面定义对应元素的视觉表现。 */
     #bookDetailActionGroup {
+        /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         position: sticky;
+        /* 逐行注释：设置 `bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         bottom: calc(5.75rem + env(safe-area-inset-bottom));
+        /* 逐行注释：设置 `z-index` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         z-index: 20;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 0.55rem;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.2rem;
+        /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         background: rgba(255, 255, 255, 0.92);
+        /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border: 1px solid rgba(249, 168, 212, 0.45);
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 18px 40px -26px rgba(var(--color-brand-primary-rgb), 0.58);
+        /* 逐行注释：设置 `backdrop-filter` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         backdrop-filter: blur(16px);
+        /* 逐行注释：设置 `-webkit-backdrop-filter` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         -webkit-backdrop-filter: blur(16px);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .detail-action-primary,
+    /* 逐行注释：选择器 `.detail-action-secondary` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-action-secondary {
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 46px;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 0.95rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.related-card` 的样式块开始，下面定义对应元素的视觉表现。 */
     .related-card {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (min-width: 640px) and (max-width: 1023px) {
+    /* 逐行注释：选择器 `.detail-hero` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-hero {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.75rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.detail-cover-shell` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-cover-shell {
+        /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-width: 260px;
+        /* 逐行注释：设置 `margin-inline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-inline: auto;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `#bookDetailActionGroup` 的样式块开始，下面定义对应元素的视觉表现。 */
     #bookDetailActionGroup {
+        /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-width: 520px;
+        /* 逐行注释：设置 `margin-inline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-inline: auto;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ==================== Desktop detail cohesion ==================== */
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (min-width: 1024px) {
+    /* 逐行注释：选择器 `#bookDetailPageState` 的样式块开始，下面定义对应元素的视觉表现。 */
     #bookDetailPageState {
+        /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-width: 1180px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.detail-hero` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-hero {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.5rem;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 2rem !important;
+        /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border: 1px solid rgba(249, 168, 212, 0.3);
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 24px 64px -44px rgba(var(--color-brand-primary-rgb), 0.42);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.detail-hero > .grid` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-hero > .grid {
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: minmax(0, 270px) minmax(0, 1fr) !important;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 2rem !important;
+        /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         align-items: start;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.detail-cover-shell` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-cover-shell {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1rem;
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 24px 46px -30px rgba(131, 24, 67, 0.42);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.detail-hero header` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-hero header {
+        /* 逐行注释：设置 `padding-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding-bottom: 0.2rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.detail-hero h1` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-hero h1 {
+        /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-width: 12ch;
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: clamp(2.5rem, 3vw, 3.6rem);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .detail-stat,
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .detail-meta-card,
+    /* 逐行注释：选择器 `.detail-hero .bg-white\/70` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-hero .bg-white\/70 {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1rem;
+        /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         background: rgba(255, 255, 255, 0.82);
+        /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-color: rgba(249, 168, 212, 0.22);
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 10px 28px -24px rgba(var(--color-brand-primary-rgb), 0.34);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.detail-stat` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-stat {
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 116px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .detail-action-primary,
+    /* 逐行注释：选择器 `.detail-action-secondary` 的样式块开始，下面定义对应元素的视觉表现。 */
     .detail-action-secondary {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 0.9rem;
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 46px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.related-card` 的样式块开始，下面定义对应元素的视觉表现。 */
     .related-card {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1rem;
+        /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-color: rgba(249, 168, 212, 0.24);
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 12px 30px -26px rgba(var(--color-brand-primary-rgb), 0.36);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }

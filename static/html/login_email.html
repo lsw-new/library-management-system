@@ -1,215 +1,430 @@
+{# 逐行注释：Jinja 模板继承声明，复用基础页面骨架。 #}
 {% extends "base.html" %}
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block title %}邮箱登录 - 景艺大图书馆{% endblock %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block header %}{% endblock %}
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block footer %}{% endblock %}
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block main_class %}flex-1 flex flex-col{% endblock %}
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block content_wrapper %}flex-1 flex{% endblock %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block content %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
 <div class="elysia-scene relative flex-1 flex items-center justify-center px-4 py-10 overflow-hidden">
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="absolute inset-0 bg-[linear-gradient(135deg,_#FFE4F1_0%,_#FFF0F5_30%,_#F3E5F5_65%,_#FCE4EC_100%)]"></div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="pointer-events-none absolute -top-24 -right-16 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,_#FFB6D9_0%,_transparent_70%)] opacity-50 blur-2xl"></div>
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="pointer-events-none absolute -bottom-32 -left-20 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,_#E8D5F2_0%,_transparent_70%)] opacity-60 blur-2xl"></div>
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="pointer-events-none absolute top-1/3 left-1/4 h-72 w-72 rounded-full bg-[radial-gradient(circle,_#FFD9E8_0%,_transparent_70%)] opacity-40 blur-3xl"></div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="pointer-events-none absolute inset-0 overflow-hidden">
+        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="absolute top-[10%] left-[12%] h-1.5 w-1.5 rounded-full bg-pink-300/70 animate-pulse"></span>
+        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="absolute top-[25%] right-[10%] h-1 w-1 rounded-full bg-purple-300/60 animate-pulse" style="animation-delay:0.7s"></span>
+        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="absolute bottom-[18%] left-[6%] h-2 w-2 rounded-full bg-pink-200/60 animate-pulse" style="animation-delay:1.2s"></span>
+        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="absolute top-[60%] right-[8%] h-1 w-1 rounded-full bg-rose-300/70 animate-pulse" style="animation-delay:0.4s"></span>
+        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="absolute top-[14%] right-[14%] h-7 w-7 text-pink-300/40 rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="absolute bottom-[22%] right-[18%] h-6 w-6 text-purple-300/40 -rotate-45" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="absolute top-[55%] left-[5%] h-5 w-5 text-pink-200/50 rotate-45" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
     </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
     <a href="{{ url_for('auth.login') }}" class="absolute top-6 right-6 z-20 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/50 backdrop-blur-md px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-pink-700/70 transition-all hover:bg-white/80 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-6px_rgba(236,72,153,0.25)]">
+        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         密码登录
+    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
     </a>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="relative z-10 w-full max-w-[440px]">
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-pink-300/40 via-fuchsia-200/30 to-purple-300/40 blur-xl"></div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="relative rounded-[28px] border border-white/70 bg-white/75 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(236,72,153,0.25),0_0_0_1px_rgba(255,255,255,0.6)_inset] p-8 lg:p-10">
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center gap-1">
+                {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                 <span class="h-1 w-8 rounded-full bg-gradient-to-r from-transparent to-pink-300"></span>
+                {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                 <svg class="h-5 w-5 text-pink-400 drop-shadow-[0_2px_4px_rgba(236,72,153,0.4)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                 <span class="h-1 w-8 rounded-full bg-gradient-to-l from-transparent to-pink-300"></span>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="flex flex-col items-center mb-7">
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="relative mb-3">
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-pink-300 to-purple-300 blur-md opacity-60"></div>
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-400 via-rose-400 to-purple-400 shadow-[0_10px_30px_-8px_rgba(236,72,153,0.5)]">
+                        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                         <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+                {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                 <p class="font-heading text-lg font-bold text-pink-900/90 tracking-wide">景艺大图书馆</p>
+                {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                 <p class="mt-1 text-[10px] uppercase tracking-[0.32em] text-pink-400/70">邮箱验证码登录</p>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="text-center mb-7">
+                {# 逐行注释：HTML `h1` 元素，构成页面结构、内容或交互区域。 #}
                 <h1 class="font-heading text-[28px] font-bold leading-tight text-pink-900">
+                    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                     免密登录<span class="italic font-normal bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"> ♡</span>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </h1>
+                {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                 <p class="mt-2 text-[13px] leading-6 text-pink-800/55">
+                    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                     输入邮箱，接收验证码即可快速登录
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </p>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             {% with messages = get_flashed_messages(with_categories=true) %}
+            {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
             {% if messages %}
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="mb-6 space-y-2.5">
+                {# 逐行注释：Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                 {% for category, message in messages %}
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="flex items-center gap-2.5 rounded-xl border px-4 py-3 text-[12px] font-semibold {% if category in ['danger', 'error'] %}border-rose-200 bg-rose-50/80 text-rose-700{% elif category == 'success' %}border-emerald-200 bg-emerald-50/80 text-emerald-700{% else %}border-amber-200 bg-amber-50/80 text-amber-700{% endif %}">
+                    {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% if category in ['danger', 'error'] %}
+                    {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                     <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4a2 2 0 00-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/></svg>
+                    {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% elif category == 'success' %}
+                    {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                     <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    {# 逐行注释：Jinja 条件的兜底分支，渲染未命中条件时的内容。 #}
                     {% else %}
+                    {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                     <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    {# 逐行注释：结束当前 Jinja 条件块。 #}
                     {% endif %}
+                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <span>{{ message }}</span>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+                {# 逐行注释：结束当前 Jinja 循环块。 #}
                 {% endfor %}
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+            {# 逐行注释：结束当前 Jinja 条件块。 #}
             {% endif %}
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             {% endwith %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <form id="emailLoginForm" method="POST" action="{{ url_for('auth.login_email') }}" class="space-y-5">
+                {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <input type="hidden" name="csrf_token" value="{{ auth_action_csrf_token }}">
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div>
+                    {# 逐行注释：HTML `label` 元素，构成页面结构、内容或交互区域。 #}
                     <label for="email" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">邮箱地址</label>
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="relative">
+                        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                         <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-pink-600">
+                            {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                         </span>
+                        {# 逐行注释：输入控件，接收用户填写或隐藏提交的数据。 #}
                         <input name="email" id="email" type="email" autocomplete="email" required
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm pl-11 pr-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]"
+                               {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                placeholder="请输入注册时的邮箱" value="{{ form_email or '' }}">
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div>
+                    {# 逐行注释：HTML `label` 元素，构成页面结构、内容或交互区域。 #}
                     <label for="code" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">验证码</label>
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="flex gap-3">
+                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="relative flex-1">
+                            {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                             <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-pink-600">
+                                {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                             </span>
+                            {# 逐行注释：输入控件，接收用户填写或隐藏提交的数据。 #}
                             <input name="code" id="code" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required
+                                   {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                    class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm pl-11 pr-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)] tracking-[0.3em]"
+                                   {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                    placeholder="6位验证码">
+                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
+                        {# 逐行注释：按钮控件，触发提交、弹窗、切换或其他页面动作。 #}
                         <button type="button" id="sendCodeBtn"
+                                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                 class="shrink-0 rounded-xl border border-pink-300/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-[12px] font-bold text-pink-600 transition-all hover:bg-white/80 hover:border-pink-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                             发送验证码
+                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                         </button>
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
+                    {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                     <p id="codeMsg" class="mt-1.5 text-[11px] font-medium hidden"></p>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+                {# 逐行注释：按钮控件，触发提交、弹窗、切换或其他页面动作。 #}
                 <button type="submit"
+                        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                         class="group relative inline-flex w-full min-h-[50px] items-center justify-center gap-2.5 overflow-hidden rounded-2xl px-6 py-3.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-pink-300/50">
+                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span class="absolute inset-0 bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400"></span>
+                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span class="absolute inset-0 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/80 to-transparent"></span>
+                    {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                     <svg class="relative z-10 h-4 w-4 drop-shadow" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span class="relative z-10 tracking-widest drop-shadow">登 录</span>
+                    {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                     <svg class="relative z-10 h-4 w-4 drop-shadow group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </button>
+            {# 逐行注释：表单结构结束。 #}
             </form>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="mt-7 flex items-center gap-3">
+                {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                 <span class="h-px flex-1 bg-gradient-to-r from-transparent to-pink-200"></span>
+                {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                 <span class="text-[10px] font-bold uppercase tracking-[0.22em] text-pink-400/60">或</span>
+                {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                 <span class="h-px flex-1 bg-gradient-to-l from-transparent to-pink-200"></span>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
             <p class="mt-5 text-center text-[13px] text-pink-800/55">
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 还没有账号？
+                {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <a href="{{ url_for('auth.register') }}" class="font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent hover:from-pink-600 hover:to-purple-600 transition-all">立即注册</a>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </p>
+        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+        {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
         <p class="mt-5 text-center text-[10px] uppercase tracking-[0.32em] text-pink-400/55 font-mono">
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             ─── ♡ 欢迎来到我们的图书馆 ♡ ───
+        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
         </p>
+    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
     </div>
+{# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
 </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block scripts %}
+{# 逐行注释：加载或开始脚本逻辑，为页面提供交互能力。 #}
 <script>
+{# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
 (function() {
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     var sendBtn = document.getElementById('sendCodeBtn');
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     var emailInput = document.getElementById('email');
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     var codeMsg = document.getElementById('codeMsg');
+    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
     var csrfToken = {{ auth_action_csrf_token|tojson }};
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     var countdown = 0;
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     var timer = null;
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     function showMsg(text, type) {
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         codeMsg.textContent = text;
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         codeMsg.className = 'mt-1.5 text-[11px] font-medium ' +
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             (type === 'error' ? 'text-rose-600' : 'text-emerald-600');
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         codeMsg.classList.remove('hidden');
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     }
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     function startCountdown(sec) {
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         countdown = sec;
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         sendBtn.disabled = true;
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         sendBtn.textContent = countdown + 's';
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         timer = setInterval(function() {
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             countdown--;
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             if (countdown <= 0) {
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 clearInterval(timer);
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 sendBtn.disabled = false;
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 sendBtn.textContent = '发送验证码';
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             } else {
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 sendBtn.textContent = countdown + 's';
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             }
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         }, 1000);
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     }
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     sendBtn.addEventListener('click', function() {
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         var email = emailInput.value.trim();
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         if (!email) { showMsg('请先输入邮箱地址', 'error'); return; }
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showMsg('邮箱格式不正确', 'error'); return; }
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         sendBtn.disabled = true;
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         sendBtn.textContent = '发送中...';
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+        {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
         fetch('{{ url_for("auth.login_email_send_code") }}', {
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             method: 'POST',
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             body: JSON.stringify({ email: email })
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         })
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         .then(function(r) { return r.json(); })
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         .then(function(data) {
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             if (data.success) {
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 showMsg(data.message || '验证码已发送', 'success');
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 startCountdown(60);
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             } else {
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 showMsg(data.message || '发送失败', 'error');
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 sendBtn.disabled = false;
+                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 sendBtn.textContent = '发送验证码';
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             }
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         })
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         .catch(function() {
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             showMsg('网络错误，请稍后重试', 'error');
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             sendBtn.disabled = false;
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             sendBtn.textContent = '发送验证码';
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         });
+    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     });
+{# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
 })();
+{# 逐行注释：结束当前脚本块。 #}
 </script>
+{# 逐行注释：Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}

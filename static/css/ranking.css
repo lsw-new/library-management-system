@@ -1,397 +1,794 @@
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ===== Ranking Page v3 ===== */
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：设置 `.rk { min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk { min-height: 100vh; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Hero ---- */
+/* 逐行注释：选择器 `.rk-hero` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-hero {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 3.5rem 1.5rem 2.25rem;
+    /* 逐行注释：设置 `text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-align: center;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-hero-bg` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-hero-bg {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; inset: 0; pointer-events: none;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background:
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         radial-gradient(ellipse at 20% 0%, rgba(var(--color-brand-primary-rgb),0.14), transparent 50%),
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         radial-gradient(ellipse at 80% 100%, rgba(168,85,247,0.11), transparent 50%);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-hero > *` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-hero > *:not(.rk-hero-bg) { position: relative; z-index: 1; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-back` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-back {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: fixed; top: 1rem; left: 1.25rem; z-index: 60;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; gap: 6px;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 8px 18px; border-radius: 999px;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.88); backdrop-filter: blur(14px);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(var(--color-brand-primary-rgb),0.12);
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep); font-size: 13px; font-weight: 600; text-decoration: none;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 4px 20px -6px rgba(var(--color-brand-deep-rgb),0.12);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.2s, box-shadow 0.2s;
+    /* 逐行注释：设置 `min-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     min-width: 44px; min-height: 44px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-back` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-back:hover { transform: translateY(-1px); box-shadow: 0 8px 28px -8px rgba(var(--color-brand-deep-rgb),0.22); }
+/* 逐行注释：设置 `.rk-back svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-back svg { width: 16px; height: 16px; flex-shrink: 0; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-eyebrow` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-eyebrow {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-block;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 10px; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.45); margin-bottom: 0.5rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-title` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-title {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700; color: var(--color-brand-deep); line-height: 1.1; margin-bottom: 0.75rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-title span` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-title span {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent));
+    /* 逐行注释：设置 `-webkit-background-clip` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-sub { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-sub { font-size: 14px; color: rgba(var(--color-brand-deep-rgb),0.55); margin-bottom: 1.5rem; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-stats` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-stats {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-stat` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-stat {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column; align-items: center;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.625rem 1.125rem; min-width: 88px;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.72); backdrop-filter: blur(8px);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(255,255,255,0.82); border-radius: 1rem;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 4px 14px -6px rgba(var(--color-brand-deep-rgb),0.1);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-stat strong` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-stat strong {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif; font-size: 1.7rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep); line-height: 1; font-variant-numeric: tabular-nums;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-stat span` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-stat span {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 10.5px; font-weight: 600; color: rgba(var(--color-brand-deep-rgb),0.5); margin-top: 3px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Content wrapper ---- */
+/* 逐行注释：设置 `.rk-content { max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-content { max-width: 72rem; margin: 0 auto; padding: 0 1rem 3rem; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Podium ---- */
+/* 逐行注释：选择器 `.rk-podium` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-podium {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: grid; grid-template-columns: 1fr 1.15fr 1fr;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 1rem; align-items: end;
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 1.75rem; padding: 0.5rem 0 1rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-pod` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative; display: flex; flex-direction: column; align-items: center;
+    /* 逐行注释：设置 `text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-align: center; padding: 1.25rem 1rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.86); border: 1px solid rgba(255,255,255,0.82);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.5rem; box-shadow: 0 10px 28px -14px rgba(var(--color-brand-deep-rgb),0.18);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-pod:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-4px); box-shadow: 0 18px 36px -14px rgba(var(--color-brand-deep-rgb),0.28);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-pod--gold` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod--gold {
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 1.75rem 1.25rem 1.5rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(160deg, rgba(255,255,255,0.96), rgba(254,243,199,0.45));
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(251,191,36,0.25);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 14px 36px -14px rgba(245,158,11,0.28);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-pod--silver` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod--silver {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(160deg, rgba(255,255,255,0.94), rgba(241,245,249,0.5));
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-pod--bronze` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod--bronze {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(160deg, rgba(255,255,255,0.94), rgba(255,237,213,0.4));
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-pod-badge` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod-badge {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; top: -14px;
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 32px; height: 32px; border-radius: 50%;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 13px; font-weight: 900; color: #fff; z-index: 2;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-pod--gold  .rk-pod-badge { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod--gold  .rk-pod-badge { width: 38px; height: 38px; background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 6px 16px -4px rgba(245,158,11,0.55); }
+/* 逐行注释：设置 `.rk-pod--silver .rk-pod-badge { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod--silver .rk-pod-badge { background: linear-gradient(135deg, #94a3b8, #64748b); box-shadow: 0 6px 14px -4px rgba(100,116,139,0.45); }
+/* 逐行注释：设置 `.rk-pod--bronze .rk-pod-badge { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod--bronze .rk-pod-badge { background: linear-gradient(135deg, #d97706, #b45309); box-shadow: 0 6px 14px -4px rgba(180,83,9,0.45); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-pod-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod-cover {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%; max-width: 110px; aspect-ratio: 3/4;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.875rem; overflow: hidden; margin-bottom: 0.875rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 8px 20px -10px rgba(var(--color-brand-deep-rgb),0.28);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-pod--gold .rk-pod-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod--gold .rk-pod-cover {
+    /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     max-width: 130px; box-shadow: 0 12px 28px -10px rgba(245,158,11,0.32);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-pod-cover img` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod-cover img {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-pod` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod:hover .rk-pod-cover img { transform: scale(1.05); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-pod-name` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-pod-name {
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700; font-size: 0.9rem; color: var(--color-brand-deep); text-decoration: none;
+    /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     line-height: 1.3; margin-bottom: 3px;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: color 0.15s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-pod-name` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod-name:hover { color: var(--color-brand-primary-hover); }
+/* 逐行注释：设置 `.rk-pod--gold .rk-pod-name { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod--gold .rk-pod-name { font-size: 1.05rem; font-family: 'Cormorant', serif; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：设置 `.rk-pod-author { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod-author { font-size: 11.5px; color: rgba(var(--color-brand-deep-rgb),0.5); margin-bottom: 0.625rem; }
+/* 逐行注释：设置 `.rk-pod-count  { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod-count  { font-size: 11.5px; font-weight: 700; color: var(--color-brand-primary-hover); margin-top: 0.375rem; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Heat bar (shared) ---- */
+/* 逐行注释：选择器 `.rk-bar` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-bar {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%; height: 6px; border-radius: 99px;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(var(--color-brand-primary-rgb),0.1); overflow: hidden;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-bar span` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-bar span {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: block; height: 100%; border-radius: inherit;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent));
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: width 0.4s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-bar.sm { height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-bar.sm { height: 5px; max-width: 180px; margin-top: 5px; }
+/* 逐行注释：设置 `.rk-bar.xs { height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-bar.xs { height: 4px; margin-top: 4px; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Toolbar ---- */
+/* 逐行注释：选择器 `.rk-toolbar` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-toolbar {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column; gap: 0.625rem;
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 1.5rem; padding: 0.75rem 1rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.78); backdrop-filter: blur(10px);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(255,255,255,0.82); border-radius: 1.25rem;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 4px 14px -6px rgba(var(--color-brand-deep-rgb),0.08);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-search-wrap` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-search-wrap {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; gap: 8px;
+    /* 逐行注释：设置 `flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex: 1; min-width: 180px;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.45rem 0.75rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(253,242,248,0.45);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(var(--color-brand-primary-rgb),0.1); border-radius: 0.75rem;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: border-color 0.2s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-search-wrap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-search-wrap:focus-within { border-color: rgba(var(--color-brand-primary-rgb),0.35); }
+/* 逐行注释：设置 `.rk-search-wrap svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-search-wrap svg { width: 18px; height: 18px; color: rgba(var(--color-brand-deep-rgb),0.35); flex-shrink: 0; }
+/* 逐行注释：选择器 `.rk-search-wrap input` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-search-wrap input {
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: none; outline: none; background: transparent;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 13px; color: var(--color-brand-deep); width: 100%;
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Montserrat', sans-serif;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-search-wrap input` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-search-wrap input::placeholder { color: rgba(var(--color-brand-deep-rgb),0.3); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-cats` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-cats {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-wrap: nowrap; gap: 6px;
+    /* 逐行注释：设置 `overflow-x` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow-x: auto; -webkit-overflow-scrolling: touch;
+    /* 逐行注释：设置 `scrollbar-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     scrollbar-width: none; padding-bottom: 2px;
+    /* 逐行注释：设置 `cursor` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     cursor: grab;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-cats` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-cats:active { cursor: grabbing; }
+/* 逐行注释：设置 `.rk-cats` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-cats::-webkit-scrollbar { display: none; }
+/* 逐行注释：选择器 `.rk-cat` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-cat {
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 5px 14px; border: 1px solid rgba(var(--color-brand-primary-rgb),0.12); border-radius: 999px;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: transparent; font-size: 12px; font-weight: 600;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.6); cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Montserrat', sans-serif; transition: all 0.2s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-cat` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-cat:hover { background: rgba(253,242,248,0.65); border-color: rgba(var(--color-brand-primary-rgb),0.25); }
+/* 逐行注释：选择器 `.rk-cat.is-active` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-cat.is-active {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent));
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #fff; border-color: transparent;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 4px 12px -4px rgba(var(--color-brand-primary-rgb),0.4);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Body layout ---- */
+/* 逐行注释：设置 `.rk-body { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-body { display: grid; grid-template-columns: minmax(0,1fr); gap: 1.5rem; }
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (min-width: 1024px) { .rk-body { grid-template-columns: minmax(0,1fr) 280px; } }
+/* 逐行注释：设置 `.rk-main { min-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-main { min-width: 0; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- List ---- */
+/* 逐行注释：选择器 `.rk-list` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-list {
+    /* 逐行注释：设置 `list-style` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     list-style: none; padding: 0; margin: 0;
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.85);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: none; border-radius: 1.5rem; overflow: hidden;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow:
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         0 8px 28px -10px rgba(var(--color-brand-deep-rgb),0.13),
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         inset 0 0 0 1.5px rgba(var(--color-brand-primary-rgb),0.15),
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         inset 0 1px 0 rgba(255,255,255,0.8);
+    /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: calc(70vh + 5px); overflow-y: auto;
+    /* 逐行注释：设置 `scrollbar-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     scrollbar-width: thin; scrollbar-color: rgba(var(--color-brand-primary-rgb),0.25) transparent;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-list` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-list::-webkit-scrollbar { width: 6px; }
+/* 逐行注释：设置 `.rk-list` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-list::-webkit-scrollbar-track { background: transparent; }
+/* 逐行注释：选择器 `.rk-list::-webkit-scrollbar-thumb` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-list::-webkit-scrollbar-thumb {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(var(--color-brand-primary-rgb),0.25); border-radius: 99px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-list` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-list::-webkit-scrollbar-thumb:hover { background: rgba(var(--color-brand-primary-rgb),0.4); }
+/* 逐行注释：选择器 `.rk-row` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-row {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: grid; grid-template-columns: 40px 52px minmax(0,1fr) auto;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 0.75rem; align-items: center;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.75rem 1rem;
+    /* 逐行注释：设置 `border-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-bottom: 1px solid rgba(var(--color-brand-primary-rgb),0.08);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: background 0.15s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-row` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-row:last-child { border-bottom: none; }
+/* 逐行注释：设置 `.rk-row` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-row:hover { background: rgba(253,242,248,0.45); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-row-rank` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-row-rank {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 32px; height: 32px; border-radius: 0.625rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 900; font-size: 12px;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.55); background: rgba(var(--color-brand-deep-rgb),0.05);
+    /* 逐行注释：设置 `font-variant-numeric` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-variant-numeric: tabular-nums;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-row-rank.top` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-row-rank.top {
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #fff; background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent));
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 5px 12px -5px rgba(var(--color-brand-primary-rgb),0.45);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-row-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-row-cover {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 52px; aspect-ratio: 3/4; border-radius: 0.5rem; overflow: hidden;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 4px 10px -5px rgba(var(--color-brand-deep-rgb),0.18);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-row-cover img { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-row-cover img { width: 100%; height: 100%; object-fit: cover; }
+/* 逐行注释：设置 `.rk-row-info { min-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-row-info { min-width: 0; }
+/* 逐行注释：选择器 `.rk-row-title` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-row-title {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: block; font-weight: 700; font-size: 13.5px; color: var(--color-brand-deep);
+    /* 逐行注释：设置 `text-decoration` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-decoration: none; overflow-wrap: anywhere; transition: color 0.15s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-row-title` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-row-title:hover { color: var(--color-brand-primary-hover); }
+/* 逐行注释：选择器 `.rk-row-info p` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-row-info p {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 11.5px; color: rgba(var(--color-brand-deep-rgb),0.5); margin-top: 2px; overflow-wrap: anywhere;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-row-num { text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-row-num { text-align: right; min-width: 4rem; }
+/* 逐行注释：选择器 `.rk-row-num strong` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-row-num strong {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: block; font-family: 'Cormorant', serif; font-size: 1.35rem;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep); line-height: 1; font-variant-numeric: tabular-nums;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-row-num span { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-row-num span { font-size: 11px; font-weight: 600; color: rgba(var(--color-brand-deep-rgb),0.45); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：设置 `.rk-no-match { text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-no-match { text-align: center; padding: 3rem 1rem; color: rgba(var(--color-brand-deep-rgb),0.45); font-size: 14px; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Sidebar ---- */
+/* 逐行注释：设置 `.rk-side { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-side { display: flex; flex-direction: column; gap: 1rem; }
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (min-width: 1024px) {
+    /* 逐行注释：选择器 `.rk-side` 的样式块开始，下面定义对应元素的视觉表现。 */
     .rk-side {
+        /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         position: sticky; top: 2rem;
+        /* 逐行注释：设置 `max-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-height: calc(100vh - 4rem); overflow-y: auto;
+        /* 逐行注释：设置 `scrollbar-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         scrollbar-width: thin; scrollbar-color: rgba(var(--color-brand-primary-rgb),0.2) transparent;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：设置 `.rk-side` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-side::-webkit-scrollbar { width: 5px; }
+    /* 逐行注释：设置 `.rk-side` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-side::-webkit-scrollbar-thumb { background: rgba(var(--color-brand-primary-rgb),0.2); border-radius: 99px; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.rk-card` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-card {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.84); border: 1px solid rgba(255,255,255,0.86);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.25rem; padding: 1rem 1.125rem;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 5px 18px -8px rgba(var(--color-brand-deep-rgb),0.1);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-card h3` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-card h3 {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif; font-size: 1rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep); margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+    /* 逐行注释：设置 `border-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-bottom: 1px solid rgba(var(--color-brand-primary-rgb),0.08);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* Overview ring */
+/* 逐行注释：设置 `.rk-overview { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-overview { display: grid; grid-template-columns: 100px 1fr; gap: 0.875rem; align-items: center; }
+/* 逐行注释：设置 `.rk-ring { position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ring { position: relative; width: 100px; height: 100px; }
+/* 逐行注释：设置 `.rk-ring svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ring svg { width: 100%; height: 100%; }
+/* 逐行注释：设置 `.rk-ring-bg { fill` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ring-bg { fill: none; stroke: rgba(var(--color-brand-primary-rgb),0.08); stroke-width: 7; }
+/* 逐行注释：设置 `.rk-ring-fg { fill` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ring-fg { fill: none; stroke: url(#rkGrad); stroke-width: 7; stroke-linecap: round; }
+/* 逐行注释：选择器 `.rk-ring-center` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-ring-center {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; inset: 0;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column; align-items: center; justify-content: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-ring-center b` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-ring-center b {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif; font-size: 1.4rem; font-weight: 700; color: var(--color-brand-deep); line-height: 1;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-ring-center span { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ring-center span { font-size: 10px; font-weight: 600; color: rgba(var(--color-brand-deep-rgb),0.45); margin-top: 2px; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：设置 `.rk-ov-list { list-style` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ov-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+/* 逐行注释：设置 `.rk-ov-list li { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ov-list li { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: rgba(var(--color-brand-deep-rgb),0.55); }
+/* 逐行注释：设置 `.rk-ov-list b { margin-left` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ov-list b { margin-left: auto; font-family: 'Cormorant', serif; font-size: 1.05rem; color: var(--color-brand-deep); }
+/* 逐行注释：设置 `.rk-ov-list i { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-ov-list i { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+/* 逐行注释：设置 `.dot-pk { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .dot-pk { background: var(--color-brand-primary); }
+/* 逐行注释：设置 `.dot-am { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .dot-am { background: #f59e0b; }
+/* 逐行注释：设置 `.dot-em { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .dot-em { background: #10b981; }
+/* 逐行注释：设置 `.dot-pu { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .dot-pu { background: var(--color-brand-accent); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* Mini top 3 */
+/* 逐行注释：设置 `.rk-mini3 { list-style` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-mini3 { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+/* 逐行注释：设置 `.rk-mini3 > li { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-mini3 > li { display: flex; align-items: flex-start; gap: 10px; }
+/* 逐行注释：选择器 `.rk-mini3-rank` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-mini3-rank {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif; font-size: 1.4rem; font-weight: 700; line-height: 1; min-width: 26px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.r1 .rk-mini3-rank { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .r1 .rk-mini3-rank { color: rgba(var(--color-brand-primary-rgb),0.65); }
+/* 逐行注释：设置 `.r2 .rk-mini3-rank { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .r2 .rk-mini3-rank { color: rgba(168,85,247,0.45); }
+/* 逐行注释：设置 `.r3 .rk-mini3-rank { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .r3 .rk-mini3-rank { color: rgba(var(--color-brand-deep-rgb),0.2); }
+/* 逐行注释：设置 `.rk-mini3-body { flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-mini3-body { flex: 1; min-width: 0; }
+/* 逐行注释：选择器 `.rk-mini3-head` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-mini3-head {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; justify-content: space-between; gap: 6px; font-size: 12px; line-height: 1.4;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-mini3-head span { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-mini3-head span { color: var(--color-brand-deep); font-weight: 600; overflow-wrap: anywhere; }
+/* 逐行注释：设置 `.rk-mini3-head b { flex-shrink` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-mini3-head b { flex-shrink: 0; color: var(--color-brand-primary-hover); font-weight: 800; font-size: 11px; }
+/* 逐行注释：设置 `.r1 .rk-bar.xs span { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .r1 .rk-bar.xs span { background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent)); }
+/* 逐行注释：设置 `.r2 .rk-bar.xs span { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .r2 .rk-bar.xs span { background: linear-gradient(90deg, #f472b6, #c084fc); }
+/* 逐行注释：设置 `.r3 .rk-bar.xs span { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .r3 .rk-bar.xs span { background: linear-gradient(90deg, #fbcfe8, #e9d5ff); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* Tips */
+/* 逐行注释：设置 `.rk-tips { list-style` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-tips { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+/* 逐行注释：设置 `.rk-tips li { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-tips li { display: flex; gap: 8px; align-items: flex-start; }
+/* 逐行注释：设置 `.rk-tips b { font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-tips b { font-family: 'Cormorant', serif; font-size: 0.95rem; color: rgba(var(--color-brand-deep-rgb),0.2); min-width: 20px; }
+/* 逐行注释：设置 `.rk-tips p { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-tips p { font-size: 12px; line-height: 1.6; color: rgba(var(--color-brand-deep-rgb),0.55); margin: 0; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Empty state ---- */
+/* 逐行注释：选择器 `.rk-empty` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-empty {
+    /* 逐行注释：设置 `text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-align: center; padding: 5rem 1rem 4rem; max-width: 22rem; margin: 0 auto;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-empty svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-empty svg { width: 48px; height: 48px; color: rgba(var(--color-brand-deep-rgb),0.2); margin: 0 auto 1.25rem; display: block; }
+/* 逐行注释：选择器 `.rk-empty h3` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-empty h3 {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif; font-size: 1.2rem; color: var(--color-brand-deep); margin-bottom: 0.5rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-empty p { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-empty p { font-size: 13px; color: rgba(var(--color-brand-deep-rgb),0.45); margin-bottom: 1.5rem; }
+/* 逐行注释：选择器 `.rk-empty-btn` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-empty-btn {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; gap: 6px;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 10px 24px; border-radius: 999px;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent)); color: #fff;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 13px; font-weight: 700; text-decoration: none;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 8px 20px -8px rgba(var(--color-brand-primary-rgb),0.45);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.2s, box-shadow 0.2s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.rk-empty-btn:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-empty-btn:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-2px); box-shadow: 0 12px 26px -8px rgba(var(--color-brand-primary-rgb),0.55);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Focus styles ---- */
+/* 逐行注释：设置 `.rk-pod-name` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-pod-name:focus-visible,
+/* 逐行注释：选择器 `.rk-row-title:focus-visible` 的样式块开始，下面定义对应元素的视觉表现。 */
 .rk-row-title:focus-visible {
+    /* 逐行注释：设置 `outline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     outline: 3px solid rgba(var(--color-brand-deep-rgb),0.65); outline-offset: 2px; border-radius: 4px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.rk-cat` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-cat:focus-visible { outline: 3px solid rgba(var(--color-brand-deep-rgb),0.65); outline-offset: 2px; }
+/* 逐行注释：设置 `.rk-back` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .rk-back:focus-visible { outline: 3px solid rgba(var(--color-brand-deep-rgb),0.65); outline-offset: 2px; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ---- Responsive ---- */
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (max-width: 767px) {
+    /* 逐行注释：设置 `.rk-hero { padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-hero { padding: 2rem 1rem 1.5rem; }
+    /* 逐行注释：设置 `.rk-title { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-title { font-size: clamp(2rem, 1rem + 4vw, 3rem); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：设置 `.rk-podium { grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-podium { grid-template-columns: 1fr 1fr; align-items: stretch; }
+    /* 逐行注释：设置 `.rk-pod--gold { grid-column` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-pod--gold { grid-column: 1 / -1; order: -1; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：设置 `.rk-back span { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-back span { display: none; }
+    /* 逐行注释：设置 `.rk-back { padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-back { padding: 10px; border-radius: 0.875rem; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：设置 `.rk-row { grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-row { grid-template-columns: 32px 44px minmax(0,1fr); gap: 0.6rem; }
+    /* 逐行注释：设置 `.rk-row-rank { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-row-rank { width: 28px; height: 28px; font-size: 11px; }
+    /* 逐行注释：设置 `.rk-row-cover { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-row-cover { width: 44px; }
+    /* 逐行注释：选择器 `.rk-row-num` 的样式块开始，下面定义对应元素的视觉表现。 */
     .rk-row-num {
+        /* 逐行注释：设置 `grid-column` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-column: 3; justify-self: start; display: flex;
+        /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         align-items: baseline; gap: 4px; text-align: left; min-width: 0;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：设置 `.rk-row-num strong { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-row-num strong { font-size: 1.1rem; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (max-width: 480px) {
+    /* 逐行注释：设置 `.rk-stats { gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-stats { gap: 0.5rem; }
+    /* 逐行注释：设置 `.rk-stat { padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-stat { padding: 0.5rem 0.75rem; min-width: 72px; }
+    /* 逐行注释：设置 `.rk-stat strong { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-stat strong { font-size: 1.3rem; }
+    /* 逐行注释：设置 `.rk-podium { grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .rk-podium { grid-template-columns: 1fr; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (prefers-reduced-motion: reduce) {
+    /* 逐行注释：选择器 `.rk *, .rk *::before, .rk *::after` 的样式块开始，下面定义对应元素的视觉表现。 */
     .rk *, .rk *::before, .rk *::after {
+        /* 逐行注释：设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         animation: none !important; transition: none !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }

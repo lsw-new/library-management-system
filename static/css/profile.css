@@ -1,612 +1,1224 @@
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ================================================================
+   /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
    Profile Page — 景艺大图书馆 个人中心
+   /* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
    ================================================================ */
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Top Bar ====== */
+/* 逐行注释：选择器 `.pf-topbar` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-topbar {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: space-between;
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 1.25rem; padding: 0.25rem 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-back` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-back {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 44px; height: 44px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.125rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.75); backdrop-filter: blur(8px);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(249,168,212,0.25);
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep); text-decoration: none;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-back:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-back:hover {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(var(--color-brand-primary-rgb),0.08); border-color: rgba(var(--color-brand-primary-rgb),0.3);
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateX(-3px);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 4px 12px -4px rgba(var(--color-brand-primary-rgb),0.15);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-back svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-back svg { width: 20px; height: 20px; }
+/* 逐行注释：选择器 `.pf-topbar-title` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-topbar-title {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; left: 50%; transform: translateX(-50%);
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 1rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.4); letter-spacing: 0.05em;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-logout` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-logout {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; gap: 0.375rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.5rem 1rem; border-radius: 1rem;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.7rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.4);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.55); backdrop-filter: blur(8px);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(249,168,212,0.2);
+    /* 逐行注释：设置 `text-decoration` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-decoration: none; transition: all 0.25s; letter-spacing: 0.03em;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-logout:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-logout:hover {
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #e11d48; background: rgba(254,226,226,0.45);
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(254,226,226,0.6);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Hero ====== */
+/* 逐行注释：选择器 `.pf-hero` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-hero {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative; border-radius: 2.5rem; overflow: hidden;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 3rem 2.5rem 2rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 30%, #f5d0fe 70%, #fae8ff 100%);
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 1.5rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-hero-bg` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-hero-bg {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; inset: 0;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(160deg, rgba(var(--color-brand-primary-rgb),0.06), rgba(168,85,247,0.08), rgba(var(--color-brand-primary-rgb),0.04));
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-hero-blob` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-hero-blob {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; border-radius: 50%;
+    /* 逐行注释：设置 `filter` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     filter: blur(70px); opacity: 0.22; pointer-events: none;
+    /* 逐行注释：设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: pfBlobFloat 8s ease-in-out infinite alternate;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-hero-blob-a { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-hero-blob-a { width: 260px; height: 260px; top: -70px; right: -50px; background: radial-gradient(circle,var(--color-brand-primary),#f472b6); }
+/* 逐行注释：设置 `.pf-hero-blob-b { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-hero-blob-b { width: 200px; height: 200px; bottom: -50px; left: -40px; background: radial-gradient(circle,var(--color-brand-accent),#c084fc); animation-delay: -3s; }
+/* 逐行注释：设置 `.pf-hero-blob-c { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-hero-blob-c { width: 140px; height: 140px; top: 35%; left: 55%; background: radial-gradient(circle,#f9a8d4,#fbcfe8); animation-delay: -5s; }
+/* 逐行注释：CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes pfBlobFloat {
+    /* 逐行注释：设置 `0%   { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%   { transform: translate(0, 0) scale(1); }
+    /* 逐行注释：设置 `100% { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     100% { transform: translate(12px, -18px) scale(1.06); }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.pf-hero-content` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-hero-content {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative; z-index: 1;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column; align-items: center;
+    /* 逐行注释：设置 `text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-align: center; margin-bottom: 2rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Avatar ====== */
+/* 逐行注释：选择器 `.pf-avatar` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-avatar {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative; width: 120px; height: 120px; flex-shrink: 0;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 2.5rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent));
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow:
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         0 0 0 4px rgba(255,255,255,0.9),
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         0 0 0 8px rgba(var(--color-brand-primary-rgb),0.18),
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         0 20px 44px -12px rgba(var(--color-brand-primary-rgb),0.3);
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden; margin-bottom: 1.25rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-avatar-img { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-avatar-img { width: 100%; height: 100%; object-fit: cover; }
+/* 逐行注释：选择器 `.pf-avatar-letter` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-avatar-letter {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 2.75rem; font-weight: 700; color: #fff;
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `text-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-avatar-overlay` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-avatar-overlay {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; inset: 0;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(0,0,0,0.45); opacity: 0; cursor: pointer;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: opacity 0.25s; border-radius: 2.5rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-avatar-overlay svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-avatar-overlay svg { width: 30px; height: 30px; color: #fff; }
+/* 逐行注释：设置 `.pf-avatar` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-avatar:hover .pf-avatar-overlay { opacity: 1; }
+/* 逐行注释：设置 `.pf-avatar.is-uploading .pf-avatar-overlay { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-avatar.is-uploading .pf-avatar-overlay { opacity: 1; background: rgba(0,0,0,0.55); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Hero Meta ====== */
+/* 逐行注释：选择器 `.pf-hero-eyebrow` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-hero-eyebrow {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; gap: 6px; margin-bottom: 0.5rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-dot { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--color-brand-primary); }
+/* 逐行注释：设置 `.pf-dot-alt { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-dot-alt { background: var(--color-brand-accent); }
+/* 逐行注释：选择器 `.pf-hero-eyebrow-text` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-hero-eyebrow-text {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.18em; color: rgba(var(--color-brand-deep-rgb),0.4);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-hero-name` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-hero-name {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem);
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700; color: var(--color-brand-deep); line-height: 1.15;
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 0.375rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-hero-sub { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-hero-sub { font-size: 0.85rem; color: rgba(var(--color-brand-deep-rgb),0.5); font-weight: 500; }
+/* 逐行注释：设置 `.pf-hero-sub-sep { margin` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-hero-sub-sep { margin: 0 0.25rem; opacity: 0.4; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Stats ====== */
+/* 逐行注释：选择器 `.pf-stats` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-stats {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative; z-index: 1;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.875rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-stat` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-stat {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; gap: 0.875rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 1rem 1.25rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.8); backdrop-filter: blur(12px);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.5rem;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(249,168,212,0.15);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-stat:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-stat:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-3px);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 10px 28px -10px rgba(var(--color-brand-primary-rgb),0.2);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-stat-icon` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-stat-icon {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 42px; height: 42px; flex-shrink: 0; border-radius: 0.875rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-stat-icon svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-stat-icon svg { width: 20px; height: 20px; }
+/* 逐行注释：设置 `.pf-stat.tone-pink .pf-stat-icon   { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-stat.tone-pink .pf-stat-icon   { background: rgba(var(--color-brand-primary-rgb),0.1); color: var(--color-brand-primary); }
+/* 逐行注释：设置 `.pf-stat.tone-amber .pf-stat-icon  { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-stat.tone-amber .pf-stat-icon  { background: rgba(245,158,11,0.1); color: #f59e0b; }
+/* 逐行注释：设置 `.pf-stat.tone-emerald .pf-stat-icon{ background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-stat.tone-emerald .pf-stat-icon{ background: rgba(16,185,129,0.1); color: #10b981; }
+/* 逐行注释：选择器 `.pf-stat-label` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-stat-label {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.08em; color: rgba(var(--color-brand-deep-rgb),0.35);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-stat-value` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-stat-value {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 1.375rem; font-weight: 700; color: var(--color-brand-deep);
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif; line-height: 1;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-stat-unit { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-stat-unit { font-size: 0.8rem; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Tabs ====== */
+/* 逐行注释：选择器 `.pf-tabs` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-tabs {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.375rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.5); backdrop-filter: blur(12px);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.25rem;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(249,168,212,0.2);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-tab` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-tab {
+    /* 逐行注释：设置 `flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex: 1;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.875rem 1.25rem;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1rem; border: none;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.85rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.4);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: transparent; cursor: pointer;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-tab svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-tab svg { width: 16px; height: 16px; }
+/* 逐行注释：设置 `.pf-tab` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-tab:hover { color: rgba(var(--color-brand-deep-rgb),0.7); background: rgba(255,255,255,0.5); }
+/* 逐行注释：选择器 `.pf-tab.is-active` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-tab.is-active {
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #fff;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-hover));
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 6px 20px -6px rgba(var(--color-brand-primary-rgb),0.35);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-tab.is-active.tone-purple` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-tab.is-active.tone-purple {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 6px 20px -6px rgba(139,92,246,0.35);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Panel ====== */
+/* 逐行注释：选择器 `.pf-panel` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-panel {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.7); backdrop-filter: blur(16px);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(249,168,212,0.25);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 2rem; padding: 2.25rem;
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 1.5rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-panel-head` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-panel-head {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; gap: 0.75rem;
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 1.75rem; padding-bottom: 1rem;
+    /* 逐行注释：设置 `border-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-bottom: 1px solid rgba(249,168,212,0.15);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-panel-icon` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-panel-icon {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 38px; height: 38px; border-radius: 0.875rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-panel-icon svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-panel-icon svg { width: 18px; height: 18px; }
+/* 逐行注释：设置 `.pf-panel-icon.tone-pink   { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-panel-icon.tone-pink   { background: rgba(var(--color-brand-primary-rgb),0.1); color: var(--color-brand-primary); }
+/* 逐行注释：设置 `.pf-panel-icon.tone-purple { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-panel-icon.tone-purple { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+/* 逐行注释：选择器 `.pf-panel-title` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-panel-title {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 1.25rem; font-weight: 700; color: var(--color-brand-deep);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-panel-badge` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-panel-badge {
+    /* 逐行注释：设置 `margin-left` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-left: auto;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.15em; color: rgba(var(--color-brand-deep-rgb),0.2);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Form ====== */
+/* 逐行注释：设置 `.pf-form { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-form { display: flex; flex-direction: column; gap: 1.5rem; }
+/* 逐行注释：选择器 `.pf-form-grid` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-form-grid {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-field { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-field { display: flex; flex-direction: column; gap: 0.375rem; }
+/* 逐行注释：选择器 `.pf-label` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-label {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.75rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.55); letter-spacing: 0.03em;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-label-hint { font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-label-hint { font-weight: 500; color: rgba(var(--color-brand-deep-rgb),0.28); }
+/* 逐行注释：选择器 `.pf-input` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-input {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%; padding: 0.8rem 1rem;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1.5px solid rgba(249,168,212,0.25);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1rem;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.875rem; font-weight: 500; color: var(--color-brand-deep);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.6);
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    /* 逐行注释：设置 `outline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     outline: none;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-input` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-input:hover { border-color: rgba(var(--color-brand-primary-rgb),0.35); }
+/* 逐行注释：选择器 `.pf-input:focus` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-input:focus {
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: var(--color-brand-primary);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 0 0 3px rgba(var(--color-brand-primary-rgb),0.1);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.85);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-static` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-static {
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.8rem 1rem;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1.5px dashed rgba(249,168,212,0.25);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1rem;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.875rem; font-weight: 500; color: rgba(var(--color-brand-deep-rgb),0.45);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(249,168,212,0.04);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-hint { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-hint { font-size: 0.7rem; color: rgba(var(--color-brand-deep-rgb),0.3); font-weight: 500; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：设置 `.pf-input-wrap { position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-input-wrap { position: relative; display: flex; align-items: center; }
+/* 逐行注释：设置 `.pf-input-wrap .pf-input { padding-right` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-input-wrap .pf-input { padding-right: 2.75rem; }
+/* 逐行注释：设置 `.pf-input-wrap.has-code-btn .pf-input { padding-right` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-input-wrap.has-code-btn .pf-input { padding-right: 7.5rem; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.pf-toggle-pw` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-toggle-pw {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; right: 0.75rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 28px; height: 28px; border-radius: 0.5rem;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.3); cursor: pointer;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: color 0.2s, background 0.2s;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: none; border: none; padding: 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-toggle-pw` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-toggle-pw:hover { color: var(--color-brand-primary); background: rgba(var(--color-brand-primary-rgb),0.06); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.pf-send-code` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-send-code {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; right: 0.5rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.45rem 0.85rem; border-radius: 0.75rem; border: none;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.75rem; font-weight: 700; color: #fff;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-hover));
+    /* 逐行注释：设置 `cursor` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+    /* 逐行注释：设置 `white-space` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     white-space: nowrap;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-send-code` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-send-code:hover { opacity: 0.85; transform: translateY(-1px); }
+/* 逐行注释：设置 `.pf-send-code` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-send-code:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Buttons ====== */
+/* 逐行注释：选择器 `.pf-btn-primary, .pf-btn-accent` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-btn-primary, .pf-btn-accent {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.875rem 2rem; border-radius: 1.25rem; border: none;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.9rem; font-weight: 700; color: #fff;
+    /* 逐行注释：设置 `cursor` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    /* 逐行注释：设置 `margin-top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-top: 0.25rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-btn-primary` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-btn-primary {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-hover));
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 8px 24px -8px rgba(var(--color-brand-primary-rgb),0.4);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-btn-primary:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-btn-primary:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-2px);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 12px 32px -10px rgba(var(--color-brand-primary-rgb),0.5);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-btn-accent` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-btn-accent {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 8px 24px -8px rgba(139,92,246,0.4);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-btn-accent:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-btn-accent:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-2px);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 12px 32px -10px rgba(139,92,246,0.5);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-btn-primary:disabled, .pf-btn-accent:disabled` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-btn-primary:disabled, .pf-btn-accent:disabled {
+    /* 逐行注释：设置 `opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     opacity: 0.6; cursor: not-allowed; transform: none;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Shortcuts ====== */
+/* 逐行注释：设置 `.pf-shortcuts { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcuts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+/* 逐行注释：选择器 `.pf-shortcut` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-shortcut {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; gap: 1rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 1.25rem 1.5rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255,255,255,0.7); backdrop-filter: blur(12px);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(249,168,212,0.2);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.5rem; text-decoration: none;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-shortcut:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-shortcut:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-2px);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 12px 32px -10px rgba(var(--color-brand-primary-rgb),0.15);
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(var(--color-brand-primary-rgb),0.3);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-shortcut-icon` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-shortcut-icon {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 44px; height: 44px; flex-shrink: 0; border-radius: 1rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-shortcut-icon svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcut-icon svg { width: 22px; height: 22px; }
+/* 逐行注释：设置 `.pf-shortcut-icon.tone-pink   { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcut-icon.tone-pink   { background: rgba(var(--color-brand-primary-rgb),0.1); color: var(--color-brand-primary); }
+/* 逐行注释：设置 `.pf-shortcut-icon.tone-purple { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcut-icon.tone-purple { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+/* 逐行注释：设置 `.pf-shortcut-meta { flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcut-meta { flex: 1; min-width: 0; }
+/* 逐行注释：设置 `.pf-shortcut-meta h3 { font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcut-meta h3 { font-family: 'Cormorant', serif; font-size: 1rem; font-weight: 700; color: var(--color-brand-deep); }
+/* 逐行注释：设置 `.pf-shortcut-meta p  { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcut-meta p  { font-size: 0.75rem; color: rgba(var(--color-brand-deep-rgb),0.4); font-weight: 500; }
+/* 逐行注释：选择器 `.pf-shortcut-arrow` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-shortcut-arrow {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 18px; height: 18px; flex-shrink: 0;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb),0.2); transition: color 0.2s, transform 0.2s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-shortcut` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcut:hover .pf-shortcut-arrow { color: var(--color-brand-primary); transform: translateX(3px); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Crop Modal ====== */
+/* 逐行注释：选择器 `.crop-modal` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-modal {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: fixed; inset: 0; z-index: 10000;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: none; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(15,23,42,0.6); backdrop-filter: blur(8px);
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 1rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.crop-modal.is-open { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-modal.is-open { display: flex; }
+/* 逐行注释：选择器 `.crop-dialog` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-dialog {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff; border-radius: 2rem;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 32px 80px -20px rgba(0,0,0,0.4);
+    /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     max-width: 400px; width: 100%; padding: 1.5rem;
+    /* 逐行注释：设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: cropPopIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes cropPopIn {
+    /* 逐行注释：设置 `0%   { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%   { opacity: 0; transform: scale(0.9) translateY(16px); }
+    /* 逐行注释：设置 `100% { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     100% { opacity: 1; transform: scale(1) translateY(0); }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.crop-header { text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-header { text-align: center; margin-bottom: 1rem; }
+/* 逐行注释：设置 `.crop-header h3 { font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-header h3 { font-family: 'Cormorant', serif; font-size: 1.25rem; font-weight: 700; color: var(--color-brand-deep); }
+/* 逐行注释：设置 `.crop-header p  { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-header p  { font-size: 0.75rem; color: rgba(var(--color-brand-deep-rgb),0.45); margin-top: 0.25rem; }
+/* 逐行注释：选择器 `.crop-viewport` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-viewport {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative; width: 100%; aspect-ratio: 1;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.25rem; overflow: hidden; background: #1e1e2e;
+    /* 逐行注释：设置 `touch-action` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.crop-viewport` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-viewport:active { cursor: grabbing; }
+/* 逐行注释：设置 `.crop-viewport canvas { position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-viewport canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+/* 逐行注释：选择器 `.crop-ring` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-ring {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; border-radius: 50%;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 0 0 9999px rgba(0,0,0,0.55);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1.5px dashed rgba(255,255,255,0.3); pointer-events: none;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.crop-zoom` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-zoom {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; gap: 0.75rem;
+    /* 逐行注释：设置 `margin` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin: 1rem 0; padding: 0 0.25rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.crop-zoom-icon { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-zoom-icon { width: 18px; height: 18px; color: rgba(var(--color-brand-deep-rgb),0.4); flex-shrink: 0; }
+/* 逐行注释：选择器 `.crop-slider` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-slider {
+    /* 逐行注释：设置 `flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex: 1; height: 4px;
+    /* 逐行注释：设置 `-webkit-appearance` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     -webkit-appearance: none; appearance: none;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(249,168,212,0.3); border-radius: 2px; outline: none;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.crop-slider::-webkit-slider-thumb` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-slider::-webkit-slider-thumb {
+    /* 逐行注释：设置 `-webkit-appearance` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     -webkit-appearance: none; appearance: none;
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 18px; height: 18px; border-radius: 50%;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-hover));
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 2px 8px rgba(var(--color-brand-primary-rgb),0.4); cursor: pointer;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.crop-slider::-moz-range-thumb` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-slider::-moz-range-thumb {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 18px; height: 18px; border-radius: 50%; border: none;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-hover));
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 2px 8px rgba(var(--color-brand-primary-rgb),0.4); cursor: pointer;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.crop-actions { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-actions { display: flex; gap: 0.75rem; }
+/* 逐行注释：选择器 `.crop-btn-cancel, .crop-btn-confirm` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-btn-cancel, .crop-btn-confirm {
+    /* 逐行注释：设置 `flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex: 1; padding: 0.75rem; border-radius: 1rem; border: none;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.875rem; font-weight: 700; cursor: pointer;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.15s, box-shadow 0.15s;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.crop-btn-cancel { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-btn-cancel { background: rgba(249,168,212,0.12); color: rgba(var(--color-brand-deep-rgb),0.5); }
+/* 逐行注释：设置 `.crop-btn-cancel` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-btn-cancel:hover { background: rgba(249,168,212,0.2); }
+/* 逐行注释：选择器 `.crop-btn-confirm` 的样式块开始，下面定义对应元素的视觉表现。 */
 .crop-btn-confirm {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-hover)); color: #fff;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 6px 20px -6px rgba(var(--color-brand-primary-rgb),0.4);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.crop-btn-confirm` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 10px 28px -8px rgba(var(--color-brand-primary-rgb),0.5); }
+/* 逐行注释：设置 `.crop-btn-confirm` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .crop-btn-confirm:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Entrance Animations ====== */
+/* 逐行注释：CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes pfSlideUp {
+    /* 逐行注释：设置 `from { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     from { opacity: 0; transform: translateY(24px); }
+    /* 逐行注释：设置 `to   { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     to   { opacity: 1; transform: translateY(0); }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pf-topbar, .pf-hero, .pf-tabs, .pf-panel, .pf-shortcuts` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-topbar, .pf-hero, .pf-tabs, .pf-panel, .pf-shortcuts {
+    /* 逐行注释：设置 `opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     opacity: 0;
+    /* 逐行注释：设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: pfSlideUp 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-topbar    { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-topbar    { animation-delay: 0s; }
+/* 逐行注释：设置 `.pf-hero      { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-hero      { animation-delay: 0.07s; }
+/* 逐行注释：设置 `.pf-tabs      { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-tabs      { animation-delay: 0.14s; }
+/* 逐行注释：设置 `.pf-panel     { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-panel     { animation-delay: 0.21s; }
+/* 逐行注释：设置 `.pf-shortcuts { animation-delay` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-shortcuts { animation-delay: 0.28s; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.pf-stat` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pf-stat {
+    /* 逐行注释：设置 `opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     opacity: 0;
+    /* 逐行注释：设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: pfSlideUp 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pf-stat` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-stat:nth-child(1) { animation-delay: 0.15s; }
+/* 逐行注释：设置 `.pf-stat` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-stat:nth-child(2) { animation-delay: 0.22s; }
+/* 逐行注释：设置 `.pf-stat` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-stat:nth-child(3) { animation-delay: 0.29s; }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* Hover Micro‐interactions */
+/* 逐行注释：设置 `.pf-panel { transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-panel { transition: box-shadow 0.3s cubic-bezier(0.22,1,0.36,1); }
+/* 逐行注释：设置 `.pf-panel` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pf-panel:hover { box-shadow: 0 16px 48px -16px rgba(var(--color-brand-primary-rgb),0.1); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Utilities ====== */
+/* 逐行注释：选择器 `.sr-only` 的样式块开始，下面定义对应元素的视觉表现。 */
 .sr-only {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; width: 1px; height: 1px;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0; margin: -1px; overflow: hidden;
+    /* 逐行注释：设置 `clip` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     clip: rect(0,0,0,0); border: 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ====== Responsive ====== */
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (max-width: 768px) {
+    /* 逐行注释：设置 `.pf-hero { padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-hero { padding: 2rem 1.5rem 1.5rem; border-radius: 2rem; }
+    /* 逐行注释：设置 `.pf-avatar { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-avatar { width: 96px; height: 96px; border-radius: 2rem; }
+    /* 逐行注释：设置 `.pf-avatar-overlay { border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-avatar-overlay { border-radius: 2rem; }
+    /* 逐行注释：设置 `.pf-avatar-letter { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-avatar-letter { font-size: 2.25rem; }
+    /* 逐行注释：设置 `.pf-stats { gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-stats { gap: 0.5rem; }
+    /* 逐行注释：设置 `.pf-stat { padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-stat { padding: 0.75rem; gap: 0.5rem; }
+    /* 逐行注释：设置 `.pf-stat-icon { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-stat-icon { width: 34px; height: 34px; border-radius: 0.7rem; }
+    /* 逐行注释：设置 `.pf-stat-icon svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-stat-icon svg { width: 16px; height: 16px; }
+    /* 逐行注释：设置 `.pf-stat-label { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-stat-label { font-size: 0.6rem; }
+    /* 逐行注释：设置 `.pf-stat-value { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-stat-value { font-size: 1.15rem; }
+    /* 逐行注释：设置 `.pf-panel { padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-panel { padding: 1.5rem; border-radius: 1.5rem; }
+    /* 逐行注释：设置 `.pf-form-grid { grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-form-grid { grid-template-columns: 1fr; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (max-width: 640px) {
+    /* 逐行注释：设置 `.pf-shortcuts { grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .pf-shortcuts { grid-template-columns: 1fr; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (max-width: 520px) {
+    /* 逐行注释：选择器 `.pf-topbar` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-topbar {
+        /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-bottom: 0.9rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-logout` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-logout {
+        /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         width: 44px;
+        /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         height: 44px;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 0;
+        /* 逐行注释：设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         justify-content: center;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 0.95rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-logout svg` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-logout svg {
+        /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         width: 18px;
+        /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         height: 18px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-logout` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-logout {
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: 0;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-hero` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-hero {
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 1.75rem 1rem 1rem;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.35rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-stats` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-stats {
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: 1fr;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-stat` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-stat {
+        /* 逐行注释：设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         justify-content: flex-start;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-tabs` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-tabs {
+        /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         position: sticky;
+        /* 逐行注释：设置 `top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         top: 0.75rem;
+        /* 逐行注释：设置 `z-index` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         z-index: 30;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-tab` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-tab {
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 44px;
+        /* 逐行注释：设置 `padding-inline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding-inline: 0.75rem;
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: 0.8rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-panel` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-panel {
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 1.15rem;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.25rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-panel-head` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-panel-head {
+        /* 逐行注释：设置 `flex-wrap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         flex-wrap: wrap;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 0.55rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-panel-badge` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-panel-badge {
+        /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         width: 100%;
+        /* 逐行注释：设置 `margin-left` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-left: 0;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-input-wrap.has-code-btn` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-input-wrap.has-code-btn {
+        /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         display: grid;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 0.55rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-input-wrap.has-code-btn .pf-input` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-input-wrap.has-code-btn .pf-input {
+        /* 逐行注释：设置 `padding-right` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding-right: 1rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.pf-send-code` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-send-code {
+        /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         position: static;
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 42px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.crop-dialog` 的样式块开始，下面定义对应元素的视觉表现。 */
     .crop-dialog {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.35rem;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 1rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ==================== Desktop profile cohesion ==================== */
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (min-width: 1024px) {
+    /* 逐行注释：选择器 `.pf-page` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-page {
+        /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-width: 1120px;
+        /* 逐行注释：设置 `margin-inline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-inline: auto;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-topbar` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-topbar {
+        /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-bottom: 1rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-hero` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-hero {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.5rem;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 2rem 2.25rem 1.75rem;
+        /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-bottom: 1rem;
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 24px 64px -44px rgba(var(--color-brand-primary-rgb), 0.42);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-hero-content` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-hero-content {
+        /* 逐行注释：设置 `flex-direction` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         flex-direction: row;
+        /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         align-items: center;
+        /* 逐行注释：设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         justify-content: flex-start;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 1.35rem;
+        /* 逐行注释：设置 `text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         text-align: left;
+        /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-bottom: 1.5rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-avatar` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-avatar {
+        /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         width: 96px;
+        /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         height: 96px;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.5rem;
+        /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-bottom: 0;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-avatar-overlay` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-avatar-overlay {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.5rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-identity` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-identity {
+        /* 逐行注释：设置 `min-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-width: 0;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-hero-eyebrow` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-hero-eyebrow {
+        /* 逐行注释：设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         justify-content: flex-start;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-hero-name` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-hero-name {
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: clamp(2rem, 2.4vw, 2.8rem);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-stats` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-stats {
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 1rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .pf-stat,
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .pf-panel,
+    /* 逐行注释：选择器 `.pf-tabs` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-tabs {
+        /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-color: rgba(249, 168, 212, 0.24);
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 14px 36px -30px rgba(var(--color-brand-primary-rgb), 0.36);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-stat` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-stat {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1rem;
+        /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         background: rgba(255, 255, 255, 0.84);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-tabs` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-tabs {
+        /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-bottom: 1rem;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.1rem;
+        /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         background: rgba(255, 255, 255, 0.68);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-tab` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-tab {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 0.85rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-panel` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-panel {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.25rem;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 2rem;
+        /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         background: rgba(255, 255, 255, 0.78);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.pf-form-grid` 的样式块开始，下面定义对应元素的视觉表现。 */
     .pf-form-grid {
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 1rem 1.25rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }

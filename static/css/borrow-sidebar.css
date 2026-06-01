@@ -1,278 +1,556 @@
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 ﻿/* ===== 侧栏卡片 ===== */
+/* 逐行注释：选择器 `.aside-card` 的样式块开始，下面定义对应元素的视觉表现。 */
 .aside-card {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 1.125rem 1.25rem 1.25rem;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1.25rem;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255, 255, 255, 0.85);
+    /* 逐行注释：设置 `backdrop-filter` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     backdrop-filter: blur(14px);
+    /* 逐行注释：设置 `-webkit-backdrop-filter` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     -webkit-backdrop-filter: blur(14px);
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(255, 255, 255, 0.7);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 12px 28px -20px rgba(var(--color-brand-deep-rgb), 0.25);
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.aside-card-head` 的样式块开始，下面定义对应元素的视觉表现。 */
 .aside-card-head {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; justify-content: space-between;
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 0.875rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.aside-card-title { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .aside-card-title { display: inline-flex; align-items: center; gap: 8px; }
+/* 逐行注释：选择器 `.aside-card-title h3` 的样式块开始，下面定义对应元素的视觉表现。 */
 .aside-card-title h3 {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 1.0625rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+    /* 逐行注释：设置 `margin` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin: 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.aside-icon` 的样式块开始，下面定义对应元素的视觉表现。 */
 .aside-icon {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 30px; height: 30px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.625rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #fff;
+    /* 逐行注释：设置 `flex-shrink` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex-shrink: 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.aside-icon svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .aside-icon svg { width: 15px; height: 15px; }
+/* 逐行注释：设置 `.aside-icon.tone-pink    { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .aside-icon.tone-pink    { background: linear-gradient(135deg, #f472b6, var(--color-brand-primary)); }
+/* 逐行注释：设置 `.aside-icon.tone-purple  { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .aside-icon.tone-purple  { background: linear-gradient(135deg, #c084fc, var(--color-brand-accent)); }
+/* 逐行注释：设置 `.aside-icon.tone-amber   { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .aside-icon.tone-amber   { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+/* 逐行注释：设置 `.aside-icon.tone-emerald { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .aside-icon.tone-emerald { background: linear-gradient(135deg, #34d399, #10b981); }
+/* 逐行注释：选择器 `.aside-card-eye` 的样式块开始，下面定义对应元素的视觉表现。 */
 .aside-card-eye {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 9.5px; font-weight: 800;
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.22em;
+    /* 逐行注释：设置 `text-transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-transform: uppercase;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb), 0.4);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.aside-card-eye.pulse` 的样式块开始，下面定义对应元素的视觉表现。 */
 .aside-card-eye.pulse {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fef3c7, #fed7aa);
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #92400e;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 2px 8px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
+    /* 逐行注释：设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: pulse-eye 2.4s ease-in-out infinite;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes pulse-eye {
+    /* 逐行注释：设置 `0%, 100% { box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3); }
+    /* 逐行注释：设置 `50%      { box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     50%      { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ----- 阅读概览 ring + list ----- */
+/* 逐行注释：选择器 `.overview-content` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-content {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: grid;
+    /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     grid-template-columns: 110px 1fr;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 1rem;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.overview-ring { position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-ring { position: relative; width: 110px; height: 110px; }
+/* 逐行注释：设置 `.overview-ring svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-ring svg { width: 100%; height: 100%; }
+/* 逐行注释：选择器 `.overview-ring .ring-bg` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-ring .ring-bg {
+    /* 逐行注释：设置 `fill` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     fill: none;
+    /* 逐行注释：设置 `stroke` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     stroke: rgba(236, 72, 153, 0.08);
+    /* 逐行注释：设置 `stroke-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     stroke-width: 10;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.overview-ring .ring-fg` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-ring .ring-fg {
+    /* 逐行注释：设置 `fill` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     fill: none;
+    /* 逐行注释：设置 `stroke-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     stroke-width: 10;
+    /* 逐行注释：设置 `stroke-linecap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     stroke-linecap: round;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: stroke-dasharray 0.6s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.overview-ring .ring-center` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-ring .ring-center {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute; inset: 0;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center; justify-content: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.overview-ring .ring-num` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-ring .ring-num {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 1.625rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+    /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     line-height: 1;
+    /* 逐行注释：设置 `font-variant-numeric` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-variant-numeric: tabular-nums;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.overview-ring .ring-num small` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-ring .ring-num small {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.75rem;
+    /* 逐行注释：设置 `margin-left` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-left: 1px;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb), 0.55);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.overview-ring .ring-label` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-ring .ring-label {
+    /* 逐行注释：设置 `margin-top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-top: 4px;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 10px; font-weight: 800;
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.18em;
+    /* 逐行注释：设置 `text-transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-transform: uppercase;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb), 0.45);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.overview-list` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-list {
+    /* 逐行注释：设置 `list-style` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     list-style: none; padding: 0; margin: 0;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column; gap: 0.4rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.overview-list li` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-list li {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; gap: 8px;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 12px;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb), 0.7);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.overview-list .dot { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-list .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+/* 逐行注释：设置 `.overview-list .lbl { flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-list .lbl { flex: 1; }
+/* 逐行注释：选择器 `.overview-list strong` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-list strong {
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+    /* 逐行注释：设置 `font-variant-numeric` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-variant-numeric: tabular-nums;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：选择器 `.overview-level` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-level {
+    /* 逐行注释：设置 `margin-top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-top: 1rem;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 10px 12px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.875rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; align-items: center; gap: 10px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.overview-level.tone-pink    { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level.tone-pink    { background: linear-gradient(135deg, #fdf2f8, #fce7f3); }
+/* 逐行注释：设置 `.overview-level.tone-emerald { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level.tone-emerald { background: linear-gradient(135deg, #ecfdf5, #d1fae5); }
+/* 逐行注释：设置 `.overview-level.tone-blue    { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level.tone-blue    { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+/* 逐行注释：设置 `.overview-level.tone-orange  { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level.tone-orange  { background: linear-gradient(135deg, #fff7ed, #fed7aa); }
+/* 逐行注释：选择器 `.overview-level .level-badge` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-level .level-badge {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 28px; height: 28px; border-radius: 8px;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(255, 255, 255, 0.7);
+    /* 逐行注释：设置 `flex-shrink` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex-shrink: 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.overview-level.tone-pink    .level-badge svg { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level.tone-pink    .level-badge svg { color: var(--color-brand-primary); }
+/* 逐行注释：设置 `.overview-level.tone-emerald .level-badge svg { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level.tone-emerald .level-badge svg { color: #10b981; }
+/* 逐行注释：设置 `.overview-level.tone-blue    .level-badge svg { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level.tone-blue    .level-badge svg { color: #3b82f6; }
+/* 逐行注释：设置 `.overview-level.tone-orange  .level-badge svg { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level.tone-orange  .level-badge svg { color: #f97316; }
+/* 逐行注释：设置 `.overview-level .level-badge svg { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .overview-level .level-badge svg { width: 14px; height: 14px; }
+/* 逐行注释：选择器 `.overview-level .level-name` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-level .level-name {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 1rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+    /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     line-height: 1.1;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.overview-level .level-desc` 的样式块开始，下面定义对应元素的视觉表现。 */
 .overview-level .level-desc {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 11px;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb), 0.55);
+    /* 逐行注释：设置 `margin-top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-top: 1px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ----- 阅读偏好 ----- */
+/* 逐行注释：选择器 `.pref-list` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pref-list {
+    /* 逐行注释：设置 `list-style` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     list-style: none; padding: 0; margin: 0;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column; gap: 0.875rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pref-item` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pref-item {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: grid;
+    /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     grid-template-columns: 32px 1fr;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 10px;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pref-rank` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pref-rank {
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 1.375rem; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb), 0.25);
+    /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     line-height: 1;
+    /* 逐行注释：设置 `text-align` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-align: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pref-item.rank-1 .pref-rank` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pref-item.rank-1 .pref-rank {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent));
+    /* 逐行注释：设置 `-webkit-background-clip` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     -webkit-background-clip: text; background-clip: text;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: transparent;
+    /* 逐行注释：设置 `opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     opacity: 0.95;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pref-item.rank-2 .pref-rank { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pref-item.rank-2 .pref-rank { color: rgba(168, 85, 247, 0.55); }
+/* 逐行注释：设置 `.pref-meta { min-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pref-meta { min-width: 0; }
+/* 逐行注释：设置 `.pref-row { display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pref-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px; }
+/* 逐行注释：选择器 `.pref-name` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pref-name {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 13px; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+    /* 逐行注释：设置 `white-space` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     white-space: nowrap;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `text-overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     text-overflow: ellipsis;
+    /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     max-width: 65%;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pref-count { font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pref-count { font-size: 11px; color: rgba(var(--color-brand-deep-rgb), 0.5); font-variant-numeric: tabular-nums; }
+/* 逐行注释：选择器 `.pref-bar` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pref-bar {
+    /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: 6px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(236, 72, 153, 0.08);
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.pref-fill` 的样式块开始，下面定义对应元素的视觉表现。 */
 .pref-fill {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: block; height: 100%;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent));
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: width 0.4s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.pref-item.rank-2 .pref-fill { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pref-item.rank-2 .pref-fill { background: linear-gradient(90deg, #f472b6, #c084fc); }
+/* 逐行注释：设置 `.pref-item.rank-3 .pref-fill { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .pref-item.rank-3 .pref-fill { background: linear-gradient(90deg, #fbcfe8, #e9d5ff); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ----- 即将到期 ----- */
+/* 逐行注释：选择器 `.due-list` 的样式块开始，下面定义对应元素的视觉表现。 */
 .due-list {
+    /* 逐行注释：设置 `list-style` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     list-style: none; padding: 0; margin: 0;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column; gap: 0.5rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.due-item { border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .due-item { border-radius: 0.75rem; transition: background 0.2s ease; }
+/* 逐行注释：设置 `.due-item` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .due-item:hover { background: rgba(236, 72, 153, 0.05); }
+/* 逐行注释：选择器 `.due-link` 的样式块开始，下面定义对应元素的视觉表现。 */
 .due-link {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: grid;
+    /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     grid-template-columns: 36px 1fr;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 10px;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 6px;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.due-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .due-cover {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 36px; height: 48px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.375rem;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
+    /* 逐行注释：设置 `flex-shrink` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex-shrink: 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.due-cover img { width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .due-cover img { width: 100%; height: 100%; object-fit: cover; }
+/* 逐行注释：设置 `.due-meta { min-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .due-meta { min-width: 0; }
+/* 逐行注释：选择器 `.due-title` 的样式块开始，下面定义对应元素的视觉表现。 */
 .due-title {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 12.5px; font-weight: 700;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-deep);
+    /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     line-height: 1.3;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: -webkit-box;
+    /* 逐行注释：设置 `-webkit-line-clamp` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     -webkit-line-clamp: 2;
+    /* 逐行注释：设置 `-webkit-box-orient` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     -webkit-box-orient: vertical;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin-bottom: 4px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.due-pill` 的样式块开始，下面定义对应元素的视觉表现。 */
 .due-pill {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-block;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 2px 7px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 10px; font-weight: 700;
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.02em;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.due-pill.is-soon     { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .due-pill.is-soon     { background: #fef3c7; color: #92400e; }
+/* 逐行注释：设置 `.due-pill.is-today    { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .due-pill.is-today    { background: #fed7aa; color: #9a3412; }
+/* 逐行注释：设置 `.due-pill.is-overdue  { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .due-pill.is-overdue  { background: #fee2e2; color: #991b1b; }
+/* 逐行注释：设置 `.due-item.is-overdue { background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .due-item.is-overdue { background: rgba(239, 68, 68, 0.04); border: 1px dashed rgba(239, 68, 68, 0.2); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ----- 借阅小贴士 ----- */
+/* 逐行注释：选择器 `.tips-card` 的样式块开始，下面定义对应元素的视觉表现。 */
 .tips-card {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background:
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         radial-gradient(circle at top right, rgba(236, 72, 153, 0.08), transparent 60%),
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(255, 255, 255, 0.85);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.tips-list` 的样式块开始，下面定义对应元素的视觉表现。 */
 .tips-list {
+    /* 逐行注释：设置 `list-style` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     list-style: none; padding: 0; margin: 0;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex; flex-direction: column; gap: 0.75rem;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.tips-list li` 的样式块开始，下面定义对应元素的视觉表现。 */
 .tips-list li {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: grid;
+    /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     grid-template-columns: 28px 1fr;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 10px;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: start;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.tip-num` 的样式块开始，下面定义对应元素的视觉表现。 */
 .tip-num {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 28px; height: 28px;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex; align-items: center; justify-content: center;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 0.5rem;
+    /* 逐行注释：设置 `font-family` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-family: 'Cormorant', serif;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 0.75rem; font-weight: 700;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-primary);
+    /* 逐行注释：设置 `letter-spacing` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     letter-spacing: 0.05em;
+    /* 逐行注释：设置 `flex-shrink` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex-shrink: 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.tips-list li p` 的样式块开始，下面定义对应元素的视觉表现。 */
 .tips-list li p {
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 12.5px;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(var(--color-brand-deep-rgb), 0.7);
+    /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     line-height: 1.55;
+    /* 逐行注释：设置 `margin` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     margin: 0;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.tips-list li strong { color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .tips-list li strong { color: var(--color-brand-primary); font-weight: 700; }

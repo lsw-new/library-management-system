@@ -1,139 +1,278 @@
+{# 逐行注释：Jinja 模板继承声明，复用基础页面骨架。 #}
 {% extends "base.html" %}
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block title %}注册账号 - 景艺大图书馆{% endblock %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block header %}{% endblock %}
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block footer %}{% endblock %}
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block main_class %}flex-1 flex flex-col{% endblock %}
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block content_wrapper %}flex-1 flex{% endblock %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block content %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
 <div class="elysia-scene relative flex-1 flex items-center justify-center px-4 py-10 overflow-hidden">
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="absolute inset-0 bg-[linear-gradient(135deg,_#FFE4F1_0%,_#FFF0F5_30%,_#F3E5F5_65%,_#FCE4EC_100%)]"></div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="pointer-events-none absolute -top-24 -right-16 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,_#FFB6D9_0%,_transparent_70%)] opacity-50 blur-2xl"></div>
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="pointer-events-none absolute -bottom-32 -left-20 h-[460px] w-[460px] rounded-full bg-[radial-gradient(circle,_#E8D5F2_0%,_transparent_70%)] opacity-60 blur-2xl"></div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="pointer-events-none absolute inset-0 overflow-hidden">
+        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="absolute top-[10%] left-[10%] h-1.5 w-1.5 rounded-full bg-pink-300/70 animate-pulse"></span>
+        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="absolute top-[28%] right-[8%] h-1 w-1 rounded-full bg-purple-300/60 animate-pulse" style="animation-delay:0.7s"></span>
+        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="absolute bottom-[15%] left-[8%] h-2 w-2 rounded-full bg-pink-200/60 animate-pulse" style="animation-delay:1.2s"></span>
+        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
         <span class="absolute top-[55%] right-[6%] h-1 w-1 rounded-full bg-rose-300/70 animate-pulse" style="animation-delay:0.4s"></span>
+        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="absolute top-[12%] right-[12%] h-7 w-7 text-pink-300/40 rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="absolute bottom-[18%] right-[15%] h-6 w-6 text-purple-300/40 -rotate-45" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
     </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
     <a href="{{ url_for('auth.login') }}" class="absolute top-6 right-6 z-20 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/50 backdrop-blur-md px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-pink-700/70 transition-all hover:bg-white/80 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-6px_rgba(236,72,153,0.25)]">
+        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         登录
+    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
     </a>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
     <div class="relative z-10 w-full max-w-[460px]">
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="absolute -inset-1 rounded-[32px] bg-gradient-to-br from-pink-300/40 via-fuchsia-200/30 to-purple-300/40 blur-xl"></div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="relative rounded-[28px] border border-white/70 bg-white/75 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(236,72,153,0.25),0_0_0_1px_rgba(255,255,255,0.6)_inset] p-8 lg:p-10">
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center gap-1">
+                {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                 <span class="h-1 w-8 rounded-full bg-gradient-to-r from-transparent to-pink-300"></span>
+                {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                 <svg class="h-5 w-5 text-pink-400 drop-shadow-[0_2px_4px_rgba(236,72,153,0.4)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                 <span class="h-1 w-8 rounded-full bg-gradient-to-l from-transparent to-pink-300"></span>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="flex flex-col items-center mb-6">
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="relative mb-3">
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-pink-300 to-purple-300 blur-md opacity-60"></div>
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-400 via-rose-400 to-purple-400 shadow-[0_10px_30px_-8px_rgba(236,72,153,0.5)]">
+                        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                         <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+                {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                 <p class="font-heading text-lg font-bold text-pink-900/90 tracking-wide">注册账号</p>
+                {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                 <p class="mt-1 text-[10px] uppercase tracking-[0.32em] text-pink-400/70">新用户注册</p>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="flex items-center justify-center gap-3 mb-6">
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="flex items-center gap-2">
+                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span class="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-purple-400 text-[11px] font-bold text-white shadow-sm">1</span>
+                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span class="text-[12px] font-bold text-pink-700">身份信息</span>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+                {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                 <span class="h-px w-8 bg-pink-200"></span>
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="flex items-center gap-2 opacity-40">
+                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span class="flex h-6 w-6 items-center justify-center rounded-full bg-pink-200 text-[11px] font-bold text-pink-500">2</span>
+                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span class="text-[12px] font-medium text-pink-400">安全设置</span>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="text-center mb-7">
+                {# 逐行注释：HTML `h1` 元素，构成页面结构、内容或交互区域。 #}
                 <h1 class="font-heading text-[26px] font-bold leading-tight text-pink-900">
+                    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                     创建你的<span class="italic font-normal bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">读者档案</span>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </h1>
+                {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                 <p class="mt-2 text-[13px] leading-6 text-pink-800/55">
+                    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                     填写真实信息，便于后续借阅与图书归还提醒 ♡
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </p>
+            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+            {# 逐行注释：表单结构开始，用于收集并提交用户输入。 #}
             <form method="POST" novalidate class="space-y-5">
+                {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <input type="hidden" name="csrf_token" value="{{ auth_action_csrf_token }}">
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="space-y-3">
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div>
+                        {# 逐行注释：HTML `label` 元素，构成页面结构、内容或交互区域。 #}
                         <label for="username" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">用户名</label>
+                        {# 逐行注释：输入控件，接收用户填写或隐藏提交的数据。 #}
                         <input type="text" id="username" name="username" required autofocus
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                minlength="3" maxlength="20" placeholder="3-20 个字符"
+                               {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                value="{{ form_data.get('username', '') }}"
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div>
+                        {# 逐行注释：HTML `label` 元素，构成页面结构、内容或交互区域。 #}
                         <label for="student_id" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">学号</label>
+                        {# 逐行注释：输入控件，接收用户填写或隐藏提交的数据。 #}
                         <input type="text" id="student_id" name="student_id" required
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                pattern="[0-9]{13}" minlength="13" maxlength="13" inputmode="numeric"
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                placeholder="13 位学号"
+                               {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                value="{{ form_data.get('student_id', '') }}"
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div>
+                        {# 逐行注释：HTML `label` 元素，构成页面结构、内容或交互区域。 #}
                         <label for="real_name" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">姓名</label>
+                        {# 逐行注释：输入控件，接收用户填写或隐藏提交的数据。 #}
                         <input type="text" id="real_name" name="real_name" required
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                maxlength="50" placeholder="请输入真实姓名"
+                               {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                value="{{ form_data.get('real_name', '') }}"
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
+                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div>
+                        {# 逐行注释：HTML `label` 元素，构成页面结构、内容或交互区域。 #}
                         <label for="class_name" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.16em] text-pink-700/65">班级 <span class="normal-case tracking-normal text-pink-400/50">(选填)</span></label>
+                        {# 逐行注释：输入控件，接收用户填写或隐藏提交的数据。 #}
                         <input type="text" id="class_name" name="class_name"
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                maxlength="100" placeholder="例如：2024级计算机1班"
+                               {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                value="{{ form_data.get('class_name', '') }}"
+                               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                class="w-full rounded-xl border border-pink-200/60 bg-white/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-pink-900 outline-none transition-all placeholder:text-pink-300/70 hover:bg-white/80 hover:border-pink-300 focus:bg-white focus:border-pink-400 focus:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="grid grid-cols-1 sm:grid-cols-[1.6fr_1fr] gap-3 pt-1">
+                    {# 逐行注释：按钮控件，触发提交、弹窗、切换或其他页面动作。 #}
                     <button type="submit"
+                            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                             class="group relative inline-flex min-h-[54px] items-center justify-center gap-3 overflow-hidden rounded-2xl px-6 py-4 text-sm font-bold text-white transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-pink-300/50">
+                        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                         <span class="absolute inset-0 bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400"></span>
+                        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                         <span class="absolute inset-0 bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                         <span class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-white/80 to-transparent"></span>
+                        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                         <svg class="relative z-10 h-4 w-4 drop-shadow" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c1.5 3 4 4.5 7 5-3 .5-5.5 2-7 5-1.5-3-4-4.5-7-5 3-.5 5.5-2 7-5z"/></svg>
+                        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                         <span class="relative z-10 tracking-widest drop-shadow">下一步</span>
+                        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                         <svg class="relative z-10 h-4 w-4 drop-shadow group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </button>
+                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <a href="{{ url_for('auth.login') }}"
+                       {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                        class="inline-flex min-h-[54px] items-center justify-center rounded-2xl border border-pink-200/70 bg-white/50 backdrop-blur-sm px-6 py-4 text-sm font-bold text-pink-700/80 transition-all hover:bg-white/90 hover:border-pink-400 hover:text-pink-600 hover:-translate-y-0.5">
+                        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                         返回登录
+                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                     </a>
+                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
+            {# 逐行注释：表单结构结束。 #}
             </form>
+        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+        {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
         <p class="mt-5 text-center text-[10px] uppercase tracking-[0.32em] text-pink-400/55 font-mono">
+            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             ─── ♡ 欢迎来到我们的图书馆 ♡ ───
+        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
         </p>
+    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
     </div>
+{# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
 </div>
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}
+{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
+{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block scripts %}
+{# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
 <script src="{{ versioned_url('js/register-validate.js') }}"></script>
+{# 逐行注释：Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}

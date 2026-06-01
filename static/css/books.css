@@ -1,362 +1,724 @@
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ==================== 图书列表页 ==================== */
+/* 逐行注释：CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes books-fade-in {
+    /* 逐行注释：设置 `from { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     from { opacity: 0; transform: translateY(12px); }
+    /* 逐行注释：设置 `to   { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     to   { opacity: 1; transform: translateY(0); }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.animate-fade-in { animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .animate-fade-in { animation: books-fade-in 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+/* 逐行注释：选择器 `.is-results-transitioning` 的样式块开始，下面定义对应元素的视觉表现。 */
 .is-results-transitioning {
+    /* 逐行注释：设置 `opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     opacity: 0.3;
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(6px);
+    /* 逐行注释：设置 `pointer-events` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     pointer-events: none;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: opacity 0.2s ease, transform 0.2s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (prefers-reduced-motion: reduce) {
+    /* 逐行注释：设置 `.animate-fade-in { animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .animate-fade-in { animation: none; }
+    /* 逐行注释：设置 `.is-results-transitioning { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .is-results-transitioning { opacity: 0.6; transform: none; filter: none; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 图书卡片 */
+/* 逐行注释：选择器 `.book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: flex;
+    /* 逐行注释：设置 `flex-direction` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     flex-direction: column;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(var(--color-brand-primary-rgb), 0.08);
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1rem;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
                 box-shadow 0.35s ease,
+                /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
                 border-color 0.35s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.book-card:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card:hover {
+    /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transform: translateY(-4px);
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(var(--color-brand-primary-rgb), 0.25);
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 18px 40px -20px rgba(var(--color-brand-primary-rgb), 0.35),
+                /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
                 0 8px 16px -8px rgba(139, 92, 246, 0.2);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.book-card-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-cover {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: relative;
+    /* 逐行注释：设置 `aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     aspect-ratio: 3 / 4;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, #fdf2f8, #f3e8ff);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.book-card-cover img` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-cover img {
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 100%;
+    /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: 100%;
+    /* 逐行注释：设置 `object-fit` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     object-fit: cover;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.book-card` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .book-card:hover .book-card-cover img { transform: scale(1.06); }
+/* 逐行注释：设置 `.book-card-cover img.lazy-img { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .book-card-cover img.lazy-img { opacity: 0; }
+/* 逐行注释：设置 `.book-card-cover img.lazy-img.is-loaded { opacity` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .book-card-cover img.lazy-img.is-loaded { opacity: 1; }
+/* 逐行注释：选择器 `.book-card-status` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-status {
+    /* 逐行注释：设置 `position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     position: absolute;
+    /* 逐行注释：设置 `z-index` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     z-index: 2;
+    /* 逐行注释：设置 `top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     top: 0.5rem;
+    /* 逐行注释：设置 `left` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     left: 0.5rem;
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 4px;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 4px 10px;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 11px;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 700;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.book-card-status.is-available` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-status.is-available {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #dcfce7;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #166534;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.book-card-status.is-unavailable` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-status.is-unavailable {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fee2e2;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #991b1b;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.book-card-status::before` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-card-status::before {
+    /* 逐行注释：设置 `content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     content: '';
+    /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     width: 6px;
+    /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     height: 6px;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 50%;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: currentColor;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 骨架屏 */
+/* 逐行注释：选择器 `.book-skeleton` 的样式块开始，下面定义对应元素的视觉表现。 */
 .book-skeleton {
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 1rem;
+    /* 逐行注释：设置 `overflow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     overflow: hidden;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(var(--color-brand-primary-rgb), 0.08);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：设置 `.book-skeleton-cover { aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 .book-skeleton-cover { aspect-ratio: 3 / 4; }
+/* 逐行注释：选择器 `.skeleton-shimmer` 的样式块开始，下面定义对应元素的视觉表现。 */
 .skeleton-shimmer {
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         90deg,
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(253, 242, 248, 0.5) 0%,
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(243, 232, 255, 0.9) 50%,
+        /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
         rgba(253, 242, 248, 0.5) 100%
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     );
+    /* 逐行注释：设置 `background-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background-size: 200% 100%;
+    /* 逐行注释：设置 `animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     animation: skeleton-shimmer 1.4s ease-in-out infinite;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：CSS at-rule，用于声明字体、动画、媒体条件或全局规则。 */
 @keyframes skeleton-shimmer {
+    /* 逐行注释：设置 `0%   { background-position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     0%   { background-position: 200% 0; }
+    /* 逐行注释：设置 `100% { background-position` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     100% { background-position: -200% 0; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (prefers-reduced-motion: reduce) {
+    /* 逐行注释：设置 `.skeleton-shimmer { animation` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .skeleton-shimmer { animation: none; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 工具条芯片 */
+/* 逐行注释：选择器 `.chip` 的样式块开始，下面定义对应元素的视觉表现。 */
 .chip {
+    /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     display: inline-flex;
+    /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     align-items: center;
+    /* 逐行注释：设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     justify-content: center;
+    /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     min-height: 44px;
+    /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     gap: 6px;
+    /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     padding: 0.625rem 0.875rem;
+    /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-radius: 999px;
+    /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-size: 12px;
+    /* 逐行注释：设置 `font-weight` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     font-weight: 600;
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: rgba(131, 24, 67, 0.7);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: #fff;
+    /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border: 1px solid rgba(var(--color-brand-primary-rgb), 0.12);
+    /* 逐行注释：设置 `cursor` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     cursor: pointer;
+    /* 逐行注释：设置 `transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     transition: all 0.25s ease;
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.chip:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
 .chip:hover {
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: var(--color-brand-primary);
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: rgba(var(--color-brand-primary-rgb), 0.4);
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: rgba(253, 242, 248, 0.6);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：选择器 `.chip.is-active` 的样式块开始，下面定义对应元素的视觉表现。 */
 .chip.is-active {
+    /* 逐行注释：设置 `color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     color: #fff;
+    /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     background: linear-gradient(135deg, var(--color-brand-accent), var(--color-brand-primary));
+    /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     border-color: transparent;
+    /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     box-shadow: 0 6px 14px -4px rgba(168, 85, 247, 0.5);
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* 图书结果区数量徽章过渡 */
+/* 逐行注释：设置 `[data-category] { transition` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 [data-category] { transition: transform 0.25s ease; }
+/* 逐行注释：设置 `[data-category].scale-110 { transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
 [data-category].scale-110 { transform: scale(1.15); }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ==================== Phone/tablet catalogue experience ==================== */
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (max-width: 639px) {
+    /* 逐行注释：选择器 `#books-sidebar-content` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-sidebar-content {
+        /* 逐行注释：设置 `margin-top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-top: -0.25rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `#books-mobile-categories` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-mobile-categories {
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 0 0.15rem 0.45rem;
+        /* 逐行注释：设置 `scroll-snap-type` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         scroll-snap-type: x mandatory;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `#books-main-content` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-main-content {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.35rem;
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 18px 42px -30px rgba(var(--color-brand-primary-rgb), 0.42);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `#books-toolbar` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-toolbar {
+        /* 逐行注释：设置 `overflow-x` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         overflow-x: auto;
+        /* 逐行注释：设置 `flex-wrap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         flex-wrap: nowrap;
+        /* 逐行注释：设置 `padding-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding-bottom: 0.25rem;
+        /* 逐行注释：设置 `scrollbar-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         scrollbar-width: none;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：设置 `#books-toolbar` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     #books-toolbar::-webkit-scrollbar { display: none; }
+    /* 逐行注释：选择器 `#books-toolbar .chip` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-toolbar .chip {
+        /* 逐行注释：设置 `flex` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         flex: 0 0 auto;
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 42px;
+        /* 逐行注释：设置 `padding-inline` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding-inline: 0.82rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     #books-results-content > .grid,
+    /* 逐行注释：选择器 `#books-results-content .grid.grid-cols-2` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-results-content .grid.grid-cols-2 {
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: minmax(0, 1fr) !important;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 0.85rem !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card {
+        /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         display: grid;
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: 112px minmax(0, 1fr);
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 160px;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.15rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.book-card:hover` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card:hover {
+        /* 逐行注释：设置 `transform` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         transform: none;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.book-card-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card-cover {
+        /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         width: 112px;
+        /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         height: 100%;
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 160px;
+        /* 逐行注释：设置 `aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         aspect-ratio: auto;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 0;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.book-card-status` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card-status {
+        /* 逐行注释：设置 `top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         top: 0.45rem;
+        /* 逐行注释：设置 `left` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         left: 0.45rem;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 3px 8px;
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: 10px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .book-card .p-3,
+    /* 逐行注释：选择器 `.book-card .sm\:p-4` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card .sm\:p-4 {
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 0.85rem !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.book-card h3` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card h3 {
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: 1.04rem;
+        /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         line-height: 1.25;
+        /* 逐行注释：设置 `margin-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         margin-bottom: 0.25rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.book-card [data-actions]` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card [data-actions] {
+        /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         display: grid;
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: 1fr;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 0.45rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .book-card [data-actions] a,
+    /* 逐行注释：选择器 `.book-card [data-actions] button` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card [data-actions] button {
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 42px;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 0.85rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     nav[aria-label],
+    /* 逐行注释：选择器 `#books-results-content nav` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-results-content nav {
+        /* 逐行注释：设置 `overflow-x` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         overflow-x: auto;
+        /* 逐行注释：设置 `justify-content` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         justify-content: flex-start !important;
+        /* 逐行注释：设置 `padding-bottom` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding-bottom: 0.35rem;
+        /* 逐行注释：设置 `scrollbar-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         scrollbar-width: none;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：设置 `#books-results-content nav` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     #books-results-content nav::-webkit-scrollbar { display: none; }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (min-width: 640px) and (max-width: 1023px) {
+    /* 逐行注释：选择器 `#books-main-content` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-main-content {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.5rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     #books-results-content > .grid,
+    /* 逐行注释：选择器 `#books-results-content .grid.grid-cols-2` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-results-content .grid.grid-cols-2 {
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.1rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (max-width: 639px) {
+    /* 逐行注释：选择器 `.guest-book-grid` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-grid {
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: minmax(0, 1fr) !important;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 0.9rem !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.guest-book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-card {
+        /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         display: grid !important;
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: 112px minmax(0, 1fr);
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 164px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.guest-book-card > img` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-card > img {
+        /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         width: 112px;
+        /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         height: 100% !important;
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 164px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+    /* 逐行注释：选择器 `.guest-book-card .touch-target` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-card .touch-target {
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 42px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：已有 CSS 注释，标记样式分区或解释设计意图。 */
 /* ==================== Desktop catalogue cohesion ==================== */
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (min-width: 1024px) {
+    /* 逐行注释：选择器 `.books-page-shell` 的样式块开始，下面定义对应元素的视觉表现。 */
     .books-page-shell {
+        /* 逐行注释：设置 `max-width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-width: 1240px;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.books-layout` 的样式块开始，下面定义对应元素的视觉表现。 */
     .books-layout {
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: 250px minmax(0, 1fr) !important;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 1rem !important;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 1rem;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.75rem;
+        /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         background: rgba(255, 255, 255, 0.44);
+        /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border: 1px solid rgba(255, 255, 255, 0.72);
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 24px 64px -44px rgba(var(--color-brand-primary-rgb), 0.42);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .books-desktop-sidebar,
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     #books-main-content,
+    /* 逐行注释：选择器 `.guest-books-panel` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-books-panel {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1.25rem !important;
+        /* 逐行注释：设置 `border` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border: 1px solid rgba(249, 168, 212, 0.28);
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: none !important;
+        /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         background: rgba(255, 255, 255, 0.94);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.books-desktop-sidebar` 的样式块开始，下面定义对应元素的视觉表现。 */
     .books-desktop-sidebar {
+        /* 逐行注释：设置 `max-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         max-height: calc(100vh - 9.5rem);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .books-panel-head,
+    /* 逐行注释：选择器 `.guest-books-head` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-books-head {
+        /* 逐行注释：设置 `display` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         display: grid !important;
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: minmax(0, 1fr) minmax(340px, 0.72fr);
+        /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         align-items: center !important;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 0.9rem 1.25rem !important;
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 1.35rem 1.5rem !important;
+        /* 逐行注释：设置 `border-bottom-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-bottom-color: rgba(249, 168, 212, 0.22) !important;
+        /* 逐行注释：设置 `background` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(253, 242, 248, 0.68));
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `#books-summary` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-summary {
+        /* 逐行注释：设置 `align-items` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         align-items: center;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     #books-search-form,
+    /* 逐行注释：选择器 `.guest-books-head form` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-books-head form {
+        /* 逐行注释：设置 `grid-column` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-column: 2;
+        /* 逐行注释：设置 `grid-row` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-row: 1;
+        /* 逐行注释：设置 `align-self` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         align-self: center;
+        /* 逐行注释：设置 `width` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         width: 100%;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `#books-toolbar` 的样式块开始，下面定义对应元素的视觉表现。 */
     #books-toolbar {
+        /* 逐行注释：设置 `grid-column` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-column: 1 / -1;
+        /* 逐行注释：设置 `padding-top` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding-top: 0.15rem;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .books-results-content,
+    /* 逐行注释：选择器 `.guest-books-results` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-books-results {
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 1.25rem !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     #books-results-content > .grid,
+    /* 逐行注释：选择器 `.guest-book-grid` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-grid {
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        /* 逐行注释：设置 `gap` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         gap: 1rem !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .book-card,
+    /* 逐行注释：选择器 `.guest-book-card` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-card {
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 1rem !important;
+        /* 逐行注释：设置 `border-color` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-color: rgba(249, 168, 212, 0.24) !important;
+        /* 逐行注释：设置 `box-shadow` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         box-shadow: 0 14px 32px -26px rgba(var(--color-brand-primary-rgb), 0.38);
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.book-card-cover` 的样式块开始，下面定义对应元素的视觉表现。 */
     .book-card-cover {
+        /* 逐行注释：设置 `aspect-ratio` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         aspect-ratio: 4 / 3;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：选择器 `.guest-book-card > img` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-card > img {
+        /* 逐行注释：设置 `height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         height: 190px !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .book-card .p-3,
+    /* 逐行注释：设置 `.book-card .sm\` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
     .book-card .sm\:p-4,
+    /* 逐行注释：选择器 `.guest-book-card .p-4` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-card .p-4 {
+        /* 逐行注释：设置 `padding` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         padding: 0.95rem !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .book-card h3,
+    /* 逐行注释：选择器 `.guest-book-card h3` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-card h3 {
+        /* 逐行注释：设置 `font-size` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         font-size: 1rem;
+        /* 逐行注释：设置 `line-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         line-height: 1.25;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .book-card [data-actions] a,
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     .book-card [data-actions] button,
+    /* 逐行注释：选择器 `.guest-book-card .touch-target` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-card .touch-target {
+        /* 逐行注释：设置 `min-height` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         min-height: 40px;
+        /* 逐行注释：设置 `border-radius` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         border-radius: 0.8rem !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }
+/* 逐行注释：空行，用于分隔 CSS 代码块，提升代码阅读层次。 */
 
+/* 逐行注释：响应式媒体查询，根据屏幕宽度应用不同布局规则。 */
 @media (min-width: 1024px) and (max-width: 1180px) {
+    /* 逐行注释：CSS 语句，参与页面视觉样式、动画或响应式布局定义。 */
     #books-results-content > .grid,
+    /* 逐行注释：选择器 `.guest-book-grid` 的样式块开始，下面定义对应元素的视觉表现。 */
     .guest-book-grid {
+        /* 逐行注释：设置 `grid-template-columns` 样式属性，影响元素布局、尺寸、颜色或交互效果。 */
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    /* 逐行注释：结束当前 CSS 规则块。 */
     }
+/* 逐行注释：结束当前 CSS 规则块。 */
 }

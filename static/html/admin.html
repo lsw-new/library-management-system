@@ -9,10 +9,6 @@
 <link rel="stylesheet" href="{{ versioned_url('css/admin.css') }}">
 {# Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
-{% block main_class %}flex-1 px-4 sm:px-6 pb-10 pt-4 md:pt-6 animate-in fade-in duration-700 mt-20 md:mt-24{% endblock %}
-{# Jinja block 开始，向基础模板填充指定区域内容。 #}
-{% block content_wrapper %}admin-workspace-wrapper mx-auto{% endblock %}
 
 {# 定义 Jinja 宏，用于复用可参数化的模板结构。 #}
 {% macro search_form(tab_value, placeholder, value='') -%}
@@ -59,11 +55,11 @@
 } %}
 
 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-<div class="admin-layout-shell grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 md:gap-8 lg:items-stretch">
+<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 md:gap-8 lg:items-stretch">
     {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
     <!-- 侧边导航栏 -->
     {# HTML `aside` 元素，构成页面结构、内容或交互区域。 #}
-    <aside class="admin-sidebar admin-sidebar-panel glass-panel p-5 md:p-6 rounded-2xl md:rounded-[2.5rem] shadow-xl border-l-4 border-brand-primary lg:sticky lg:top-4 lg:flex lg:flex-col lg:max-h-[calc(100vh-2rem)] lg:overflow-hidden">
+    <aside class="admin-sidebar glass-panel p-5 md:p-6 rounded-2xl md:rounded-[2.5rem] shadow-xl border-l-4 border-brand-primary lg:sticky lg:top-4 lg:flex lg:flex-col lg:max-h-[calc(100vh-2rem)] lg:overflow-hidden">
         {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
         <!-- 头部标识 -->
         {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
@@ -375,11 +371,11 @@
     {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
     <!-- 主展示区 -->
     {# HTML `section` 元素，构成页面结构、内容或交互区域。 #}
-    <section class="admin-main-panel space-y-5 md:space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 lg:flex lg:flex-col lg:min-h-screen">
+    <section class="space-y-5 md:space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 lg:flex lg:flex-col lg:min-h-screen">
         {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
         <!-- 头部概览 -->
         {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-        <div class="admin-hero-panel glass-panel p-5 md:p-7 rounded-2xl md:rounded-3xl shadow-sm relative overflow-hidden">
+        <div class="glass-panel p-5 md:p-7 rounded-2xl md:rounded-3xl shadow-sm relative overflow-hidden">
             {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
@@ -412,7 +408,7 @@
         {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
         <!-- KPI 概览条 -->
         {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-        <div class="admin-kpi-grid grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4">
             {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <a href="{{ url_for('admin.admin_index', tab='online') }}" class="admin-kpi tone-online block">
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
@@ -515,13 +511,13 @@
         {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
         <!-- 动态 Tab 内容 -->
         {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-        <div class="glass-panel admin-tab-content admin-tab-panel rounded-2xl md:rounded-[3rem] shadow-sm overflow-hidden border border-white/50 lg:flex-1 lg:flex lg:flex-col" aria-live="polite">
+        <div class="glass-panel admin-tab-content rounded-2xl md:rounded-[3rem] shadow-sm overflow-hidden border border-white/50 lg:flex-1 lg:flex lg:flex-col" aria-live="polite">
             {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
             {% if tab == 'online' %}
                 {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
                 <!-- 实时活跃会话 - 头部 -->
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                <div class="admin-section-toolbar px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
+                <div class="px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="flex items-center gap-3">
                         {# HTML `h3` 元素，构成页面结构、内容或交互区域。 #}
@@ -559,7 +555,7 @@
                     {# 结束当前 Jinja 条件块。 #}
                     {% endif %}
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                    <div id="online-users-grid" class="admin-online-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                    <div id="online-users-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                         {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                         {% for user in online_users %}
                         {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
@@ -672,7 +668,7 @@
                 {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
                 <!-- 搜索 + 统计 -->
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                <div class="admin-section-toolbar px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
+                <div class="px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
                     {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     {{ search_form('books', '搜索书名、作者、ISBN...', search) }}
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
@@ -692,7 +688,7 @@
                     {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% if books %}
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                    <div class="admin-books-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
                         {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                         {% for book in books %}
                         {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
@@ -808,7 +804,7 @@
                 {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
                 <!-- 当前借阅处理 - 头部 -->
                 {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
-                <div class="admin-section-toolbar px-5 md:px-8 pt-4 pb-0 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white lg:sticky lg:top-0 lg:z-10" data-current-default-status="{{ current_default_status }}">
+                <div class="px-5 md:px-8 pt-4 pb-0 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white lg:sticky lg:top-0 lg:z-10" data-current-default-status="{{ current_default_status }}">
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mb-4">
                         {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
@@ -866,7 +862,7 @@
                     {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% if current_records %}
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                    <div class="admin-records-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                         {% for record in current_records %}
                         {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
@@ -1014,7 +1010,7 @@
                 {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
                 <!-- 历史借阅记录 - 头部 -->
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                <div class="admin-section-toolbar px-5 md:px-8 pt-4 pb-0 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white lg:sticky lg:top-0 lg:z-10">
+                <div class="px-5 md:px-8 pt-4 pb-0 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white lg:sticky lg:top-0 lg:z-10">
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mb-4">
                         {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
@@ -1073,7 +1069,7 @@
                     {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% if today_records %}
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                    <div class="admin-records-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                         {% for record in today_records %}
                         {# HTML `article` 元素，构成页面结构、内容或交互区域。 #}
@@ -1204,7 +1200,7 @@
                     {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% if past_records %}
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                    <div class="admin-records-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                         {% for record in past_records %}
                         {# HTML `article` 元素，构成页面结构、内容或交互区域。 #}
@@ -1333,7 +1329,7 @@
                 {# 已有 HTML 注释，标记页面结构分区或模板意图。 #}
                 <!-- 用户管理 - 头部 -->
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                <div class="admin-section-toolbar px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
+                <div class="px-5 md:px-8 py-4 border-b border-pink-100/80 bg-gradient-to-r from-pink-50/60 via-white/80 to-white flex flex-col md:flex-row justify-between items-center gap-3 lg:sticky lg:top-0 lg:z-10">
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="flex items-center gap-3">
                         {# HTML `h3` 元素，构成页面结构、内容或交互区域。 #}
@@ -1367,7 +1363,7 @@
                     {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% if users_list %}
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                    <div id="users-grid" class="admin-users-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                    <div id="users-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                         {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
                         {% for u in users_list %}
                         {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}

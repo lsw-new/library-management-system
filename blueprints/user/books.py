@@ -27,7 +27,7 @@ from utils.cache import cache_get, cache_set
 # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
 MAX_STOCK_QUERY_IDS = 50
 # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
-BOOKS_PER_PAGE = 8
+BOOKS_PER_PAGE = 4
 
 
 # 定义 `_get_categories_cached` 函数，封装一段可复用的后端处理流程。

@@ -16,7 +16,7 @@
 {# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block main_class %}flex-1 py-6 md:py-12 px-4 animate-in fade-in duration-700{% endblock %}
 {# Jinja block 开始，向基础模板填充指定区域内容。 #}
-{% block content_wrapper %}max-w-6xl mx-auto{% endblock %}
+{% block content_wrapper %}max-w-4xl mx-auto{% endblock %}
 
 {# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
 {% set active_count = insights.active_count %}
@@ -94,7 +94,6 @@
             </div>
 
             {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-            <div class="pf-identity">
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="pf-hero-eyebrow">
                     {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
@@ -114,7 +113,6 @@
                 {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </p>
             {# HTML 闭合标签，结束前面打开的页面结构。 #}
-            </div>
         {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
 

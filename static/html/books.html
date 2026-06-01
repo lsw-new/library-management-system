@@ -23,9 +23,9 @@
 {# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block content %}
 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-<div class="books-page-shell max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-    <div class="books-layout grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:items-start">
 
         {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         {# ========== 侧边栏 ========== #}
@@ -76,7 +76,7 @@
                 {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 {# 桌面端垂直侧边栏 #}
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-                <div class="books-desktop-sidebar hidden lg:flex lg:min-h-0 lg:flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="hidden lg:flex lg:min-h-0 lg:flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="px-6 py-4 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-pink-100 flex-shrink-0">
                         {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
@@ -168,12 +168,12 @@
         {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
         {# ========== 主内容区 ========== #}
         {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-        <div id="books-main-content" class="books-content-panel bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div id="books-main-content" class="bg-white rounded-2xl shadow-lg overflow-hidden">
 
             {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             {# 头部:标题 + 搜索 + 工具条 #}
             {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-            <div class="books-panel-head px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex flex-col gap-3 sm:gap-4">
+            <div class="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex flex-col gap-3 sm:gap-4">
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div id="books-summary" class="flex items-end justify-between gap-3">
                     {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
@@ -260,7 +260,7 @@
             {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             {# 网格区 #}
             {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
-            <div id="books-results-content" class="books-results-content p-4 sm:p-6 animate-fade-in">
+            <div id="books-results-content" class="p-4 sm:p-6 animate-fade-in">
                 {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                 {% if books %}
                 {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}

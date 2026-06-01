@@ -136,3 +136,39 @@
 /* 图书结果区数量徽章过渡 */
 [data-category] { transition: transform 0.25s ease; }
 [data-category].scale-110 { transform: scale(1.15); }
+
+@media (min-width: 1024px) {
+    .books-page-layout {
+        --books-fixed-panel-height: calc(100vh - 10rem);
+        align-items: stretch;
+    }
+
+    .books-category-sidebar,
+    .books-main-panel {
+        height: var(--books-fixed-panel-height);
+        max-height: var(--books-fixed-panel-height);
+        min-height: 0;
+    }
+
+    .books-category-sidebar,
+    .books-sidebar-shell,
+    .books-category-card,
+    .books-main-panel {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .books-sidebar-shell,
+    .books-category-card {
+        height: 100%;
+    }
+
+    #books-desktop-categories,
+    .books-results-scroll {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+}

@@ -1,426 +1,411 @@
-{# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+{# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
 {# 图书详情页 #}
-{# 逐行注释：Jinja 模板继承声明，复用基础页面骨架。 #}
+{# Jinja 模板继承声明，复用基础页面骨架。 #}
 {% extends "base.html" %}
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
+{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block title %}{{ book.title }} - 景艺大图书馆{% endblock %}
-{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
+{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block head_extra %}
-{# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+{# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
 <link rel="stylesheet" href="{{ versioned_url('css/book-detail.css') }}">
-{# 逐行注释：Jinja block 结束，关闭当前模板填充区域。 #}
+{# Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-{# 逐行注释：设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
+{# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
 {% set cover_url = url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') %}
-{# 逐行注释：设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
+{# 设置 Jinja 模板变量，供后续渲染条件或内容使用。 #}
 {% set stock_pct = (book.stock * 100 // book.total) if book.total else 0 %}
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
+{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block content %}
-{# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+{# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
 <div id="bookDetailPageState"
-     {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+     {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
      data-book-id="{{ book.id }}"
-     {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+     {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
      data-book-title="{{ book.title }}"
-     {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+     {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
      data-book-stock="{{ book.stock }}"
-     {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+     {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
      data-book-total="{{ book.total }}"
-     {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+     {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
      data-can-borrow="{{ 'true' if current_user.is_authenticated and not current_user.is_admin else 'false' }}"
-     {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+     {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+    {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     {# 顶部面包屑 #}
-    {# 逐行注释：HTML `nav` 元素，构成页面结构、内容或交互区域。 #}
+    {# HTML `nav` 元素，构成页面结构、内容或交互区域。 #}
     <nav class="flex items-center gap-2 text-xs sm:text-sm text-brand-deep/60 mb-4 sm:mb-6">
-        {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
         <a href="{{ url_for('user.books') }}" class="hover:text-brand-primary transition-colors font-semibold">馆藏资源</a>
-        {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
+        {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
         {% if book.category %}
-        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+        {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-        {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
         <a href="{{ url_for('user.books', category=book.category) }}" class="hover:text-brand-primary transition-colors">{{ book.category }}</a>
-        {# 逐行注释：结束当前 Jinja 条件块。 #}
+        {# 结束当前 Jinja 条件块。 #}
         {% endif %}
-        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+        {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
         <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-        {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
         <span class="text-brand-deep/40 truncate">{{ book.title }}</span>
-    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+    {# HTML 闭合标签，结束前面打开的页面结构。 #}
     </nav>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+    {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     {# Hero 区:封面 + 信息 #}
-    {# 逐行注释：HTML `section` 元素，构成页面结构、内容或交互区域。 #}
+    {# HTML `section` 元素，构成页面结构、内容或交互区域。 #}
     <section class="detail-hero p-4 sm:p-6 lg:p-10"
-             {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+             {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
              style="--detail-cover: url('{{ cover_url }}');">
-        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,300px)_1fr] gap-6 lg:gap-10">
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+            {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             {# ========== 左侧:封面 + 操作 ========== #}
-            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+            {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="lg:sticky lg:top-24 lg:self-start space-y-5">
-                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="detail-cover-shell">
-                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <img src="{{ cover_url }}" alt="{{ book.title }}" loading="eager" decoding="async">
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 {# 状态徽章保留 ID 以兼容轮询脚本 #}
-                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="flex justify-center">
-                    {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
+                    {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% if book.available %}
-                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span id="bookDetailAvailabilityBadge" class="flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            {# 逐行注释：HTML `path` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `path` 元素，构成页面结构、内容或交互区域。 #}
                             <path id="bookDetailAvailabilityIconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </svg>
-                        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                         <span id="bookDetailAvailabilityText">可借阅</span>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </span>
-                    {# 逐行注释：Jinja 条件的兜底分支，渲染未命中条件时的内容。 #}
+                    {# Jinja 条件的兜底分支，渲染未命中条件时的内容。 #}
                     {% else %}
-                    {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                     <span id="bookDetailAvailabilityBadge" class="flex items-center px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            {# 逐行注释：HTML `path` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `path` 元素，构成页面结构、内容或交互区域。 #}
                             <path id="bookDetailAvailabilityIconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </svg>
-                        {# 逐行注释：HTML `span` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `span` 元素，构成页面结构、内容或交互区域。 #}
                         <span id="bookDetailAvailabilityText">已借出</span>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </span>
-                    {# 逐行注释：结束当前 Jinja 条件块。 #}
+                    {# 结束当前 Jinja 条件块。 #}
                     {% endif %}
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 {# 操作按钮 #}
-                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div id="bookDetailActionGroup" class="space-y-2.5">
-                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div id="bookDetailBorrowButtonSlot">
-                        {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
+                        {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                         {% if book.available and current_user.is_authenticated and not current_user.is_admin %}
-                        {# 逐行注释：按钮控件，触发提交、弹窗、切换或其他页面动作。 #}
+                        {# 按钮控件，触发提交、弹窗、切换或其他页面动作。 #}
                         <button type="button"
-                                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                 id="bookDetailBorrowButton"
-                                {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                 data-book-id="{{ book.id }}"
-                                {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                 data-book-title="{{ book.title }}"
-                                {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                                 data-book-stock="{{ book.stock }}"
-                                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                 onclick="showBorrowModalFromData(this)"
-                                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                                 class="detail-action-primary">
-                            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                            {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                             预约借阅
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </button>
-                        {# 逐行注释：结束当前 Jinja 条件块。 #}
+                        {# 结束当前 Jinja 条件块。 #}
                         {% endif %}
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <a href="{{ url_for('user.books') }}" class="detail-action-secondary block">返回列表</a>
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-            {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+            {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
             {# ========== 右侧:标题 + 元数据 + 库存 ========== #}
-            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+            {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div class="space-y-6">
-                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 {# 标题块 #}
-                {# 逐行注释：HTML `header` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `header` 元素，构成页面结构、内容或交互区域。 #}
                 <header>
-                    {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
+                    {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                     {% if book.category %}
-                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <a href="{{ url_for('user.books', category=book.category) }}"
-                       {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                       {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                        class="inline-flex items-center gap-1.5 px-3 py-1 mb-3 text-xs font-bold text-brand-primary bg-white/70 rounded-full hover:bg-white transition-colors">
-                        {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-                        {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                         {{ book.category }}
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </a>
-                    {# 逐行注释：结束当前 Jinja 条件块。 #}
+                    {# 结束当前 Jinja 条件块。 #}
                     {% endif %}
-                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-brand-deep leading-tight">{{ book.title }}</h1>
-                    {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                     <p class="mt-3 text-base sm:text-lg text-brand-deep/70">
-                        {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                         <span class="font-semibold">{{ book.author }}</span>
-                        {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
+                        {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                         {% if book.publisher %}<span class="mx-2 text-brand-deep/30">·</span><span>{{ book.publisher }}</span>{% endif %}
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </p>
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </header>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 {# 关键统计 #}
-                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="grid grid-cols-3 gap-3 sm:gap-4">
-                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="detail-stat" data-stock-pct-card>
-                        {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                         <p class="detail-stat-label">库存</p>
-                        {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                         <p class="detail-stat-value">
-                            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <span id="detailStockNow">{{ book.stock }}</span><span class="text-brand-deep/40 text-base font-sans">/{{ book.total }}</span>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </p>
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="detail-progress mt-2">
-                            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <div id="detailStockBar" class="detail-progress-bar" style="width: {{ stock_pct }}%"></div>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="detail-stat">
-                        {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                         <p class="detail-stat-label">借阅总次数</p>
-                        {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                         <p class="detail-stat-value" id="detailBorrowCount">{{ borrow_count }}</p>
-                        {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                         <p class="text-[11px] text-brand-deep/50 mt-1">累计借出</p>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="detail-stat">
-                        {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                         <p class="detail-stat-label">馆藏位置</p>
-                        {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                        {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                         <p class="detail-stat-value text-xl sm:text-2xl truncate" title="{{ book.location or '未设置' }}">
-                            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             {{ book.location or '未设置' }}
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </p>
-                        {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                         <p class="text-[11px] text-brand-deep/50 mt-1">实体位置</p>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 {# 元数据卡 #}
-                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="detail-meta-card">
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="detail-meta-icon">
-                            {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="min-w-0">
-                            {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                             <p class="detail-meta-label">作者</p>
-                            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <p class="detail-meta-value">{{ book.author }}</p>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="detail-meta-card">
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="detail-meta-icon">
-                            {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253"/></svg>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="min-w-0">
-                            {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                             <p class="detail-meta-label">ISBN</p>
-                            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <p class="detail-meta-value font-mono text-sm">{{ book.isbn or '—' }}</p>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="detail-meta-card">
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="detail-meta-icon">
-                            {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="min-w-0">
-                            {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                             <p class="detail-meta-label">出版社</p>
-                            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <p class="detail-meta-value">{{ book.publisher or '未提供' }}</p>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                    {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                     <div class="detail-meta-card">
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="detail-meta-icon">
-                            {# 逐行注释：HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `svg` 元素，构成页面结构、内容或交互区域。 #}
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                         <div class="min-w-0">
-                            {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                            {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                             <p class="detail-meta-label">分类</p>
-                            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                             <p class="detail-meta-value">{{ book.category or '未分类' }}</p>
-                        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                        {# HTML 闭合标签，结束前面打开的页面结构。 #}
                         </div>
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </div>
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 {# 库存详情 (保留 ID 以兼容轮询脚本) #}
-                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="bg-white/70 rounded-2xl p-4 sm:p-5 border border-pink-100">
-                    {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                     <p id="bookDetailInventoryText" class="text-sm sm:text-base font-semibold text-brand-deep">
-                        {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
+                        {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
                         {% if book.available %}可借阅 (剩余 {{ book.stock }}/{{ book.total }} 本){% else %}已借出{% endif %}
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </p>
-                    {# 逐行注释：HTML `p` 元素，构成页面结构、内容或交互区域。 #}
+                    {# HTML `p` 元素，构成页面结构、内容或交互区域。 #}
                     <p class="text-xs text-brand-deep/50 mt-1">
-                        {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                        {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                         库存数据每 3 秒同步一次,确保你看到的是最新状态
-                    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                    {# HTML 闭合标签，结束前面打开的页面结构。 #}
                     </p>
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
-        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+        {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
-    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+    {# HTML 闭合标签，结束前面打开的页面结构。 #}
     </section>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-    {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+    {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
     {# ========== 相关推荐 ========== #}
-    {# 逐行注释：Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
+    {# Jinja 条件判断，根据后端传入数据决定渲染内容。 #}
     {% if related_books %}
-    {# 逐行注释：HTML `section` 元素，构成页面结构、内容或交互区域。 #}
+    {# HTML `section` 元素，构成页面结构、内容或交互区域。 #}
     <section class="mt-10 sm:mt-12">
-        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="flex items-end justify-between mb-4 sm:mb-5">
-            {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+            {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
             <div>
-                {# 逐行注释：HTML `h2` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `h2` 元素，构成页面结构、内容或交互区域。 #}
                 <h2 class="text-xl sm:text-2xl font-heading font-bold text-brand-deep">同类好书</h2>
-                {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                 <p class="text-xs sm:text-sm text-brand-deep/50 mt-1">来自《{{ book.category }}》分类下的其他作品</p>
-            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </div>
-            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <a href="{{ url_for('user.books', category=book.category) }}"
-               {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+               {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                class="text-xs sm:text-sm font-semibold text-brand-primary hover:text-pink-600 transition-colors">
-                {# 逐行注释：页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
+                {# 页面文本或模板内容，会作为界面文案、属性值或脚本片段参与渲染。 #}
                 查看全部 →
-            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </a>
-        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+        {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
-        {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+        {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {# 逐行注释：Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
+            {# Jinja 循环开始，遍历后端传入的数据列表生成重复结构。 #}
             {% for rel in related_books %}
-            {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+            {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
             <a href="{{ url_for('user.book_detail', book_id=rel.id) }}" class="related-card group">
-                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="related-card-cover">
-                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <img src="{{ url_for('static', filename='images/' + rel.image) if rel.image else url_for('static', filename='images/default-book.jpg') }}"
-                         {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                         {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                          alt="{{ rel.title }}" loading="lazy" decoding="async">
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-                {# 逐行注释：HTML `div` 元素，构成页面结构、内容或交互区域。 #}
+                {# HTML `div` 元素，构成页面结构、内容或交互区域。 #}
                 <div class="p-3">
-                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <h3 class="text-sm font-heading font-semibold text-brand-deep line-clamp-2 group-hover:text-brand-primary transition-colors">{{ rel.title }}</h3>
-                    {# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+                    {# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
                     <p class="text-xs text-brand-deep/50 mt-1 truncate">{{ rel.author }}</p>
-                {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+                {# HTML 闭合标签，结束前面打开的页面结构。 #}
                 </div>
-            {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+            {# HTML 闭合标签，结束前面打开的页面结构。 #}
             </a>
-            {# 逐行注释：结束当前 Jinja 循环块。 #}
+            {# 结束当前 Jinja 循环块。 #}
             {% endfor %}
-        {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+        {# HTML 闭合标签，结束前面打开的页面结构。 #}
         </div>
-    {# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+    {# HTML 闭合标签，结束前面打开的页面结构。 #}
     </section>
-    {# 逐行注释：结束当前 Jinja 条件块。 #}
+    {# 结束当前 Jinja 条件块。 #}
     {% endif %}
-{# 逐行注释：HTML 闭合标签，结束前面打开的页面结构。 #}
+{# HTML 闭合标签，结束前面打开的页面结构。 #}
 </div>
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-{# 逐行注释：引入其他模板片段，复用公共页面结构。 #}
+{# 引入其他模板片段，复用公共页面结构。 #}
 {% include '_borrow_modal.html' %}
-{# 逐行注释：Jinja block 结束，关闭当前模板填充区域。 #}
+{# Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}
-{# 逐行注释：空行，用于分隔 HTML/Jinja 代码块，提升代码阅读层次。 #}
 
-{# 逐行注释：Jinja block 开始，向基础模板填充指定区域内容。 #}
+{# Jinja block 开始，向基础模板填充指定区域内容。 #}
 {% block scripts %}
-{# 逐行注释：输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
+{# 输出 Jinja 表达式，把后端数据或路由结果渲染到页面。 #}
 <script src="{{ versioned_url('js/book-detail.js') }}"></script>
-{# 逐行注释：Jinja block 结束，关闭当前模板填充区域。 #}
+{# Jinja block 结束，关闭当前模板填充区域。 #}
 {% endblock %}

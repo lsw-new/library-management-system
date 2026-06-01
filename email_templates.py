@@ -1,22 +1,17 @@
-# 逐行注释：从指定模块导入类、函数或变量，简化后续代码引用。
+# 从指定模块导入类、函数或变量，简化后续代码引用。
 from html import escape
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+# 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
 _CODE_TTL_MINUTES = 10
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `_html_text` 函数，封装一段可复用的后端处理流程。
+# 定义 `_html_text` 函数，封装一段可复用的后端处理流程。
 def _html_text(value: object) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return escape(str(value), quote=True)
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+# 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
 _MAIL_OUTER_OPEN = """\
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -49,9 +44,8 @@ _MAIL_OUTER_OPEN = """\
 <tr><td align="center">
 
 <table width="620" cellpadding="0" cellspacing="0" class="m-card" style="max-width:620px;width:100%;background:rgba(255,255,255,0.92);border-radius:24px;overflow:hidden;border:1px solid rgba(216,180,254,0.3);box-shadow:0 30px 60px -28px rgba(192,132,252,0.15),0 2px 4px rgba(216,180,254,0.06);">"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+# 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
 _MAIL_OUTER_CLOSE = """\
 
 </table>
@@ -60,9 +54,8 @@ _MAIL_OUTER_CLOSE = """\
 
 </body>
 </html>"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+# 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
 _MAIL_FOOTER = """\
 
   <tr>
@@ -104,13 +97,11 @@ _MAIL_FOOTER = """\
   <tr>
     <td style="height:4px;background:linear-gradient(90deg,#f9a8d4,#d8b4fe,#f9a8d4);"></td>
   </tr>"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `_mail_header` 函数，封装一段可复用的后端处理流程。
+# 定义 `_mail_header` 函数，封装一段可复用的后端处理流程。
 def _mail_header(title: str, subtitle: str) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""\
 
   <tr>
@@ -151,31 +142,29 @@ def _mail_header(title: str, subtitle: str) -> str:
 
     </td>
   </tr>"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `_tip_box` 函数，封装一段可复用的后端处理流程。
+# 定义 `_tip_box` 函数，封装一段可复用的后端处理流程。
 def _tip_box(icon: str, title: str, items: list[str],
-             # 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+             # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
              icon_gradient: str = 'linear-gradient(135deg,#fbcfe8,#f9a8d4)') -> str:
-    # 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+    # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
     rows = '\n'.join(
-        # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+        # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
         f'              <tr>\n'
-        # 逐行注释：调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
+        # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
         f'                <td style="padding:3px 0;font-size:13px;color:rgba(157,78,122,0.6);line-height:1.7;">\n'
-        # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+        # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
         f'                  <span style="color:#f9a8d4;font-weight:600;">&bull;</span>&nbsp;&nbsp;{item}\n'
-        # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+        # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
         f'                </td>\n'
-        # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+        # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
         f'              </tr>'
-        # 逐行注释：循环控制语句，用于遍历数据集合或重复执行指定逻辑。
+        # 循环控制语句，用于遍历数据集合或重复执行指定逻辑。
         for item in items
-    # 逐行注释：关闭前面打开的复合表达式、集合字面量或函数调用结构。
+    # 关闭前面打开的复合表达式、集合字面量或函数调用结构。
     )
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""\
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
         <tr>
@@ -196,13 +185,11 @@ def _tip_box(icon: str, title: str, items: list[str],
           </td>
         </tr>
       </table>"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `_status_card_header` 函数，封装一段可复用的后端处理流程。
+# 定义 `_status_card_header` 函数，封装一段可复用的后端处理流程。
 def _status_card_header(label: str, status_text: str, gradient: str) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""\
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
@@ -224,13 +211,11 @@ def _status_card_header(label: str, status_text: str, gradient: str) -> str:
                 </td>
               </tr>
             </table>"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `_book_title_section` 函数，封装一段可复用的后端处理流程。
+# 定义 `_book_title_section` 函数，封装一段可复用的后端处理流程。
 def _book_title_section(safe_title: str) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""\
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
@@ -244,13 +229,11 @@ def _book_title_section(safe_title: str) -> str:
                 </td>
               </tr>
             </table>"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `_divider` 函数，封装一段可复用的后端处理流程。
+# 定义 `_divider` 函数，封装一段可复用的后端处理流程。
 def _divider() -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return """\
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
@@ -259,13 +242,11 @@ def _divider() -> str:
                 </td>
               </tr>
             </table>"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `_single_date_row` 函数，封装一段可复用的后端处理流程。
+# 定义 `_single_date_row` 函数，封装一段可复用的后端处理流程。
 def _single_date_row(label: str, value: str) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""\
             <table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(255,255,255,0.95);">
               <tr>
@@ -279,35 +260,32 @@ def _single_date_row(label: str, value: str) -> str:
                 </td>
               </tr>
             </table>"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `build_verification_email` 函数，封装一段可复用的后端处理流程。
+# 定义 `build_verification_email` 函数，封装一段可复用的后端处理流程。
 def build_verification_email(code: str) -> str:
-    # 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+    # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
     digit_gap = '<td class="m-dgap" style="width:8px;"></td>'
-    # 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+    # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
     digit_cells = [
-        # 逐行注释：调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
+        # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
         f'<td class="m-digit" style="width:48px;height:56px;background:linear-gradient(180deg,#FFF0F5,#FCE4EC);'
-        # 逐行注释：调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
+        # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
         f'border:1.5px solid rgba(216,180,254,0.35);'
-        # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+        # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
         f'border-radius:14px;text-align:center;vertical-align:middle;'
-        # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+        # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
         f'font-size:28px;font-weight:800;color:#c084fc;font-family:\'Courier New\',monospace;'
-        # 逐行注释：调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
+        # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
         f'letter-spacing:0;box-shadow:0 4px 12px -4px rgba(192,132,252,0.2);">{_html_text(d)}</td>'
-        # 逐行注释：循环控制语句，用于遍历数据集合或重复执行指定逻辑。
+        # 循环控制语句，用于遍历数据集合或重复执行指定逻辑。
         for d in code
-    # 逐行注释：关闭前面打开的复合表达式、集合字面量或函数调用结构。
+    # 关闭前面打开的复合表达式、集合字面量或函数调用结构。
     ]
-    # 逐行注释：执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+    # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
     digits = digit_gap.join(digit_cells)
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""{_MAIL_OUTER_OPEN}
 
 {_mail_header("邮箱验证", "请使用以下验证码完成身份验证")}
@@ -356,15 +334,13 @@ def build_verification_email(code: str) -> str:
 {_MAIL_FOOTER}
 
 {_MAIL_OUTER_CLOSE}"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `build_borrow_notification_email` 函数，封装一段可复用的后端处理流程。
+# 定义 `build_borrow_notification_email` 函数，封装一段可复用的后端处理流程。
 def build_borrow_notification_email(safe_username: str, safe_book_title: str,
-                                    # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+                                    # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
                                     safe_borrow_date: str, safe_return_display: str) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""{_MAIL_OUTER_OPEN}
 
 {_mail_header("图书预约成功", f"{safe_username}，你的预约已确认")}
@@ -422,15 +398,13 @@ def build_borrow_notification_email(safe_username: str, safe_book_title: str,
 {_MAIL_FOOTER}
 
 {_MAIL_OUTER_CLOSE}"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `build_rejection_email` 函数，封装一段可复用的后端处理流程。
+# 定义 `build_rejection_email` 函数，封装一段可复用的后端处理流程。
 def build_rejection_email(safe_username: str, safe_book_title: str,
-                          # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+                          # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
                           safe_reject_date: str) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""{_MAIL_OUTER_OPEN}
 
 {_mail_header("预约已被拒绝", f"{safe_username}，你的预约未通过审核")}
@@ -467,13 +441,11 @@ def build_rejection_email(safe_username: str, safe_book_title: str,
 {_MAIL_FOOTER}
 
 {_MAIL_OUTER_CLOSE}"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `build_password_reset_email` 函数，封装一段可复用的后端处理流程。
+# 定义 `build_password_reset_email` 函数，封装一段可复用的后端处理流程。
 def build_password_reset_email(safe_username: str, safe_new_password: str) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""{_MAIL_OUTER_OPEN}
 
 {_mail_header("密码已重置", f"{safe_username}，你的账号密码已被管理员重置")}
@@ -520,15 +492,13 @@ def build_password_reset_email(safe_username: str, safe_new_password: str) -> st
 {_MAIL_FOOTER}
 
 {_MAIL_OUTER_CLOSE}"""
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：空行，用于分隔 Python 代码块，提升代码阅读层次。
 
-# 逐行注释：定义 `build_expiry_email` 函数，封装一段可复用的后端处理流程。
+# 定义 `build_expiry_email` 函数，封装一段可复用的后端处理流程。
 def build_expiry_email(safe_username: str, safe_book_title: str,
-                       # 逐行注释：Python 语句，参与当前后端模块的配置、数据处理或控制流程。
+                       # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
                        safe_borrow_date: str) -> str:
-    # 逐行注释：返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
+    # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
     return f"""{_MAIL_OUTER_OPEN}
 
 {_mail_header("预约已过期", f"{safe_username}，你的预约因超时未领取已自动取消")}

@@ -9,16 +9,16 @@
 <!-- 页面标题 -->
 {% block title %}馆藏浏览 - 景艺大图书馆{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/books.css') }}">
+<link rel="stylesheet" href="{{ versioned_url('css/books.css') }}">
 {% endblock %}
 
 {% block content %}
 <!-- 主容器 -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="guest-books-page books-page-shell max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- 白色卡片容器 -->
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div class="guest-books-panel bg-white rounded-2xl shadow-lg overflow-hidden">
         <!-- ==================== 头部：标题和搜索栏 ==================== -->
-        <div class="px-4 sm:px-6 py-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="guest-books-head px-4 sm:px-6 py-6 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <!-- 标题区域 -->
             <div>
                 <h2 class="text-xl sm:text-2xl font-heading font-semibold text-brand-deep">馆藏浏览</h2>
@@ -38,7 +38,7 @@
         </div>
 
         <!-- ==================== 图书网格 ==================== -->
-        <div class="p-6">
+        <div class="guest-books-results p-6">
             {% if books %}
             <!-- 响应式网格：移动端1列，平板2列，桌面4列 -->
             <div class="guest-book-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

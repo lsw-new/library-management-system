@@ -13,7 +13,7 @@ from models import Book, BorrowRecord, db
 from utils.cache import cache_get, cache_set
 
 MAX_STOCK_QUERY_IDS = 50
-BOOKS_PER_PAGE = 4
+BOOKS_PER_PAGE = 8
 
 
 def _get_categories_cached(search: str):

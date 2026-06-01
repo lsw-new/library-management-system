@@ -112,6 +112,18 @@ class FrontendExperienceTests(unittest.TestCase):
                 offenders.append(str(path.relative_to(PROJECT_ROOT)))
         self.assertEqual(offenders, [])
 
+    def test_page_stylesheets_are_versioned(self):
+        expected = {
+            'books.html': "versioned_url('css/books.css')",
+            'guest_books.html': "versioned_url('css/books.css')",
+            'book_detail.html': "versioned_url('css/book-detail.css')",
+            'borrow_records.html': "versioned_url('css/borrow-records.css')",
+            'profile.html': "versioned_url('css/profile.css')",
+        }
+        for template, marker in expected.items():
+            content = (PROJECT_ROOT / 'static' / 'html' / template).read_text(encoding='utf-8')
+            self.assertIn(marker, content)
+
 
 class GitSafetyTests(unittest.TestCase):
     def test_sensitive_runtime_files_are_not_tracked(self):

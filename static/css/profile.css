@@ -523,3 +523,90 @@
         padding: 1rem;
     }
 }
+
+/* ==================== Desktop profile cohesion ==================== */
+@media (min-width: 1024px) {
+    .pf-page {
+        max-width: 1120px;
+        margin-inline: auto;
+    }
+
+    .pf-topbar {
+        margin-bottom: 1rem;
+    }
+
+    .pf-hero {
+        border-radius: 1.5rem;
+        padding: 2rem 2.25rem 1.75rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 24px 64px -44px rgba(var(--color-brand-primary-rgb), 0.42);
+    }
+
+    .pf-hero-content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1.35rem;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+
+    .pf-avatar {
+        width: 96px;
+        height: 96px;
+        border-radius: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .pf-avatar-overlay {
+        border-radius: 1.5rem;
+    }
+
+    .pf-identity {
+        min-width: 0;
+    }
+
+    .pf-hero-eyebrow {
+        justify-content: flex-start;
+    }
+
+    .pf-hero-name {
+        font-size: clamp(2rem, 2.4vw, 2.8rem);
+    }
+
+    .pf-stats {
+        gap: 1rem;
+    }
+
+    .pf-stat,
+    .pf-panel,
+    .pf-tabs {
+        border-color: rgba(249, 168, 212, 0.24);
+        box-shadow: 0 14px 36px -30px rgba(var(--color-brand-primary-rgb), 0.36);
+    }
+
+    .pf-stat {
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.84);
+    }
+
+    .pf-tabs {
+        margin-bottom: 1rem;
+        border-radius: 1.1rem;
+        background: rgba(255, 255, 255, 0.68);
+    }
+
+    .pf-tab {
+        border-radius: 0.85rem;
+    }
+
+    .pf-panel {
+        border-radius: 1.25rem;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.78);
+    }
+
+    .pf-form-grid {
+        gap: 1rem 1.25rem;
+    }
+}

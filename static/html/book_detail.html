@@ -3,7 +3,7 @@
 
 {% block title %}{{ book.title }} - 景艺大图书馆{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/book-detail.css') }}">
+<link rel="stylesheet" href="{{ versioned_url('css/book-detail.css') }}">
 {% endblock %}
 
 {% set cover_url = url_for('static', filename='images/' + book.image) if book.image else url_for('static', filename='images/default-book.jpg') %}

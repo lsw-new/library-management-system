@@ -876,3 +876,55 @@
 .record-progress-pct   { color: rgba(131, 24, 67, 0.45); font-variant-numeric: tabular-nums; }
 .record-progress.is-soon    .record-progress-label { color: #92400e; }
 .record-progress.is-overdue .record-progress-label { color: #991b1b; }
+
+/* ==================== Desktop borrow-records cohesion ==================== */
+@media (min-width: 1024px) {
+    .borrow-page {
+        max-width: 1180px;
+        margin-inline: auto;
+        padding-inline: 1.5rem;
+    }
+
+    .borrow-hero {
+        margin: 0 0 1.25rem;
+        padding: 1.7rem 1.75rem 1.45rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 24px 64px -44px rgba(var(--color-brand-primary-rgb), 0.42);
+    }
+
+    .borrow-layout {
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 1.25rem;
+    }
+
+    .records-tabs-bar {
+        padding: 1rem;
+        border-radius: 1.25rem;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(249, 168, 212, 0.24);
+        box-shadow: 0 14px 36px -30px rgba(var(--color-brand-primary-rgb), 0.35);
+    }
+
+    #records-list {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .record-card,
+    .aside-card {
+        border-radius: 1rem;
+        border-color: rgba(249, 168, 212, 0.22);
+        box-shadow: 0 14px 36px -30px rgba(var(--color-brand-primary-rgb), 0.36);
+    }
+
+    .borrow-aside {
+        gap: 1rem;
+        max-height: none;
+        overflow: visible;
+        top: 7.25rem;
+    }
+
+    .records-search {
+        max-width: 320px;
+    }
+}

@@ -3,13 +3,13 @@
 
 {% block title %}借阅足迹 - 景艺大图书馆{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/borrow-records.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/borrow-sidebar.css') }}">
+<link rel="stylesheet" href="{{ versioned_url('css/borrow-records.css') }}">
+<link rel="stylesheet" href="{{ versioned_url('css/borrow-sidebar.css') }}">
 {% endblock %}
 
 {% block header %}{% endblock %}
 {% block main_class %}flex-1 py-6 md:py-12 px-4 animate-in fade-in duration-700{% endblock %}
-{% block content_wrapper %}max-w-6xl mx-auto{% endblock %}
+{% block content_wrapper %}max-w-7xl mx-auto{% endblock %}
 
 {% set status_meta = {
     'pending':   {'label': '未领取', 'tone': 'pending'},

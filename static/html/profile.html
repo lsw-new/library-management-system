@@ -3,11 +3,11 @@
 
 {% block title %}个人中心 - 景艺大图书馆{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link rel="stylesheet" href="{{ versioned_url('css/profile.css') }}">
 {% endblock %}
 {% block header %}{% endblock %}
 {% block main_class %}flex-1 py-6 md:py-12 px-4 animate-in fade-in duration-700{% endblock %}
-{% block content_wrapper %}max-w-4xl mx-auto{% endblock %}
+{% block content_wrapper %}max-w-6xl mx-auto{% endblock %}
 
 {% set active_count = insights.active_count %}
 {% set completion_rate = insights.completion_rate %}
@@ -49,15 +49,17 @@
                 <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/gif" class="sr-only">
             </div>
 
-            <div class="pf-hero-eyebrow">
-                <span class="pf-dot"></span>
-                <span class="pf-hero-eyebrow-text">个人中心</span>
-                <span class="pf-dot pf-dot-alt"></span>
+            <div class="pf-identity">
+                <div class="pf-hero-eyebrow">
+                    <span class="pf-dot"></span>
+                    <span class="pf-hero-eyebrow-text">个人中心</span>
+                    <span class="pf-dot pf-dot-alt"></span>
+                </div>
+                <h1 class="pf-hero-name" data-bind="username">{{ current_user.username }}</h1>
+                <p class="pf-hero-sub" data-bind="user-sub">
+                    {% if current_user.real_name %}<span data-bind="real-name">{{ current_user.real_name }}</span>{% endif %}{% if current_user.class_name %}<span class="pf-hero-sub-sep"> · </span><span data-bind="class-name">{{ current_user.class_name }}</span>{% endif %}{% if current_user.student_id %}<span class="pf-hero-sub-sep"> · </span>学号 {{ current_user.student_id }}{% endif %}
+                </p>
             </div>
-            <h1 class="pf-hero-name" data-bind="username">{{ current_user.username }}</h1>
-            <p class="pf-hero-sub" data-bind="user-sub">
-                {% if current_user.real_name %}<span data-bind="real-name">{{ current_user.real_name }}</span>{% endif %}{% if current_user.class_name %}<span class="pf-hero-sub-sep"> · </span><span data-bind="class-name">{{ current_user.class_name }}</span>{% endif %}{% if current_user.student_id %}<span class="pf-hero-sub-sep"> · </span>学号 {{ current_user.student_id }}{% endif %}
-            </p>
         </div>
 
         <div class="pf-stats">

@@ -2,6 +2,10 @@
 from extensions import socketio
 
 
+def _json_int(value: object) -> int:
+    return int(value or 0)
+
+
 # 定义 `emit_online_changed` 函数，封装一段可复用的后端处理流程。
 def emit_online_changed():
     # 从指定模块导入类、函数或变量，简化后续代码引用。
@@ -65,13 +69,13 @@ def emit_reservation_changed(action: str = 'update'):
     # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
     socketio.emit('reservation_changed', {
         # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
-        'pending_count': result.pending_count or 0,
+        'pending_count': _json_int(result.pending_count),
         # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
-        'current_count': result.current_count or 0,
+        'current_count': _json_int(result.current_count),
         # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
-        'history_count': result.history_count or 0,
+        'history_count': _json_int(result.history_count),
         # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
-        'latest_id': result.latest_id or 0,
+        'latest_id': _json_int(result.latest_id),
         # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
         'action': action,
     # Python 语句，参与当前后端模块的配置、数据处理或控制流程。

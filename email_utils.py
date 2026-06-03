@@ -13,9 +13,7 @@ from hmac import compare_digest
 # 从指定模块导入类、函数或变量，简化后续代码引用。
 from datetime import timedelta
 # 从指定模块导入类、函数或变量，简化后续代码引用。
-from email.mime.multipart import MIMEMultipart
-# 从指定模块导入类、函数或变量，简化后续代码引用。
-from email.mime.text import MIMEText
+from email.message import EmailMessage
 # 从指定模块导入类、函数或变量，简化后续代码引用。
 from email.utils import formataddr
 # 从指定模块导入类、函数或变量，简化后续代码引用。
@@ -63,6 +61,38 @@ def _sanitize_header(value: object, max_length: int | None = None) -> str:
     return sanitized[:max_length] if max_length else sanitized
 
 
+def _smtp_error_detail(exc: smtplib.SMTPException) -> str:
+    code = getattr(exc, 'smtp_code', None)
+    raw_error = getattr(exc, 'smtp_error', '')
+    if isinstance(raw_error, bytes):
+        raw_error = raw_error.decode('utf-8', errors='replace')
+    detail = _sanitize_header(raw_error, 300)
+    if code and detail:
+        return f'{code} {detail}'
+    if code:
+        return str(code)
+    return detail or exc.__class__.__name__
+
+
+def _build_message(to_email: str, subject: str, plain_content: str,
+                   html_content: str | None = None) -> EmailMessage:
+    msg = EmailMessage()
+    msg['Subject'] = _sanitize_header(subject, _SUBJECT_MAX_LENGTH)
+    msg['From'] = formataddr(('景艺大图书馆', _SENDER_EMAIL))
+    msg['To'] = to_email
+    msg.set_content(plain_content, subtype='plain', charset='utf-8')
+    if html_content:
+        msg.add_alternative(html_content, subtype='html')
+    return msg
+
+
+def _send_message(msg: EmailMessage, to_email: str) -> None:
+    with smtplib.SMTP(_SMTP_SERVER, _SMTP_PORT, timeout=15) as server:
+        server.starttls()
+        server.login(_SENDER_EMAIL, _SENDER_PASSWORD)
+        server.send_message(msg, from_addr=_SENDER_EMAIL, to_addrs=[to_email])
+
+
 # 定义 `_mask_email` 函数，封装一段可复用的后端处理流程。
 def _mask_email(email: str) -> str:
     # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
@@ -84,7 +114,8 @@ def generate_code(length: int = 6) -> str:
 
 
 # 定义 `_send_email` 函数，封装一段可复用的后端处理流程。
-def _send_email(to_email: str, subject: str, html_content: str) -> bool:
+def _send_email(to_email: str, subject: str, html_content: str,
+                plain_content: str | None = None) -> bool:
     # 条件判断，根据当前变量、请求参数或运行状态选择不同处理分支。
     if not _SENDER_EMAIL or not _SENDER_PASSWORD:
         # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
@@ -93,38 +124,46 @@ def _send_email(to_email: str, subject: str, html_content: str) -> bool:
         return False
     # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
     safe_to_email = _sanitize_header(to_email)
+    has_plain_fallback = plain_content is not None
+    plain_content = plain_content or '这是一封系统通知邮件，请使用支持 HTML 的邮件客户端查看完整内容。'
     # 异常保护入口，下面的逻辑可能失败，需要捕获并转成可控结果。
     try:
-        # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
-        msg = MIMEMultipart('alternative')
-        # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
-        msg['Subject'] = _sanitize_header(subject, _SUBJECT_MAX_LENGTH)
-        # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
-        msg['From'] = formataddr(('景艺大图书馆', _SENDER_EMAIL))
-        # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
-        msg['To'] = safe_to_email
-        # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-        msg.attach(MIMEText(html_content, 'html', 'utf-8'))
-        # 上下文管理语句，自动管理资源生命周期或事务边界。
-        with smtplib.SMTP(_SMTP_SERVER, _SMTP_PORT) as server:
-            # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-            server.starttls()
-            # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-            server.login(_SENDER_EMAIL, _SENDER_PASSWORD)
-            # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-            server.send_message(msg)
+        msg = _build_message(safe_to_email, subject, plain_content, html_content)
+        _send_message(msg, safe_to_email)
         # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
         return True
+    except smtplib.SMTPDataError as exc:
+        logger.error(
+            "邮件内容被 SMTP 拒收 recipient=%s detail=%s",
+            _mask_email(safe_to_email),
+            _smtp_error_detail(exc),
+        )
+        if not has_plain_fallback:
+            return False
+        try:
+            msg = _build_message(safe_to_email, subject, plain_content)
+            _send_message(msg, safe_to_email)
+            logger.warning("HTML 邮件被拒收，已改用纯文本验证码邮件 recipient=%s", _mask_email(safe_to_email))
+            return True
+        except smtplib.SMTPException as retry_exc:
+            logger.error(
+                "纯文本邮件发送失败 recipient=%s detail=%s",
+                _mask_email(safe_to_email),
+                _smtp_error_detail(retry_exc),
+            )
+        except Exception:
+            logger.error("纯文本邮件发送失败 recipient=%s", _mask_email(safe_to_email), exc_info=True)
+        return False
     # 异常处理分支，用于回滚、记录日志或返回错误响应。
     except smtplib.SMTPException as exc:
         # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
         logger.error(
             # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
-            "邮件发送失败 recipient=%s error=%s",
+            "邮件发送失败 recipient=%s detail=%s",
             # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
             _mask_email(safe_to_email),
             # Python 语句，参与当前后端模块的配置、数据处理或控制流程。
-            exc.__class__.__name__,
+            _smtp_error_detail(exc),
         # 关闭前面打开的复合表达式、集合字面量或函数调用结构。
         )
         # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
@@ -141,8 +180,14 @@ def _send_email(to_email: str, subject: str, html_content: str) -> bool:
 def send_verification_email(to_email: str, code: str) -> bool:
     # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
     html_content = build_verification_email(code)
+    plain_content = (
+        f"景艺大图书馆邮箱验证码\n\n"
+        f"你的验证码是：{code}\n"
+        f"有效期 {_CODE_TTL_MINUTES} 分钟，仅限本次使用。\n"
+        f"请勿将此验证码分享给任何人；如非本人操作，请忽略此邮件。"
+    )
     # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
-    return _send_email(to_email, '景艺大图书馆 — 邮箱验证码', html_content)
+    return _send_email(to_email, '景艺大图书馆 — 邮箱验证码', html_content, plain_content)
 
 
 # 定义 `store_verification_code` 函数，封装一段可复用的后端处理流程。

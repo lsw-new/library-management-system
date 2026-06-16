@@ -33,8 +33,16 @@ cp docker/.env.example .env
 ### 2. 启动服务
 
 ```bash
+# 自动从 Docker Hub 拉取已发布的多架构镜像并启动
 docker-compose up -d
 ```
+
+> 应用镜像默认使用已发布的 `lsw3435255848/library_web:latest`，无需本地构建。
+> 如需本地源码构建，先构建并指定 `APP_IMAGE`：
+> ```bash
+> docker build -t library_web:local .
+> APP_IMAGE=library_web:local docker-compose up -d
+> ```
 
 ### 3. 初始化数据库
 
@@ -57,7 +65,7 @@ docker-compose up -d
 | 服务 | 镜像 | 端口 | 说明 |
 |------|------|------|------|
 | mysql | mysql:8.0 | 3306 | 数据库 |
-| app | library_app:latest | 5000 | Flask 应用 (gunicorn) |
+| app | lsw3435255848/library_web:latest | 5000 | Flask 应用 (gunicorn)，已发布多架构镜像 amd64+arm64 |
 | nginx | nginx:alpine | 80 | 反向代理（可选，需 `--profile production`） |
 
 ## 环境变量
@@ -72,6 +80,7 @@ docker-compose up -d
 | `SMTP_SENDER_EMAIL` | 发件邮箱（可选） | - |
 | `SMTP_SENDER_PASSWORD` | 邮箱授权码（可选） | - |
 | `APP_PORT` | 应用端口 | 5000 |
+| `APP_IMAGE` | 应用镜像（可改 tag 指定版本） | lsw3435255848/library_web:latest |
 
 ## 常用命令
 
@@ -85,8 +94,8 @@ docker-compose down
 # 查看日志
 docker-compose logs -f app
 
-# 重建镜像
-docker-compose up -d --build
+# 拉取最新镜像并重启
+docker-compose pull app && docker-compose up -d
 
 # 启用 Nginx 反向代理
 docker-compose --profile production up -d
@@ -100,14 +109,14 @@ docker-compose down -v
 
 ## 离线部署
 
-在有网络的机器上构建并导出镜像：
+在有网络的机器上拉取（或构建）并导出镜像：
 
 ```bash
-# 构建应用镜像
-docker-compose build
+# 拉取已发布的应用镜像（或本地构建：docker build -t lsw3435255848/library_web:latest .）
+docker pull lsw3435255848/library_web:latest
 
 # 导出镜像
-docker save library_app:latest -o docker/docker_ios/library_app.tar
+docker save lsw3435255848/library_web:latest -o docker/docker_ios/library_web.tar
 docker save mysql:8.0 -o docker/docker_ios/mysql_8.0.tar
 ```
 

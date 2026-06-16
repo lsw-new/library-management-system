@@ -6,7 +6,7 @@
 
 | 文件名 | 说明 |
 |--------|------|
-| `library_app.tar` | Flask 应用镜像 |
+| `library_web.tar` | Flask 应用镜像（标签 `lsw3435255848/library_web:latest`） |
 | `mysql_8.0.tar` | MySQL 8.0 数据库镜像 |
 
 > 默认离线启动只运行 `app + mysql`。如需 Nginx 反向代理，可另外准备 `nginx:alpine` 镜像并使用 production profile。
@@ -16,8 +16,8 @@
 在项目根目录执行：
 
 ```bash
-docker-compose build
-docker save library_app:latest -o docker/docker_ios/library_app.tar
+docker pull lsw3435255848/library_web:latest
+docker save lsw3435255848/library_web:latest -o docker/docker_ios/library_web.tar
 docker save mysql:8.0 -o docker/docker_ios/mysql_8.0.tar
 ```
 
@@ -30,7 +30,7 @@ cd C:\path\to\PythonProject\docker\docker_ios
 
 脚本会自动：
 1. 检查 Docker Desktop
-2. 加载 `library_app.tar` 和 `mysql_8.0.tar`
+2. 加载 `library_web.tar` 和 `mysql_8.0.tar`
 3. 从 `docker/.env.example` 创建根目录 `.env`
 4. 执行 `docker-compose up -d`
 
@@ -52,7 +52,7 @@ sudo bash docker/docker_ios/deploy.sh
 
 ```bash
 cd docker/docker_ios
-docker load -i library_app.tar
+docker load -i library_web.tar
 docker load -i mysql_8.0.tar
 
 cd ../..
@@ -98,11 +98,11 @@ docker-compose down -v
 ## 更新镜像
 
 ```bash
-# 在有网络/源码的机器上重建
-docker-compose build --no-cache
+# 在有网络的机器上拉取最新镜像
+docker pull lsw3435255848/library_web:latest
 
 # 重新导出
-docker save library_app:latest -o docker/docker_ios/library_app.tar
+docker save lsw3435255848/library_web:latest -o docker/docker_ios/library_web.tar
 docker save mysql:8.0 -o docker/docker_ios/mysql_8.0.tar
 ```
 

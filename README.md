@@ -2,6 +2,14 @@
 
 一个基于 Flask 的图书馆管理系统，覆盖图书检索、预约借阅、归还审核、用户管理、邮箱验证码、在线会话管理和 Docker 部署。项目适合课程设计、校园图书馆原型、后台管理系统练习，以及 Flask + MySQL + Socket.IO 的完整 Web 项目参考。
 
+应用镜像已发布到 Docker Hub（多架构 `amd64` + `arm64`）：
+
+```text
+lsw3435255848/library_web:latest
+```
+
+`docker-compose.yml` 默认直接拉取该镜像，无需本地构建即可一键启动。
+
 ## 项目特点
 
 - 用户端支持首页推荐、图书列表、分类筛选、详情查看、热门排行榜、图书预约、取消预约和借阅记录查询。
@@ -19,7 +27,7 @@
 | 后端框架 | Flask 3.0 |
 | ORM | Flask-SQLAlchemy 3.1 |
 | 登录会话 | Flask-Login |
-| 实时通信 | Flask-SocketIO、python-socketio、eventlet |
+| 实时通信 | Flask-SocketIO、python-socketio、gevent |
 | 数据库 | MySQL 8.0、PyMySQL |
 | 缓存/限流 | Redis，可回退到进程内存 |
 | 部署 | Docker、Docker Compose、Gunicorn、可选 Nginx |
@@ -164,14 +172,23 @@ SMTP_SENDER_PASSWORD=your_qq_mail_authorization_code
 
 ### 2. 启动服务
 
+默认从 Docker Hub 拉取已发布的多架构应用镜像并启动：
+
 ```bash
-docker compose up -d --build
+docker compose up -d
 ```
 
 如果你的 Docker 版本仍使用旧命令，也可以执行：
 
 ```bash
-docker-compose up -d --build
+docker-compose up -d
+```
+
+如需基于本地源码构建镜像（而不是拉取 Docker Hub 版本），先构建并通过 `APP_IMAGE` 指定：
+
+```bash
+docker build -t library_web:local .
+APP_IMAGE=library_web:local docker compose up -d
 ```
 
 ### 3. 访问系统
@@ -295,7 +312,7 @@ http://127.0.0.1:5000
 | --- | --- | --- | --- |
 | `mysql` | `mysql:8.0` | `3306` | 主数据库，使用 `mysql_data` 卷持久化 |
 | `redis` | `redis:7-alpine` | 内部端口 | 缓存和限流后端，使用 `redis_data` 卷持久化 |
-| `app` | 本项目 `Dockerfile` | `5000` | Gunicorn + eventlet 运行 Flask 应用 |
+| `app` | `lsw3435255848/library_web:latest`（多架构，可用 `APP_IMAGE` 覆盖） | `5000` | Gunicorn + gevent 运行 Flask 应用 |
 | `nginx` | `nginx:alpine` | `80` | 可选反向代理，需要启用 `production` profile |
 
 启动应用和数据库：
@@ -310,10 +327,11 @@ docker compose up -d
 docker compose logs -f app
 ```
 
-重建应用镜像：
+拉取最新应用镜像并重启：
 
 ```bash
-docker compose up -d --build app
+docker compose pull app
+docker compose up -d
 ```
 
 停止容器但保留数据：
@@ -333,6 +351,33 @@ docker compose down -v
 ```bash
 docker compose --profile production up -d
 ```
+
+## 离线 / 内网部署
+
+无法访问 Docker Hub 的服务器，可在有网络的机器上导出镜像后离线加载。
+
+在有网络的机器上拉取并导出：
+
+```bash
+docker pull lsw3435255848/library_web:latest
+docker save lsw3435255848/library_web:latest -o docker/docker_ios/library_web.tar
+docker save mysql:8.0 -o docker/docker_ios/mysql_8.0.tar
+```
+
+将 `docker/docker_ios/` 目录连同 `docker-compose.yml`、`docker/` 配置复制到目标机器，再使用脚本一键加载并启动：
+
+```bash
+# Linux 服务器
+sudo bash docker/docker_ios/deploy.sh
+
+# Linux / macOS
+bash docker/docker_ios/load_and_start.sh
+
+# Windows PowerShell
+.\docker\docker_ios\load_and_start.ps1
+```
+
+脚本会加载 `library_web.tar` 和 `mysql_8.0.tar`，从模板生成 `.env`，再执行 `docker compose up -d` 启动。由于 `app` 服务的 `pull_policy` 为 `missing`，已离线加载的镜像不会再次联网拉取。更多细节见 `docker/docker_ios/README.md`。
 
 ## 环境变量
 
@@ -357,6 +402,7 @@ docker compose --profile production up -d
 | `APP_PORT` | Docker 可选 | `5000` | 应用映射到宿主机的端口 |
 | `MYSQL_PORT` | Docker 可选 | `3306` | MySQL 映射到宿主机的端口 |
 | `NGINX_PORT` | Docker 可选 | `80` | Nginx 映射到宿主机的端口 |
+| `APP_IMAGE` | Docker 可选 | `lsw3435255848/library_web:latest` | 应用镜像，可改 tag 指定版本或指向本地构建镜像 |
 
 ## 常用路由
 
@@ -481,10 +527,11 @@ docker compose logs -f mysql
 
 ### Docker 启动后静态资源缺失
 
-应用镜像会在入口脚本中把默认静态资源复制到挂载卷。可以尝试重建并重启：
+应用镜像会在入口脚本中把默认静态资源复制到挂载卷。可以尝试重新拉取镜像并重启：
 
 ```bash
-docker compose up -d --build app
+docker compose pull app
+docker compose up -d
 ```
 
 ### 数据库连接失败

@@ -92,3 +92,4 @@ data/stream_store/
 
 # Local debug screenshots
 admin-sidebar-logs*.png
+/books-*.png

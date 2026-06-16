@@ -20,7 +20,7 @@ Write-Host ""
 
 # 2. 加载镜像
 Write-Host "[2/4] 加载镜像..." -ForegroundColor Yellow
-$images = @("library_app.tar", "mysql_8.0.tar")
+$images = @("library_web.tar", "mysql_8.0.tar")
 
 foreach ($tar in $images) {
     if (Test-Path $tar) {

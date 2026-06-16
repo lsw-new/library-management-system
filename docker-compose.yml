@@ -48,8 +48,8 @@ services:
       start_period: 30s
 
   app:
-    build: .
-    image: library_app:latest
+    image: ${APP_IMAGE:-lsw3435255848/library_web:latest}
+    pull_policy: missing
     container_name: library_app
     restart: unless-stopped
     environment:

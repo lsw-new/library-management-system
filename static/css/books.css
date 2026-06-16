@@ -78,6 +78,16 @@
     background: currentColor;
 }
 
+/* 标题固定预留两行高度(配合 line-clamp-2),保证不同标题长度下卡片高度一致 */
+.book-card h3 {
+    min-height: 2.5rem; /* 移动端:2 × 1.25rem(text-sm 行高) */
+}
+@media (min-width: 640px) {
+    .book-card h3 {
+        min-height: 3rem; /* sm+:2 × 1.5rem(text-base 行高) */
+    }
+}
+
 /* 骨架屏 */
 .book-skeleton {
     border-radius: 1rem;
@@ -138,37 +148,58 @@
 [data-category].scale-110 { transform: scale(1.15); }
 
 @media (min-width: 1024px) {
+    /* 两列等高：高度由馆藏资源内容决定，图书分类底部与其齐平 */
     .books-page-layout {
-        --books-fixed-panel-height: calc(100vh - 10rem);
         align-items: stretch;
     }
 
-    .books-category-sidebar,
-    .books-main-panel {
-        height: var(--books-fixed-panel-height);
-        max-height: var(--books-fixed-panel-height);
-        min-height: 0;
-    }
-
-    .books-category-sidebar,
-    .books-sidebar-shell,
-    .books-category-card,
+    /* 馆藏资源完整展示，不使用内部滚动条，其内容高度决定整行高度 */
     .books-main-panel {
         display: flex;
         flex-direction: column;
-        min-height: 0;
     }
 
-    .books-sidebar-shell,
-    .books-category-card {
-        height: 100%;
-    }
-
-    #books-desktop-categories,
     .books-results-scroll {
+        overflow: visible;
+    }
+
+    /* 侧栏高度跟随馆藏资源：height:0 使其不反向撑高整行，
+       min-height:100% 再把它拉伸到与馆藏资源等高 */
+    .books-category-sidebar {
+        height: 0;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .books-sidebar-shell {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .books-category-card {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* 图书分类超出等高区域的部分使用内部滚动条显示 */
+    #books-desktop-categories {
         flex: 1 1 auto;
         min-height: 0;
         overflow-y: auto;
         overscroll-behavior: contain;
+    }
+
+    /* 空状态(无搜索结果)也不收缩,保持与正常单行结果页等高,文案垂直居中 */
+    #books-results-content > .text-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 618px; /* ≈ 封面行(521)+分页占位(97),使内容区与正常页等高 */
     }
 }

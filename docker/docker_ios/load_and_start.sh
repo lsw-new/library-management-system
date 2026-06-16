@@ -19,7 +19,7 @@ echo ""
 
 # 2. 加载镜像
 echo "[2/4] 加载镜像..."
-for tar in library_app.tar mysql_8.0.tar; do
+for tar in library_web.tar mysql_8.0.tar; do
     if [ -f "$tar" ]; then
         echo "  → 加载 $tar..."
         docker load -i "$tar" > /dev/null

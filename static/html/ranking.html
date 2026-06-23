@@ -5,7 +5,7 @@
 {% block main_class %}flex-1 animate-in fade-in duration-500{% endblock %}
 {% block content_wrapper %}{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/ranking.css', v='20260515-v11') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ranking.css', v='20260623-v12') }}">
 {% endblock %}
 
 {% set total_borrows = books|sum(attribute='borrow_count') if books else 0 %}

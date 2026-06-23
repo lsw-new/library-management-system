@@ -5,13 +5,13 @@
     if (!list) return;
 
     var rows = [].slice.call(list.querySelectorAll('.rk-row'));
-    var pods = [].slice.call(document.querySelectorAll('.rk-pod'));
     var podium = document.querySelector('.rk-podium');
     var cats = [].slice.call(document.querySelectorAll('.rk-cat'));
     var curCat = 'all';
     var curQ = '';
 
     function applyFilter() {
+        var filtering = curCat !== 'all' || !!curQ;
         var n = 0;
         rows.forEach(function (r) {
             var mc = curCat === 'all' || r.dataset.cat === curCat;
@@ -19,8 +19,8 @@
             r.hidden = !(mc && mq);
             if (!r.hidden) n++;
         });
-        if (podium) podium.hidden = false;
-        pods.forEach(function (p) { p.hidden = false; });
+        // 过滤时隐藏“热门前三”领奖台：它展示的是全局前三，过滤后会产生误导
+        if (podium) podium.hidden = filtering;
         if (noMatch) noMatch.hidden = n > 0;
     }
 

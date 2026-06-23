@@ -225,6 +225,8 @@
 }
 .rk-row:last-child { border-bottom: none; }
 .rk-row:hover { background: rgba(253,242,248,0.45); }
+/* 过滤隐藏：class 选择器设置了 display，需要更高优先级让 hidden 生效 */
+.rk-row[hidden], .rk-pod[hidden], .rk-podium[hidden] { display: none !important; }
 
 .rk-row-rank {
     width: 32px; height: 32px; border-radius: 0.625rem;

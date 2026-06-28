@@ -151,6 +151,8 @@ def emit_new_log(log_entry: dict):
 
 
 # 定义 `emit_force_logout` 函数，封装一段可复用的后端处理流程。
-def emit_force_logout(user_id: int, reason: str = '您已被管理员强制下线'):
-    # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-    socketio.emit('force_logout', {'reason': reason}, room=f'user_{user_id}')
+def emit_force_logout(user_id: int, user_type: str = 'user',
+                      reason: str = '您已被管理员强制下线'):
+    # 房间名需与 socketio_events.handle_connect 一致（'{user_type}_{id}'），
+    # 否则会因 users/admins 表 id 重叠而把 force_logout 误发给同 id 的其他类型账号。
+    socketio.emit('force_logout', {'reason': reason}, room=f'{user_type}_{user_id}')

@@ -278,8 +278,8 @@ def kick_active_session(user_id: int, user_type: str = 'user') -> str | None:
     try:
         # 从指定模块导入类、函数或变量，简化后续代码引用。
         from socketio_emitters import emit_force_logout, emit_online_changed
-        # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-        emit_force_logout(user_id)
+        # 传入 user_type，使房间名与连接时一致，避免 users/admins 同 id 误伤。
+        emit_force_logout(user_id, user_type)
         # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
         emit_online_changed()
     # 异常处理分支，用于回滚、记录日志或返回错误响应。

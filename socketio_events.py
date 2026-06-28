@@ -21,12 +21,16 @@ def handle_connect():
     if not current_user.is_authenticated:
         # 返回当前函数的结果或 HTTP 响应，并结束这一条执行路径。
         return False
+    # users 与 admins 是两张独立表、id 各自自增会重叠，房间名必须带上账号类型，
+    # 否则 admin(id=1) 与普通用户(id=1) 会落入同一个 'user_1' 房间，导致踢普通
+    # 用户时管理员也收到 force_logout。普通用户仍为 'user_{id}'，管理员为 'admin_{id}'。
+    user_type = 'admin' if getattr(current_user, 'is_admin', False) else 'user'
     # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-    join_room(f'user_{current_user.id}')
+    join_room(f'{user_type}_{current_user.id}')
     # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
     join_room('books')
     # 条件判断，根据当前变量、请求参数或运行状态选择不同处理分支。
-    if getattr(current_user, 'is_admin', False):
+    if user_type == 'admin':
         # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
         join_room('admins')
 

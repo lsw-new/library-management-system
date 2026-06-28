@@ -189,6 +189,10 @@ document.addEventListener('DOMContentLoaded', function () {
     checkOnlineUsers();
     startOnlineTimestampTick();
 
+    // 兜底轮询：实时事件（socket）偶发丢失或重连间隙时，仍保证在线用户列表自动刷新。
+    // checkOnlineUsers 内部已守卫 document.hidden 与 isOnlineTab，非在线页/后台标签不会请求。
+    setInterval(checkOnlineUsers, 10000);
+
     window.addEventListener('library:online-users-changed', function (event) {
         var data = event.detail || {};
         renderOnlineUsers(data.users || []);

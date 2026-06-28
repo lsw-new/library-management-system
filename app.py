@@ -77,6 +77,25 @@ def create_app():
     if message_queue:
         # 执行变量赋值，把 Redis 作为 SocketIO 跨进程消息队列。
         socketio_kwargs['message_queue'] = message_queue
+    # 反向代理（nginx/istio）下浏览器 Origin 为对外域名，与容器内 host 不一致，
+    # flask-socketio 默认仅同源会拒绝握手（日志：xxx is not an accepted origin），
+    # 导致服务器上 SocketIO 完全连不上。通过 SOCKETIO_CORS_ORIGINS 显式放行：
+    # '*' 放行全部；或逗号分隔的精确来源列表。未设置时保持默认（同源）。
+    cors_origins = os.environ.get('SOCKETIO_CORS_ORIGINS')
+    # 条件判断，根据当前变量、请求参数或运行状态选择不同处理分支。
+    if cors_origins:
+        # 执行变量赋值，解析允许的来源配置。
+        cors_origins = cors_origins.strip()
+        # 条件判断：'*' 放行全部，否则按逗号拆分为精确来源列表。
+        if cors_origins == '*':
+            # 执行变量赋值，放行全部来源。
+            socketio_kwargs['cors_allowed_origins'] = '*'
+        # 条件判断的兜底分支，处理前面条件没有命中的场景。
+        else:
+            # 执行变量赋值，放行指定的精确来源列表。
+            socketio_kwargs['cors_allowed_origins'] = [
+                o.strip() for o in cors_origins.split(',') if o.strip()
+            ]
     # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
     socketio.init_app(app, **socketio_kwargs)
 

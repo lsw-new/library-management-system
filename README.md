@@ -15,7 +15,8 @@ lsw3435255848/library_web:latest
 - 用户端支持首页推荐、图书列表、分类筛选、详情查看、热门排行榜、图书预约、取消预约和借阅记录查询。
 - 管理端支持图书增删改、预约审核、拒绝预约、确认归还、用户封禁/解封、强制下线、重置密码、修改邮箱、在线用户查看和操作日志查看。
 - 账号体系支持普通登录、邮箱验证码登录、注册分步完善、忘记密码、个人资料修改、头像上传和密码修改。
-- 实时能力基于 Flask-SocketIO，支持在线人数、预约状态、库存变更、图书目录变更、操作日志和强制下线等事件推送。
+- 移动端与平板端自适应：基于 User-Agent 的服务端设备识别（`is_mobile`），提供独立的移动端底部导航与页面适配；移动端/平板端不暴露管理员入口，也无法进入管理后台。
+- 实时能力基于 Flask-SocketIO，支持在线人数、预约状态、库存变更、图书目录变更、操作日志和强制下线等事件推送；多副本/多进程部署时通过 Redis 消息队列跨进程广播。
 - 数据层使用 Flask-SQLAlchemy + PyMySQL，默认面向 MySQL 8.0，并带有运行时表结构补齐和初始化页面。
 - Docker 编排包含 MySQL、Redis、Flask 应用和可选 Nginx，适合本地演示和生产部署起步。
 - 安全方面包含 CSRF 校验、登录/验证码限流、Session Cookie 安全配置、CSP/安全响应头、敏感运行文件忽略和基础健康检查。
@@ -79,11 +80,13 @@ lsw3435255848/library_web:latest
 - 管理端新操作日志。
 - 管理员强制用户下线。
 
+> 多副本 / 多进程部署下，以上事件依赖 Redis 消息队列（`REDIS_URL` 或 `SOCKETIO_MESSAGE_QUEUE`）在各进程间广播；未配置时事件只能在单进程内送达，会出现「踢人无弹窗」「在线人数不刷新」等问题。后台在线用户列表除实时事件外，还带有约 10 秒的兜底轮询，保证最终一致。
+
 ## 项目结构
 
 ```text
 PythonProject/
-├── app.py                    # Flask 应用工厂、全局错误处理、会话追踪、安全响应头
+├── app.py                    # Flask 应用工厂、全局错误处理、会话追踪、安全响应头、设备识别注入、Socket.IO 消息队列/CORS 配置
 ├── config.py                 # 环境变量、数据库连接、Session Cookie 配置
 ├── extensions.py             # db、login_manager、socketio 和北京时间工具
 ├── models.py                 # User、Admin、Book、BorrowRecord、OnlineSession 等模型
@@ -97,11 +100,12 @@ PythonProject/
 │   ├── health.py             # 健康检查
 │   ├── user/                 # 用户端图书、借阅、个人资料路由
 │   └── admin/                # 管理端首页、图书、借阅、用户管理路由
-├── utils/                    # 日志、限流、会话、CSRF、图片校验、缓存、IP 归属等工具
+├── utils/                    # 日志、限流、会话、CSRF、图片校验、缓存、IP 归属、设备识别、静态资源哈希等工具
+│   └── static_hash.py        # versioned_url：为静态资源注入内容哈希做缓存失效
 ├── data/test_books.py        # 演示图书数据和演示借阅次数生成
 ├── static/
 │   ├── html/                 # Jinja2 模板
-│   ├── css/                  # 页面样式
+│   ├── css/                  # 页面样式（含 responsive.css 移动端/平板端适配与底部导航）
 │   ├── js/                   # 前端交互脚本
 │   ├── images/               # 默认封面和上传图片目录
 │   └── fonts/                # 本地字体资源
@@ -271,6 +275,11 @@ AMAP_REST_KEY=
 
 # 可选：开发测试中强制 Socket.IO 使用 threading
 SOCKETIO_ASYNC_MODE=threading
+
+# 可选：反向代理 / 多域名部署时放行 Socket.IO 跨域来源（单进程本地开发通常无需设置）
+# SOCKETIO_CORS_ORIGINS=https://your-domain.example
+# 可选：独立指定 Socket.IO 消息队列（默认复用 REDIS_URL）
+# SOCKETIO_MESSAGE_QUEUE=redis://127.0.0.1:6379/0
 ```
 
 ### 3. 准备数据库
@@ -388,8 +397,10 @@ bash docker/docker_ios/load_and_start.sh
 | `APP_ENV` | 否 | 空 | 设置为 `production` 时启用生产判定 |
 | `FLASK_ENV` | 否 | `production` | 设置为 `production` 时要求安全的 `SECRET_KEY` 和 `DATABASE_URL` |
 | `FLASK_DEBUG` | 否 | `false` | `python app.py` 时是否开启 Flask debug |
-| `SOCKETIO_ASYNC_MODE` | 否 | 自动选择 | 可设置为 `threading` 方便测试 |
-| `REDIS_URL` | 否 | 空 | Redis 连接地址，用于缓存和限流 |
+| `SOCKETIO_ASYNC_MODE` | 否 | 自动选择 | 可设置为 `threading` 方便测试；容器镜像默认使用 `gevent` |
+| `SOCKETIO_MESSAGE_QUEUE` | 否 | 回退到 `REDIS_URL` | 显式指定 Socket.IO 消息队列地址；未设置时复用 `REDIS_URL` |
+| `SOCKETIO_CORS_ORIGINS` | 反代部署建议 | 空（仅同源） | Socket.IO 允许的跨域来源，反向代理下需填对外域名（`*` 放行全部，或逗号分隔的来源列表），否则握手会被拒、实时连接建立不起来 |
+| `REDIS_URL` | 否 | 空 | Redis 连接地址，用于缓存、限流；多副本/多进程部署时同时作为 Socket.IO 消息队列实现跨进程事件广播 |
 | `SMTP_SENDER_EMAIL` | 邮件功能必填 | 空 | QQ 邮箱发件地址 |
 | `SMTP_SENDER_PASSWORD` | 邮件功能必填 | 空 | QQ 邮箱 SMTP 授权码，不是邮箱登录密码 |
 | `AMAP_JS_KEY` | 否 | 空 | 高德地图 JS Key，用于前端定位能力 |
@@ -482,7 +493,8 @@ python -m pytest
 - MySQL 端口不建议直接暴露到公网；必要时绑定到内网或 `127.0.0.1`。
 - 定期备份 `mysql_data` 和上传图片卷 `app_images`。
 - 配置 `SMTP_SENDER_EMAIL` 和 `SMTP_SENDER_PASSWORD` 后，注册、邮箱登录、忘记密码和修改密码中的验证码功能才能正常使用。
-- 多进程或多容器部署时建议配置 `REDIS_URL`，让限流、缓存和实时状态更加稳定。
+- 多进程 / 多副本（如 Gunicorn 多 worker、Kubernetes 多 Pod）部署时**必须**配置 `REDIS_URL` 作为 Socket.IO 消息队列，否则强制下线、在线人数等跨进程事件无法送达；同时按需配置 `SOCKETIO_CORS_ORIGINS` 放行反向代理的对外域名。
+- 静态资源由 `versioned_url` 注入内容哈希做缓存失效（配合 `immutable` 长缓存）；新增前端文件后引用处使用 `versioned_url`，避免浏览器长期命中旧缓存。
 
 ## 备份和恢复
 

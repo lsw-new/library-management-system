@@ -2,7 +2,7 @@
 
 {% block title %}后台管理 - 图书管理系统{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+<link rel="stylesheet" href="{{ versioned_url('css/admin.css') }}">
 {% endblock %}
 
 {% macro search_form(tab_value, placeholder, value='') -%}
@@ -1068,12 +1068,12 @@ window.adminConfig = Object.assign({}, window.adminConfig || {}, {
     csrfToken: {{ admin_action_csrf_token|tojson }}
 });
 </script>
-<script src="{{ url_for('static', filename='js/admin-utils.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/admin-tabs.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/admin-books.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/admin-users.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/admin-online.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/admin-logs.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/admin-reservations.js') }}" defer></script>
+<script src="{{ versioned_url('js/admin-utils.js') }}" defer></script>
+<script src="{{ versioned_url('js/admin-tabs.js') }}" defer></script>
+<script src="{{ versioned_url('js/admin-books.js') }}" defer></script>
+<script src="{{ versioned_url('js/admin-users.js') }}" defer></script>
+<script src="{{ versioned_url('js/admin-online.js') }}" defer></script>
+<script src="{{ versioned_url('js/admin-logs.js') }}" defer></script>
+<script src="{{ versioned_url('js/admin-reservations.js') }}" defer></script>
 {% endblock %}
 

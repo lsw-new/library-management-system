@@ -149,6 +149,78 @@
     border-color: rgba(16, 185, 129, 0.35);
     box-shadow: 0 12px 24px -16px rgba(16, 185, 129, 0.4);
 }
+/* 在线用户卡片底部：地址独占一行完整显示（可换行不截断），下一行地区徽章 + 时间 */
+.online-meta {
+    margin-top: 0.75rem;
+    padding-top: 0.625rem;
+    border-top: 1px solid rgba(236, 72, 153, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+.online-ip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    min-width: 0;
+    padding: 0.3rem 0.5rem;
+    background: rgba(var(--color-brand-primary-rgb), 0.04);
+    border: 1px solid rgba(var(--color-brand-primary-rgb), 0.08);
+    border-radius: 0.55rem;
+}
+.online-ip-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex: 0 0 auto;
+    margin-top: 0.08rem;
+    color: rgba(var(--color-brand-primary-rgb), 0.45);
+}
+.online-ip-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.6875rem;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: rgba(var(--color-brand-primary-rgb), 0.62);
+    word-break: break-all;
+}
+.online-sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+.online-geo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+    max-width: 68%;
+    padding: 0.15rem 0.5rem;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 0.625rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    border: 1px solid #dbeafe;
+}
+.online-geo svg { width: 0.7rem; height: 0.7rem; flex: 0 0 auto; }
+.online-geo-text {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.online-geo-empty { display: inline-block; }
+.online-last-seen {
+    flex: 0 0 auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: rgba(var(--color-brand-primary-rgb), 0.7);
+    white-space: nowrap;
+}
 .kick-btn,
 .ban-btn,
 .unban-btn {

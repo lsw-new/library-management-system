@@ -46,12 +46,15 @@ function buildUserCard(u) {
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>活跃
                 </span>
             </div>
-            <div class="flex items-center justify-between text-[11px] pt-3 border-t border-pink-50">
-                <div class="flex items-center gap-1.5 min-w-0">
-                    <span class="font-mono text-brand-deep/50 shrink-0">${ipAddress}</span>
-                    ${geoLocation ? '<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-semibold rounded-md border border-blue-100 truncate online-geo"><svg class="w-2.5 h-2.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' + geoLocation + '</span>' : ''}
+            <div class="online-meta">
+                <div class="online-ip" title="${ipAddress}">
+                    <svg class="online-ip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                    <span class="online-ip-text">${ipAddress}</span>
                 </div>
-                <span class="font-mono font-semibold text-brand-deep/70 online-last-seen shrink-0">${lastSeen}</span>
+                <div class="online-sub">
+                    ${geoLocation ? '<span class="online-geo"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span class="online-geo-text">' + geoLocation + '</span></span>' : '<span class="online-geo-empty"></span>'}
+                    <span class="online-last-seen">${lastSeen}</span>
+                </div>
             </div>
             ${kickBtn}
         </article>`;
@@ -81,12 +84,17 @@ function renderOnlineUsers(users) {
         if (el) {
             var ts = el.querySelector('.online-last-seen');
             if (ts) ts.textContent = u.last_seen;
-            var ip = el.querySelector('.font-mono.text-brand-deep\\/50');
+            var ip = el.querySelector('.online-ip-text');
             if (ip) ip.textContent = u.ip_address || '—';
+            var ipWrap = el.querySelector('.online-ip');
+            if (ipWrap) ipWrap.setAttribute('title', u.ip_address || '—');
             var geo = el.querySelector('.online-geo');
             if (u.geo_location && !geo) {
-                var geoHtml = '<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-semibold rounded-md border border-blue-100 truncate online-geo"><svg class="w-2.5 h-2.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' + escapeHtml(u.geo_location) + '</span>';
-                if (ip && ip.parentElement) ip.parentElement.insertAdjacentHTML('beforeend', geoHtml);
+                var sub = el.querySelector('.online-sub');
+                var empty = el.querySelector('.online-geo-empty');
+                if (empty) empty.remove();
+                var geoHtml = '<span class="online-geo"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span class="online-geo-text">' + escapeHtml(u.geo_location) + '</span></span>';
+                if (sub) sub.insertAdjacentHTML('afterbegin', geoHtml);
             }
         } else {
             var tmp = document.createElement('div');

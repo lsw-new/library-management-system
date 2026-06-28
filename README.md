@@ -227,6 +227,176 @@ http://localhost:5000/init_db
 
 首次正式使用时请立即修改默认密码。
 
+## 零基础完整部署教程（小白版）
+
+这一节面向「第一次部署、没接触过 Docker」的同学，照着从上到下复制命令即可。推荐用一台 **Ubuntu 22.04/24.04 服务器**（云服务器或虚拟机都行），全程约 10 分钟。Windows 用户见每步的「Windows 说明」。
+
+> 整套系统由三个容器组成：`mysql`（数据库）、`redis`（缓存/实时）、`app`（网站本体）。Docker Compose 会帮你一次性把它们装好、连好，你基本只需要复制命令。
+
+### 第 0 步：你需要准备什么
+
+- 一台能联网的服务器或电脑（Linux 推荐 Ubuntu；Windows 也可以）。
+- 如果是云服务器：在控制台「安全组/防火墙」放行 **80 端口**（用 Nginx 时）和 **5000 端口**（直接访问应用时）。
+- 一个能用的 QQ 邮箱（可选，用于发验证码，不配也能登录管理后台）。
+
+### 第 1 步：安装 Docker
+
+**Ubuntu / Debian**（一条官方脚本搞定）：
+
+```bash
+curl -fsSL https://get.docker.com | sudo sh
+sudo systemctl enable --now docker
+```
+
+验证安装成功（能打印版本号即可）：
+
+```bash
+sudo docker --version
+sudo docker compose version
+```
+
+> **Windows 说明**：到 https://www.docker.com/products/docker-desktop 下载并安装 Docker Desktop，安装后启动它，等右下角图标变成「运行中」即可。之后的命令在 PowerShell 里去掉前面的 `sudo`。
+
+### 第 2 步：获取项目代码
+
+```bash
+git clone https://github.com/lsw-new/library-management-system.git
+cd library-management-system
+```
+
+> 没装 git 可以先 `sudo apt install -y git`；或在 GitHub 页面点「Code → Download ZIP」下载后解压，再 `cd` 进入目录。
+
+### 第 3 步：生成并修改配置文件 `.env`
+
+复制模板：
+
+```bash
+cp docker/.env.example .env
+```
+
+Windows PowerShell：
+
+```powershell
+Copy-Item docker\.env.example .env
+```
+
+用编辑器打开 `.env`（命令行可用 `nano .env`，改完按 `Ctrl+O` 回车保存、`Ctrl+X` 退出），**至少修改这几项**（密码自己改成别人猜不到的）：
+
+```env
+MYSQL_ROOT_PASSWORD=改成一个强密码
+MYSQL_DATABASE=library_db
+MYSQL_USER=library_user
+MYSQL_PASSWORD=改成另一个强密码
+SECRET_KEY=改成一长串随机字符
+FLASK_ENV=production
+APP_PORT=5000
+```
+
+生成随机 `SECRET_KEY` 的小技巧（Linux）：
+
+```bash
+openssl rand -hex 32
+```
+
+想用邮箱验证码再补上（不需要可留空）：
+
+```env
+SMTP_SENDER_EMAIL=你的QQ邮箱@qq.com
+SMTP_SENDER_PASSWORD=QQ邮箱的SMTP授权码
+```
+
+### 第 4 步：一键启动
+
+```bash
+sudo docker compose up -d
+```
+
+第一次会自动从 Docker Hub 拉取镜像，等几分钟。完成后看看三个容器是否都在运行：
+
+```bash
+sudo docker compose ps
+```
+
+`mysql`、`redis`、`app` 三个都显示 `running/healthy` 就对了。
+
+### 第 5 步：初始化数据库（只做一次）
+
+浏览器打开（把 `服务器IP` 换成你的公网 IP，本机部署就用 `localhost`）：
+
+```text
+http://服务器IP:5000
+```
+
+如果数据库还是空的，会自动跳到初始化页面 `http://服务器IP:5000/init_db`。在页面上**按顺序点**：
+
+1. 测试数据库连接 → 显示成功。
+2. 创建数据库表。
+3. 导入演示数据。
+4. 返回首页 / 进入管理端。
+
+### 第 6 步：登录验证
+
+| 角色 | 账号 | 密码 | 入口 |
+| --- | --- | --- | --- |
+| 管理员 | `admin` | `admin123` | `http://服务器IP:5000/admin/login` |
+| 普通用户 | `user1` | `user123` | `http://服务器IP:5000/login` |
+
+**登录后请立刻修改默认密码。**
+
+### 第 7 步（可选）：配置域名 + Nginx + HTTPS
+
+如果你有域名并希望用 80/443 端口访问，把域名解析到服务器 IP 后，用 `production` profile 启动自带的 Nginx：
+
+```bash
+sudo docker compose --profile production up -d
+```
+
+HTTPS 建议在 Nginx 外层用 Caddy 或 `certbot` 申请免费证书；如果用了反向代理且通过域名访问，记得在 `.env` 里加一行放行 Socket.IO 跨域来源，否则实时功能（踢人弹窗、在线人数）会失效：
+
+```env
+SOCKETIO_CORS_ORIGINS=https://你的域名
+```
+
+改完重启：`sudo docker compose up -d`。
+
+### 日常运维速查
+
+升级到最新版本（拉新镜像并重启，数据不丢）：
+
+```bash
+sudo docker compose pull app
+sudo docker compose up -d
+```
+
+查看应用日志（排错首选）：
+
+```bash
+sudo docker compose logs -f app
+```
+
+停止但保留数据：
+
+```bash
+sudo docker compose down
+```
+
+备份数据库：
+
+```bash
+sudo docker compose exec mysql mysqldump -u root -p library_db > backup.sql
+```
+
+### 小白常见报错对照表
+
+| 现象 | 原因 | 解决 |
+| --- | --- | --- |
+| 浏览器打不开网站 | 端口没放行 / 容器没起来 | 云控制台放行 `5000`（或 `80`）；`sudo docker compose ps` 看 `app` 是否 running |
+| 一直跳到 `/init_db` | 数据库没初始化或连不上 | 在 `/init_db` 按第 5 步操作；确认 `.env` 里 MySQL 账号密码一致 |
+| `app` 反复重启 | `.env` 配置有误（如 SECRET_KEY 为空） | `sudo docker compose logs app` 看报错，对照第 3 步补全 |
+| 端口被占用 `address already in use` | `5000`/`80` 已被其他程序占用 | 改 `.env` 里的 `APP_PORT`/`NGINX_PORT` 为其他端口后重启 |
+| 收不到邮箱验证码 | 未配/配错 SMTP | 检查 `SMTP_SENDER_EMAIL` 与 QQ 邮箱**授权码**（不是登录密码） |
+| 踢人没弹窗 / 在线人数不刷新 | 多副本未配消息队列或反代未放行来源 | 配 `REDIS_URL` 作消息队列、配 `SOCKETIO_CORS_ORIGINS` 为对外域名 |
+
 ## 本地开发方式
 
 本地开发需要先准备 MySQL。Redis 是可选项；未配置 `REDIS_URL` 时，限流和缓存会回退到进程内存，适合单进程开发调试。

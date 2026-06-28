@@ -386,17 +386,6 @@ sudo docker compose down
 sudo docker compose exec mysql mysqldump -u root -p library_db > backup.sql
 ```
 
-### 小白常见报错对照表
-
-| 现象 | 原因 | 解决 |
-| --- | --- | --- |
-| 浏览器打不开网站 | 端口没放行 / 容器没起来 | 云控制台放行 `5000`（或 `80`）；`sudo docker compose ps` 看 `app` 是否 running |
-| 一直跳到 `/init_db` | 数据库没初始化或连不上 | 在 `/init_db` 按第 5 步操作；确认 `.env` 里 MySQL 账号密码一致 |
-| `app` 反复重启 | `.env` 配置有误（如 SECRET_KEY 为空） | `sudo docker compose logs app` 看报错，对照第 3 步补全 |
-| 端口被占用 `address already in use` | `5000`/`80` 已被其他程序占用 | 改 `.env` 里的 `APP_PORT`/`NGINX_PORT` 为其他端口后重启 |
-| 收不到邮箱验证码 | 未配/配错 SMTP | 检查 `SMTP_SENDER_EMAIL` 与 QQ 邮箱**授权码**（不是登录密码） |
-| 踢人没弹窗 / 在线人数不刷新 | 多副本未配消息队列或反代未放行来源 | 配 `REDIS_URL` 作消息队列、配 `SOCKETIO_CORS_ORIGINS` 为对外域名 |
-
 ## 本地开发方式
 
 本地开发需要先准备 MySQL。Redis 是可选项；未配置 `REDIS_URL` 时，限流和缓存会回退到进程内存，适合单进程开发调试。

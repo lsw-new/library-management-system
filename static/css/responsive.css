@@ -1,0 +1,204 @@
+/* ============================================================
+   响应式适配 - 景艺大图书馆
+   手机 / 平板单独适配；底部导航坞为移动端主导航。
+   断点：<=767.98px 视为手机（启用底部导航坞与紧凑布局）
+        768px~1023.98px 视为平板（沿用 md: 横向导航 + 收紧间距）
+   ============================================================ */
+
+/* ---------- 全局安全网：杜绝横向溢出 ---------- */
+@media (max-width: 1023.98px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
+    img, svg, video, canvas, table { max-width: 100%; }
+    /* 超宽内容（表格/代码）允许内部横向滚动而非撑破页面 */
+    .overflow-x-scroll, .table-scroll { -webkit-overflow-scrolling: touch; }
+}
+
+/* ============================================================
+   移动端底部导航坞（仅手机显示）
+   ============================================================ */
+.mobile-dock { display: none; }
+
+@media (max-width: 767.98px) {
+    .mobile-dock {
+        position: fixed;
+        left: 0; right: 0; bottom: 0;
+        z-index: 200;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 1fr;
+        align-items: stretch;
+        gap: 2px;
+        padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+        background: rgba(255, 255, 255, 0.82);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
+        backdrop-filter: blur(20px) saturate(160%);
+        border-top: 1px solid rgba(249, 168, 212, 0.5);
+        box-shadow: 0 -10px 30px -12px rgba(var(--color-brand-primary-rgb), 0.28),
+                    0 -2px 8px -4px rgba(var(--color-brand-deep-rgb), 0.08);
+    }
+
+    .dock-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        min-height: 52px;
+        border-radius: 16px;
+        color: rgba(var(--color-brand-deep-rgb), 0.5);
+        text-decoration: none;
+        transition: color 0.25s ease, transform 0.25s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .dock-item:active { transform: scale(0.94); }
+
+    .dock-icon {
+        width: 23px; height: 23px;
+        transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .dock-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        line-height: 1;
+    }
+
+    /* 激活态：渐变药丸背景 + 品牌色 + 顶部指示点 */
+    .dock-item.is-active {
+        color: var(--color-brand-primary);
+        background: linear-gradient(135deg,
+            rgba(var(--color-brand-primary-rgb), 0.12),
+            rgba(var(--color-brand-accent-rgb), 0.12));
+    }
+    .dock-item.is-active .dock-icon {
+        transform: translateY(-1px) scale(1.06);
+    }
+    .dock-item.is-active::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        width: 18px; height: 3px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent));
+    }
+
+    /* 游客“注册”项：用强调色提示主行动 */
+    .dock-item--accent { color: var(--color-brand-accent); }
+    .dock-item--accent.is-active {
+        color: #fff;
+        background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent));
+    }
+    .dock-item--accent.is-active::before { background: rgba(255, 255, 255, 0.85); }
+
+    /* 为底部导航坞预留空间，避免遮挡页脚/内容 */
+    body.has-mobile-dock { padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px)); }
+    body.has-mobile-dock footer { margin-bottom: 4px; }
+}
+
+/* ============================================================
+   手机：导航/排版收紧
+   ============================================================ */
+@media (max-width: 767.98px) {
+    /* 顶栏更紧凑，品牌名缩小一档避免与右侧按钮挤压 */
+    header.site-header { padding-top: 8px; }
+    #site-nav { border-radius: 18px; padding: 10px 14px; }
+    #site-nav .font-heading.text-2xl { font-size: 1.25rem; }
+
+    /* 首页：缩小区块间距 */
+    #main-content { gap: 3rem; }
+
+    /* 卡片兜底圆角 */
+    .glass-panel { border-radius: 18px; }
+}
+
+/* ============================================================
+   平板：收紧两侧留白、避免内容过窄
+   ============================================================ */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+    header.site-header { padding-left: 1rem; padding-right: 1rem; }
+    /* 平板上隐藏底部导航坞（顶部已有横向导航） */
+    .mobile-dock { display: none; }
+}
+
+/* ============================================================
+   借阅足迹页（borrow_records）— 手机专属重构
+   仅 <=639.98px 生效；沿用原主题（粉/紫品牌色与状态配色），
+   仅调整布局/密度，使其更适合单手滑动浏览。
+   ============================================================ */
+@media (max-width: 639.98px) {
+    /* —— 英雄区：收紧、降低装饰干扰 —— */
+    .borrow-hero { padding: 1.25rem 1.1rem 1.1rem; border-radius: 22px; }
+    .borrow-hero-inner { flex-direction: column; align-items: flex-start; gap: 0.9rem; }
+    .borrow-hero-title { font-size: 1.75rem; line-height: 1.15; }
+    .borrow-hero-sub { font-size: 0.8rem; }
+    .borrow-hero-petals { opacity: 0.45; }
+    .borrow-hero-blob-c { display: none; }
+    /* CTA 占满整行，触控更友好 */
+    .borrow-hero-cta { width: 100%; justify-content: center; padding: 0.7rem 1rem; }
+
+    /* —— 统计卡：2×2 紧凑 —— */
+    .borrow-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin-top: 1.1rem; }
+    .borrow-stat-card { padding: 0.8rem 0.85rem; border-radius: 16px; }
+    .borrow-stat-card .stat-icon { width: 32px; height: 32px; }
+    .borrow-stat-card .stat-icon svg { width: 17px; height: 17px; }
+    .borrow-stat-card .stat-label { font-size: 10px; }
+    .borrow-stat-card .stat-value { font-size: 1.4rem; }
+
+    /* —— 布局：单列，隐藏右侧洞察栏，聚焦记录流 —— */
+    .borrow-layout { display: block; }
+    .borrow-aside { display: none; }
+    .borrow-main { width: 100%; }
+
+    /* —— 筛选头：搜索独占一行 + 标签横向滑动 —— */
+    .records-tabs-bar { padding: 0.9rem; border-radius: 18px; }
+    .records-tabs-head { flex-direction: column; align-items: stretch; gap: 0.7rem; }
+    .records-search { width: 100%; }
+    .records-search input { width: 100%; }
+    .records-tabs-scroll {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        margin: 0 -0.9rem;
+        padding: 0 0.9rem 0.15rem;
+    }
+    .records-tabs-scroll::-webkit-scrollbar { display: none; }
+    .records-tab { flex: 0 0 auto; scroll-snap-align: start; }
+
+    /* —— 记录卡：横向紧凑列表（小封面 + 内容）—— */
+    #records-list { gap: 0.7rem; }
+    .record-card {
+        grid-template-columns: 76px 1fr;
+        gap: 0.85rem;
+        padding: 0.85rem 0.9rem 0.85rem 1rem;
+        border-radius: 18px;
+        align-items: start;
+    }
+    .record-cover {
+        width: 76px;
+        justify-self: start;
+        aspect-ratio: 3 / 4;
+        border-radius: 0.6rem;
+    }
+    .record-cover-day { font-size: 9px; padding: 1px 5px; }
+    .record-body { gap: 0.55rem; }
+
+    /* 时间线更紧凑、字号下调 */
+    .record-timeline { gap: 0.3rem; }
+    .record-timeline .timeline-step { font-size: 11px; }
+
+    /* 进度条标签缩小 */
+    .record-progress-label, .record-progress-pct { font-size: 11px; }
+
+    /* 操作按钮占满，达到 44px 触控高度 */
+    .record-actions { width: 100%; }
+    .record-action-btn { flex: 1; justify-content: center; min-height: 40px; }
+
+    /* 空状态收紧 */
+    .borrow-empty { padding: 2.5rem 1.25rem; }
+    .borrow-empty-title { font-size: 1.35rem; }
+}

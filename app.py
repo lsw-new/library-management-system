@@ -93,6 +93,15 @@ def create_app():
         # 关闭前面打开的复合表达式、集合字面量或函数调用结构。
         }
 
+    # 装饰器行，为下面的函数或类附加路由、权限、限流或其他框架行为。
+    @app.context_processor
+    # 向所有模板注入 is_mobile 标记：用于在手机/平板上隐藏管理员入口并启用移动端布局。
+    def inject_device_flags():
+        # 局部导入，避免与扩展初始化的导入顺序产生耦合。
+        from utils.helpers import is_mobile_device
+        # 返回当前请求是否来自手机/平板设备（基于 User-Agent 判断）。
+        return {'is_mobile': is_mobile_device()}
+
     # 从指定模块导入类、函数或变量，简化后续代码引用。
     from blueprints.auth import auth_bp
     # 从指定模块导入类、函数或变量，简化后续代码引用。

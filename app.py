@@ -60,18 +60,26 @@ def create_app():
     # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
     login_manager.login_message_category = 'warning'
     # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
+    redis_url = os.environ.get('REDIS_URL')
+    # 组装 socketio.init_app 的参数：多副本/多进程部署时，必须用 Redis 作为
+    # 消息队列，否则各进程房间互不相通，跨进程的 socketio.emit（如强制下线
+    # force_logout）无法送达目标用户，本地单进程正常、服务器多 Pod 失效。
+    socketio_kwargs = {}
+    # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
     socketio_async_mode = os.environ.get('SOCKETIO_ASYNC_MODE')
     # 条件判断，根据当前变量、请求参数或运行状态选择不同处理分支。
     if socketio_async_mode:
         # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-        socketio.init_app(app, async_mode=socketio_async_mode)
-    # 条件判断的兜底分支，处理前面条件没有命中的场景。
-    else:
-        # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
-        socketio.init_app(app)
+        socketio_kwargs['async_mode'] = socketio_async_mode
+    # 条件判断：存在 Redis 时启用消息队列，允许专门的 SOCKETIO_MESSAGE_QUEUE 覆盖。
+    message_queue = os.environ.get('SOCKETIO_MESSAGE_QUEUE') or redis_url
+    # 条件判断，根据当前变量、请求参数或运行状态选择不同处理分支。
+    if message_queue:
+        # 执行变量赋值，把 Redis 作为 SocketIO 跨进程消息队列。
+        socketio_kwargs['message_queue'] = message_queue
+    # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
+    socketio.init_app(app, **socketio_kwargs)
 
-    # 执行变量、配置或对象属性赋值，保存后续逻辑需要的数据。
-    redis_url = os.environ.get('REDIS_URL')
     # 条件判断，根据当前变量、请求参数或运行状态选择不同处理分支。
     if redis_url:
         # 调用函数或方法，触发查询、渲染、校验、提交或其他业务动作。
